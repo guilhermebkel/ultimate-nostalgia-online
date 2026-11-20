@@ -1,6 +1,6 @@
 # 0001. Static HTML, no framework
 
-Status: accepted
+Status: superseded by [0007](0007-next-static-export.md)
 
 ## Context
 

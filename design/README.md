@@ -6,7 +6,7 @@ Logo, icons and web files for uno (Ultimate Nostalgia Online). The kit was made 
 
 - `svg/`: vector originals. The letters are outlines, so no font needs to be installed.
 - `png/`: ready images. Horizontal logos (1200 px wide, transparent), the symbol and the app icon at 1024 px, and `social-preview.png` (1280×640, the image of the repository's social preview).
-- `web/`: favicon, app icons, `site.webmanifest` and `head-snippet.html`. They are copied to `public/` by `pnpm build` (copy, do not move); the tags of `head-snippet.html` are in `src/templates/PageTemplate.mjs`.
+- `web/`: favicon, app icons, `site.webmanifest` and `head-snippet.html`. They are copied to `public/` by `scripts/prepare.mjs` (run by `pnpm dev` and `pnpm build`) (copy, do not move); the tags of `head-snippet.html` are written by `src/Utils/MetadataUtil.ts`.
 - `reference/`: `social-preview.html` and `og-image.html`, the sources of `png/social-preview.png` (1280×640) and `public/og.png` (1200×630). Open one at its size and take a screenshot to redo the image.
 
 | File in `web/` | Served as |
@@ -48,7 +48,7 @@ Three game tiles in a pyramid spell the name: the yellow "n" on top rests on the
 | Cream (the "u" and "o" tiles) | `#FFF1C9` | 255, 241, 201 |
 | Outline black on dark | `#0B0820` | 11, 8, 32 |
 
-The site's own tokens (paper, ink, the card colors) are in `src/input.css`, not here.
+The site's own tokens (paper, ink, the card colors) are in `src/app/globals.css`, not here.
 
 ## Font license
 

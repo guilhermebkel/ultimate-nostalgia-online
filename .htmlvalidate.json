@@ -1,6 +1,11 @@
 {
   "extends": ["html-validate:recommended"],
   "rules": {
-    "no-inline-style": ["error", { "allowedProperties": ["--k", "--z", "--c"] }]
+    "no-inline-style": ["error", { "allowedProperties": ["--k", "--z", "--c"] }],
+    "void-style": "off",
+    "attribute-boolean-style": "off",
+    "attribute-empty-style": "off",
+    "attr-case": "off",
+    "valid-id": "off"
   }
 }

@@ -1,0 +1,8 @@
+{
+  "path": ["src", "scripts"],
+  "format": ["typescript", "tsx", "javascript"],
+  "ignore": ["**/*.test.ts", "**/*.test.tsx", "**/*.test.mjs", "src/components/Icons/**"],
+  "minTokens": 50,
+  "threshold": 1,
+  "reporters": ["console"]
+}

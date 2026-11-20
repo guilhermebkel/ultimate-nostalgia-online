@@ -3,7 +3,9 @@ if (!matchMedia("(prefers-reduced-motion: reduce)").matches && matchMedia("(hove
   for (const card of document.querySelectorAll("[data-tilt-card]")) {
     const target = card.querySelector("[data-tilt-target]");
     const range = Number(card.dataset.tiltCard);
-    if (!target) continue;
+    if (!target) {
+      continue;
+    }
     card.addEventListener("pointermove", (event) => {
       const box = card.getBoundingClientRect();
       target.style.setProperty("--tilt", ((event.clientX - box.left) / box.width - 0.5) * range);

@@ -26,9 +26,10 @@ for (const path of pages) {
       test("shows the three games and only Zerod is playable", async ({ page }) => {
         await page.goto(path);
         await expect(page.locator("main article, main section")).toHaveCount(3);
-        await expect(page.locator('main a[href^="https://zerod.guilherr.me"]')).toBeVisible();
+        await expect(page.locator('main a[href^="https://zerod.guilherr.me"]:not([aria-hidden])')).toBeVisible();
         await expect(page.locator('main [aria-disabled="true"]')).toHaveCount(2);
-        await expect(page.locator("main a")).toHaveCount(1);
+        // One link a keyboard or a screen reader reaches; the other covers the banner for the pointer.
+        await expect(page.locator("main a:not([aria-hidden])")).toHaveCount(1);
       });
     });
   }
@@ -40,7 +41,7 @@ test.describe("Zerod card", () => {
   test("keeps the card fan below the Play button on a phone", async ({ page }) => {
     await page.goto("/");
     await page.waitForLoadState("networkidle");
-    const button = await page.locator("#zerod a").boundingBox();
+    const button = await page.locator("#zerod a:not([aria-hidden])").boundingBox();
     const fan = await page.locator("#fan").boundingBox();
     expect(button).not.toBeNull();
     expect(fan).not.toBeNull();
@@ -52,4 +53,22 @@ test("answers an unknown path with the 404 page", async ({ page }) => {
   const response = await page.goto("/old-uno-game/room");
   expect(response?.status()).toBe(404);
   await expect(page.locator("meta[name=robots]")).toHaveAttribute("content", "noindex");
+});
+
+test("the whole Zerod banner opens the game in a new tab", async ({ page, context }) => {
+  // The new tab is a page of the same context: answer its request locally instead of reaching the network.
+  await context.route(
+    (url) => url.hostname === "zerod.guilherr.me",
+    (route) => route.fulfill({ contentType: "text/html", body: "<title>zerod</title>" }),
+  );
+  await page.goto("/");
+  const card = page.locator("#zerod");
+  const box = await card.boundingBox();
+  const [popup] = await Promise.all([
+    context.waitForEvent("page"),
+    // A point of the banner that is neither the button nor the text.
+    page.mouse.click(box.x + box.width * 0.55, box.y + box.height * 0.3),
+  ]);
+  await popup.waitForLoadState();
+  expect(popup.url()).toContain("zerod.guilherr.me");
 });

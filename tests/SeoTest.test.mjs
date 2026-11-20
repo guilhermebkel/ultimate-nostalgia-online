@@ -69,7 +69,10 @@ describe.each(locales)("the page $htmlLang", (locale) => {
       expect(html).toContain(locale.games[game.id].name.replace(/&/g, "&amp;"));
       if (game.status === "soon") expect(html).not.toContain(`id="${game.id}-link"`);
     }
-    expect(html.match(/<a [^>]*href="https:\/\/zerod\.guilherr\.me"/g)).toHaveLength(1);
+    // The live game has the button and a link that covers the whole banner (hidden from keyboard and screen readers).
+    const links = html.match(/<a [^>]*href="https:\/\/zerod\.guilherr\.me"[^>]*>/g);
+    expect(links).toHaveLength(2);
+    expect(links.filter((tag) => tag.includes('aria-hidden="true"') && tag.includes('tabindex="-1"'))).toHaveLength(1);
   });
 
   it("only references files that exist in dist", () => {
@@ -133,10 +136,30 @@ describe("the footer feedback links", () => {
     ["dist/pt-br/index.html", "Enviar feedback", "Reportar um problema"],
   ])("%s links the feedback page, the issue chooser and the repository", (file, feedback, issue) => {
     const html = read(file);
-    expect(html).toContain(`href="https://mail.guilherr.me/">${feedback}</a>`);
-    expect(html).toContain(
-      `href="https://github.com/guilhermebkel/ultimate-nostalgia-online/issues/new/choose">${issue}</a>`,
-    );
-    expect(html).toContain('href="https://github.com/guilhermebkel/ultimate-nostalgia-online">GitHub</a>');
+    const link = (href, text) => new RegExp(`href="${href}"[^>]*>${text}</a>`);
+    expect(html).toMatch(link("https://mail.guilherr.me/", feedback));
+    expect(html).toMatch(link("https://github.com/guilhermebkel/ultimate-nostalgia-online/issues/new/choose", issue));
+    expect(html).toMatch(link("https://github.com/guilhermebkel/ultimate-nostalgia-online", "GitHub"));
+  });
+});
+
+describe("links that leave the page", () => {
+  // Why: every link to another site opens in a new tab, and none of them hands the page to it.
+  it.each(["dist/index.html", "dist/pt-br/index.html"])(
+    "%s opens external links in a new tab with noopener",
+    (file) => {
+      const anchors = [...read(file).matchAll(/<a\s[^>]*>/g)].map((m) => m[0]);
+      const external = anchors.filter((tag) => /href="https?:\/\//.test(tag));
+      expect(external.length).toBe(5);
+      for (const tag of external) {
+        expect(tag, tag).toContain('target="_blank"');
+        expect(tag, tag).toContain('rel="noopener"');
+      }
+    },
+  );
+
+  it.each(["dist/index.html", "dist/pt-br/index.html"])("%s keeps in-page links in the same tab", (file) => {
+    const anchors = [...read(file).matchAll(/<a\s[^>]*>/g)].map((m) => m[0]);
+    for (const tag of anchors.filter((t) => /href="(#|\.\/)/.test(t))) expect(tag, tag).not.toContain("target=");
   });
 });

@@ -6,6 +6,13 @@ const escapeHtml = (text) =>
 const SLAB =
   "relative rounded-[30px] shadow-[0_18px_38px_rgb(20_17_15/.16)] transition-[translate,box-shadow] duration-300 ease-out hover:-translate-y-[5px] hover:shadow-[0_26px_46px_rgb(20_17_15/.22)]";
 
+// Links that leave the page open in a new tab.
+const NEW_TAB = 'target="_blank" rel="noopener"';
+
+// Footer link: an underline that fills with the card yellow on hover and focus.
+const FOOTER_LINK =
+  "-mx-1.5 rounded-md bg-[linear-gradient(var(--color-card-yellow),var(--color-card-yellow))] bg-size-[100%_2px] bg-bottom bg-no-repeat px-1.5 py-1.5 text-inherit no-underline transition-[background-size,color] duration-200 ease-out hover:bg-size-[100%_100%] hover:text-ink focus-visible:bg-size-[100%_100%] focus-visible:text-ink motion-reduce:transition-none";
+
 const BUTTON =
   "inline-flex items-center gap-3 whitespace-nowrap rounded-[14px] font-display font-semibold no-underline transition-[translate,background-color] duration-150 ease-out";
 const BUTTON_LIVE = `${BUTTON} h-14 bg-white px-[26px] text-[1.15rem] text-ink hover:-translate-y-0.5 hover:bg-[#ffe27a] active:translate-y-px max-[420px]:w-full max-[420px]:justify-center`;
@@ -27,7 +34,8 @@ const gameHtml = ({ game, locale, art }) => {
       ${status}
       <h1 id="${game.id}-title" class="relative z-[2] mt-[18px] font-display text-[clamp(3.4rem,1rem+6vw,7rem)] leading-[.92] font-bold tracking-[-.03em]">${escapeHtml(text.name)}</h1>
       <p class="relative z-[2] mt-[18px] max-w-[40ch] text-[clamp(1rem,.9rem+.4vw,1.1875rem)] font-medium text-white">${escapeHtml(text.text)}</p>
-      <div class="relative z-[8] mt-[22px]"><a class="${BUTTON_LIVE}" href="${escapeHtml(game.url)}"><span>${escapeHtml(locale.cta.live)}</span>${art.arrow}</a></div>
+      <a class="absolute inset-0 z-[9] rounded-[inherit]" href="${escapeHtml(game.url)}" ${NEW_TAB} aria-hidden="true" tabindex="-1"></a>
+      <div class="relative z-[10] mt-[22px]"><a class="${BUTTON_LIVE}" href="${escapeHtml(game.url)}" ${NEW_TAB}><span>${escapeHtml(locale.cta.live)}</span>${art.arrow}</a></div>
       ${art.fan}
     </section>`;
   }
@@ -179,9 +187,9 @@ ${head({ site, locale, locales, games })}
 <footer class="relative z-[2] flex min-h-24 items-center justify-between gap-4 px-gutter pt-6 pb-7 text-[.9375rem] font-semibold text-ink-soft max-[560px]:items-start">
   <p class="max-[560px]:[&>span:not([aria-hidden])]:block"><span class="font-semibold">${expansion}</span><span class="max-[560px]:hidden" aria-hidden="true"> · </span><span>${escapeHtml(locale.moreGames)}</span></p>
   <nav class="flex flex-wrap justify-end gap-x-6 gap-y-1 max-[560px]:flex-col max-[560px]:items-end" aria-label="${escapeHtml(locale.feedbackLink)}">
-    <a class="border-b-2 border-current py-1.5 text-inherit no-underline" href="${site.feedbackUrl}">${escapeHtml(locale.feedbackLink)}</a>
-    <a class="border-b-2 border-current py-1.5 text-inherit no-underline" href="${site.repo}/issues/new/choose">${escapeHtml(locale.issueLink)}</a>
-    <a class="border-b-2 border-current py-1.5 text-inherit no-underline" href="${site.repo}">${escapeHtml(locale.githubLink)}</a>
+    <a class="${FOOTER_LINK}" href="${site.feedbackUrl}" ${NEW_TAB}>${escapeHtml(locale.feedbackLink)}</a>
+    <a class="${FOOTER_LINK}" href="${site.repo}/issues/new/choose" ${NEW_TAB}>${escapeHtml(locale.issueLink)}</a>
+    <a class="${FOOTER_LINK}" href="${site.repo}" ${NEW_TAB}>${escapeHtml(locale.githubLink)}</a>
   </nav>
 </footer>
 <script src="${rootOf(locale)}fan-tilt.js" defer></script>

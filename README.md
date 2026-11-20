@@ -18,7 +18,7 @@
 | Pebo       | Online 3D foosball. Teams of 1, 2 or 4 players, with just a nickname.                      | Coming soon | None yet                                       |
 | Ogro Party | Nine minigames in the mud. Up to 8 players, online, in the browser.                        | Coming soon | None yet                                       |
 
-The list lives in `src/data/games.json`; the texts are in `src/locales/`.
+The list lives in `src/data/games.json`; the texts are in `src/locales/`. `tests/ReadmeTest.test.mjs` fails when this table and the site disagree.
 
 ## What you get
 

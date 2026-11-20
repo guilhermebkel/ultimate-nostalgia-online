@@ -1,9 +1,9 @@
 import type { Metadata, Viewport } from "next";
+import { SHARE_IMAGE } from "@/constants/ShareImageConstant";
 import type { Locale, Site } from "@/Protocols/SiteProtocol";
 import { SiteDataUtil } from "@/Utils/SiteDataUtil";
 
 const THEME_COLOR = "#F5F3EE";
-const SHARE_IMAGE = { width: 1200, height: 630 };
 
 export class MetadataUtil {
   static viewport(): Viewport {

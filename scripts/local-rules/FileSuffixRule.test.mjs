@@ -17,6 +17,8 @@ ruleTester.run("file-suffix", fileSuffix, {
   valid: [
     at("an adapter", "/repo/src/Adapters/GitAdapter.ts"),
     at("a builder", "/repo/src/Builders/GameBuilder.ts"),
+    at("a config", "/repo/src/config/EnvConfig.ts"),
+    at("a constant", "/repo/src/constants/ShareImageConstant.ts"),
     at("a protocol", "/repo/src/Protocols/SiteProtocol.ts"),
     at("a util and its test", "/repo/src/Utils/SitemapUtil.test.ts"),
     at("a file in a subfolder of a mapped folder", "/repo/src/Utils/Deep/ThingUtil.ts"),
@@ -36,6 +38,8 @@ ruleTester.run("file-suffix", fileSuffix, {
   invalid: [
     missing("an adapter without the suffix", "/repo/src/Adapters/Git.ts"),
     missing("a builder without the suffix", "/repo/src/Builders/Game.ts"),
+    missing("a config without the suffix", "/repo/src/config/Env.ts"),
+    missing("a constant in the plural", "/repo/src/constants/ShareImageConstants.ts"),
     missing("a protocol without the suffix", "/repo/src/Protocols/Site.ts"),
     missing("a util with a plural suffix", "/repo/src/Utils/SitemapUtils.ts"),
     missing("a rule without the suffix", "/repo/scripts/local-rules/MapName.mjs"),

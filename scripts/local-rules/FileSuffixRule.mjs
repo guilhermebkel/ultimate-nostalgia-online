@@ -4,6 +4,8 @@ import { basename, extname } from "node:path";
 const SUFFIXES_BY_FOLDER = {
   "src/Adapters": ["Adapter"],
   "src/Builders": ["Builder"],
+  "src/config": ["Config"],
+  "src/constants": ["Constant"],
   "src/Protocols": ["Protocol"],
   "src/Utils": ["Util"],
   "scripts/local-rules": ["Rule", "Helper"],

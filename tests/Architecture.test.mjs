@@ -19,6 +19,8 @@ const unitTests = files.filter((file) => /\.test\.(ts|tsx)$/.test(file));
 // Why: a layer imports only the layers below it, so a util never reaches into a component and a protocol stays types only.
 const LAYERS_BELOW = {
   Protocols: [],
+  constants: [],
+  config: ["Protocols", "constants"],
   Utils: ["Protocols"],
   Adapters: ["Protocols", "Utils"],
   Builders: ["Protocols"],
@@ -33,7 +35,7 @@ describe("the layers of src/", () => {
     (file) => {
       const layer = file.split("/")[1];
       const imported = [...readFileSync(join(root, file), "utf8").matchAll(IMPORT)].map((match) => match[1]);
-      const allowed = [...LAYERS_BELOW[layer], layer, "locales", "data"];
+      const allowed = [...LAYERS_BELOW[layer], layer, "locales", "data", "constants"];
       expect(
         imported.filter((target) => !allowed.includes(target)),
         file,
@@ -44,6 +46,14 @@ describe("the layers of src/", () => {
   it("keeps Builders out of the code the site ships", () => {
     const users = sources.filter((file) => readFileSync(join(root, file), "utf8").includes("@/Builders/"));
     expect(users.filter((file) => file.split("/")[1] !== "Builders")).toEqual([]);
+  });
+});
+
+describe("the environment", () => {
+  // Why: process.env is read in one folder, so a variable has one name, one default and one place to look.
+  it("is read only in src/config/", () => {
+    const readers = sources.filter((file) => readFileSync(join(root, file), "utf8").includes("process.env"));
+    expect(readers.filter((file) => file.split("/")[1] !== "config")).toEqual([]);
   });
 });
 

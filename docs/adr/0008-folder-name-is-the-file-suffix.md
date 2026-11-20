@@ -20,6 +20,8 @@ With the move to TypeScript and components (ADR 0007), `src/` has folders with a
   | `tests/`               | `<Subject>.test.mjs` for a test, `<Name>Helper.mjs` for a helper | `Seo.test.mjs`, `HtmlHelper.mjs`        |
   | `e2e/`                 | `<Subject>.spec.mjs` for a spec, `<Name>Helper.mjs` for a helper | `Tracking.spec.mjs`, `BaseHelper.mjs`   |
 
+  `src/config/` is the only place in `src/` that reads `process.env` (`tests/Architecture.test.mjs`); it has no file until a variable needs one. `src/constants/` holds values that more than one file uses; a value used by one file stays in that file.
+
   In `tests/` and `e2e/` the `.test` or `.spec` part already says the file is a test, so the name does not repeat it (`Seo.test.mjs`, not `SeoTest.test.mjs`).
 
 - Folders outside the map, and why:

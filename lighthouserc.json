@@ -3,7 +3,8 @@
     "collect": {
       "staticDistDir": "./dist",
       "url": ["/index.html", "/pt-br/index.html"],
-      "numberOfRuns": 1
+      "numberOfRuns": 1,
+      "settings": { "blockedUrlPatterns": ["*static.guilherr.me*"] }
     },
     "assert": {
       "assertions": {

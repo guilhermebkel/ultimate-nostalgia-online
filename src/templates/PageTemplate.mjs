@@ -131,7 +131,7 @@ const head = ({ site, locale, locales, games }) => {
 ${alternates}
 <link rel="alternate" hreflang="x-default" href="${site.url}/">
 <meta name="robots" content="index, follow, max-image-preview:large">
-<meta name="theme-color" content="#F5F3EE">
+<meta name="theme-color" content="#F3EAD8">
 <link rel="icon" href="${rootOf(locale)}favicon.ico" sizes="48x48">
 <link rel="icon" href="${rootOf(locale)}favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="${rootOf(locale)}apple-touch-icon.png">
@@ -158,9 +158,7 @@ ${alternates}
 };
 
 export const renderPage = ({ site, locale, locales, games, art }) => {
-  const expansion = locale.expansion
-    .map((word) => `<b class="font-extrabold text-ink">${escapeHtml(word[0])}</b>${escapeHtml(word.slice(1))}`)
-    .join(" ");
+  const expansion = locale.expansion.map(escapeHtml).join(" ");
   return `<!DOCTYPE html>
 <html lang="${locale.htmlLang}">
 <head>

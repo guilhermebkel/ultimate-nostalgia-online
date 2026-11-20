@@ -167,8 +167,6 @@ ${alternates}
 <script type="application/ld+json">${JSON.stringify(jsonLd({ site, locale, games }))}</script>`;
 };
 
-const grainFilter = `<svg class="absolute" width="0" height="0" aria-hidden="true" focusable="false"><defs><filter id="grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" stitchTiles="stitch" result="n"/><feColorMatrix type="saturate" values="0"/></filter></defs></svg>`;
-
 export const renderPage = ({ site, locale, locales, games, art }) => {
   const expansion = locale.expansion
     .map((word) => `<b class="font-extrabold text-ink">${escapeHtml(word[0])}</b>${escapeHtml(word.slice(1))}`)
@@ -179,7 +177,6 @@ export const renderPage = ({ site, locale, locales, games, art }) => {
 ${head({ site, locale, locales, games })}
 </head>
 <body class="flex min-h-dvh flex-col overflow-x-clip bg-paper font-body text-base leading-normal text-ink antialiased">
-${grainFilter}
 <a class="fixed top-2 left-2 z-[1000] -translate-y-[200%] rounded-lg bg-white px-4 py-2 text-black focus-visible:translate-y-0" href="#games">${escapeHtml(locale.skip)}</a>
 <div class="grain" aria-hidden="true"></div>
 

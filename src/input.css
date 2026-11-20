@@ -90,16 +90,14 @@
   }
 }
 
-/* Paper grain over the whole page. */
+/* Paper grain over the whole page: a small tiled noise image (a live SVG filter on the whole viewport cost about a second of main thread). */
 .grain {
   position: fixed;
   inset: 0;
   z-index: 90;
   pointer-events: none;
-  opacity: 0.09;
-  mix-blend-mode: multiply;
-  filter: url(#grain);
-  background: #fff;
+  background: url("/img/grain.png") repeat;
+  background-size: 160px 160px;
 }
 
 /* Status label: "OUT NOW:" and "COMING SOON:" with a colored dot. */

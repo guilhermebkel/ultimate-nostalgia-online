@@ -1,0 +1,30 @@
+{
+  "htmlLang": "en",
+  "ogLocale": "en_US",
+  "path": "/",
+  "title": "uno — Ultimate Nostalgia Online",
+  "description": "uno (Ultimate Nostalgia Online): famous games remastered with multiplayer and new mechanics, free in your browser. Zerod is out now; Pebo and Ogro Party are coming soon.",
+  "ogImageAlt": "uno logo and the line Ultimate Nostalgia Online. Famous games remastered with multiplayer and new mechanics.",
+  "skip": "Skip to the games",
+  "intro": "Famous games remastered with multiplayer and new mechanics, free to play with your friends in the browser.",
+  "expansion": ["Ultimate", "Nostalgia", "Online"],
+  "moreGames": "More games on the way.",
+  "githubLink": "GitHub",
+  "status": { "live": "Out now", "soon": "Coming soon" },
+  "cta": { "live": "Play now", "soon": "Not playable yet" },
+  "games": {
+    "zerod": {
+      "name": "Zerod",
+      "text": "A free card game for up to 12 friends. Open a room, send the code and play in the browser."
+    },
+    "pebo": {
+      "name": "Pebo",
+      "text": "Online 3D foosball. Teams of 1, 2 or 4 players, with just a nickname."
+    },
+    "ogro-party": {
+      "name": "Ogro Party",
+      "text": "Nine minigames in the mud. Up to 8 players, online, in the browser."
+    }
+  },
+  "notFound": { "title": "Page not found — uno", "text": "This page does not exist.", "home": "Back to the games" }
+}

@@ -1,0 +1,17 @@
+# Glossary
+
+| Term                          | Meaning                                                                                                                                     | Avoid                                      |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------ |
+| **uno**                       | The name of the hub and the site. It is also the short form of the expansion. Always lowercase.                                             | UNO (that is the card game of Mattel), Uno |
+| **Ultimate Nostalgia Online** | What "uno" stands for. Written in full in the footer, the title and the description.                                                        | UNO as an acronym in capitals              |
+| **hub**                       | The site at uno.guilherr.me: one page that lists the games.                                                                                 | portal, platform                           |
+| **game**                      | A thing the visitor can play or will be able to play, with its own site or repository (Zerod, Pebo, Ogro Party). One entry of `games.json`. | product, app                               |
+| **live**                      | A game that can be played now. It has a url and a "Play now" link.                                                                          | released, launched                         |
+| **soon**                      | A game that is not playable yet. No link, a disabled button saying "Not playable yet", and it stays out of the structured data.             | upcoming, beta                             |
+| **featured card**             | The wide card of the first live game (today Zerod).                                                                                         | hero, banner                               |
+| **status label**              | The small label of a card ("Out now:", "Coming soon:") with its colored dot.                                                                | badge, tag                                 |
+| **locale**                    | A language of the site. `en` is at `/` and is the default; `pt-br` is at `/pt-br/`. Each is its own page.                                   | translation (as the file)                  |
+| **brand kit**                 | The logo, icons and web files in `design/`.                                                                                                 | assets                                     |
+| **tile**                      | One of the three letter blocks of the logo (u, n, o).                                                                                       | block, box                                 |
+| **share image**               | `og.png`, 1200×630, shown when a link is shared.                                                                                            | thumbnail, banner                          |
+| **GTM script**                | The owner's Google Tag Manager loader, `https://static.guilherr.me/js/gtm.js`.                                                              | analytics, tracker                         |

@@ -1,0 +1,45 @@
+name: Feature request for a game or for the site
+description: Something a game or the hub could do that it does not do today.
+title: "[feature] "
+labels: ["enhancement", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Requests for every game of the hub are collected here. Triage adds the `game:` label and may move the issue to the repository of the game, or turn it into a task.
+        **Never paste real nicknames, chat or other private content.**
+  - type: dropdown
+    id: game
+    attributes:
+      label: For which game
+      options:
+        - Zerod
+        - Pebo
+        - Ogro Party
+        - A new game for the hub
+        - The hub site (uno.guilherr.me)
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: The problem
+      description: What players cannot do or understand today, or what is annoying. Say what happens in a match or on the screen, not the solution yet.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What you would like
+      description: How it could work, in your own words. A sketch or a reference game helps.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives and what happens if we do nothing
+  - type: textarea
+    id: open-questions
+    attributes:
+      label: Open questions
+      description: What must be answered before this can be written as a task.

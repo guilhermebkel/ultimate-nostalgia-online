@@ -34,7 +34,11 @@
     "sonarjs/no-nested-template-literals": "error",
     "sonarjs/no-duplicate-string": "error",
     "local/comment-marker": "error",
-    "local/file-suffix": "error"
+    "local/file-suffix": "error",
+    "local/literal-dispatch": "error",
+    "local/map-name": "error",
+    "local/known-keys": "error",
+    "local/no-bare-string-field": "error"
   },
   "overrides": [
     {

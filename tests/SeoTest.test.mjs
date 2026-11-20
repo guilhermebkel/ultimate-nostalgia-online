@@ -69,9 +69,9 @@ describe.each(locales)("the page $htmlLang", (locale) => {
   it("links only the live games, and each game is named", () => {
     for (const game of games) {
       expect(html).toContain(locale.games[game.id].name.replace(/&/g, "&amp;"));
-      if (game.status === "soon") {
-        expect(html).not.toContain(`id="${game.id}-link"`);
-      }
+    }
+    for (const game of games.filter((entry) => entry.status === "soon")) {
+      expect(html).not.toContain(`id="${game.id}-link"`);
     }
     // Why: a live game has the button and a link that covers the whole banner, which is hidden from keyboard and screen readers.
     const links = html.match(/<a [^>]*href="https:\/\/zerod\.guilherr\.me"[^>]*>/g);

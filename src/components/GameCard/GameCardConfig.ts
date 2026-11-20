@@ -1,3 +1,5 @@
+import type { GameId } from "@/Protocols/SiteProtocol";
+
 export type CardArt =
   | { kind: "fan" }
   | { kind: "image"; src: string; width: number; height: number; className: string }
@@ -25,8 +27,12 @@ export type SoonCardConfig = CardBase & {
 
 export type CardConfig = LiveCardConfig | SoonCardConfig;
 
-// Why: one entry per game in src/data/games.json; a test fails when a game has no entry or an entry has no game.
-export const CARD_CONFIGS: Record<string, CardConfig> = {
+export type ArtKind = CardArt["kind"];
+
+export type ArtOfKind<Kind extends ArtKind> = Extract<CardArt, { kind: Kind }>;
+
+// Why: keyed by GameId, so a game added to the union does not compile until it has a card; games.json is checked against the union by a test.
+export const GAME_ID_TO_CARD_CONFIG: Record<GameId, CardConfig> = {
   zerod: {
     status: "live",
     heading: "h1",

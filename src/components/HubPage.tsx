@@ -1,10 +1,11 @@
 import { GameCard } from "@/components/GameCard";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
+import type { LocaleKey } from "@/Protocols/SiteProtocol";
 import { JsonLdUtil } from "@/Utils/JsonLdUtil";
 import { SiteDataUtil } from "@/Utils/SiteDataUtil";
 
-type HubPageProps = { localeKey: string };
+type HubPageProps = { localeKey: LocaleKey };
 
 export const HubPage = ({ localeKey }: HubPageProps) => {
   const { SITE: site, GAMES: games } = SiteDataUtil;

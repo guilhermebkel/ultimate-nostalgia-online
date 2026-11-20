@@ -1,8 +1,9 @@
 import { preload } from "react-dom";
 import type { ReactNode } from "react";
+import type { LocaleKey } from "@/Protocols/SiteProtocol";
 import { SiteDataUtil } from "@/Utils/SiteDataUtil";
 
-type HubLayoutProps = { localeKey: string; children: ReactNode };
+type HubLayoutProps = { localeKey: LocaleKey; children: ReactNode };
 
 const BODY_CLASS =
   "flex min-h-dvh flex-col overflow-x-clip bg-paper bg-[url(/img/paper.png)] bg-size-[384px_384px] bg-blend-multiply font-body text-base leading-normal text-ink antialiased";

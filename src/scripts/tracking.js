@@ -54,14 +54,15 @@ if (matchMedia("(hover: hover)").matches) {
       });
     };
 
+    const isMouse = (event) => event.pointerType === "mouse";
     card.addEventListener("pointerenter", (event) => {
-      if (event.pointerType === "mouse") {
+      if (isMouse(event)) {
         startMs = performance.now();
       }
     });
     // After the tab was hidden the pointer may still be over the card: count again from the next move.
     card.addEventListener("pointermove", (event) => {
-      if (startMs === null && event.pointerType === "mouse") {
+      if (startMs === null && isMouse(event)) {
         startMs = performance.now();
       }
     });

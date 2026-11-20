@@ -7,8 +7,4 @@ describe("SiteDataUtil", () => {
       expect(SiteDataUtil.localeOf(key).htmlLang).toBeTruthy();
     }
   });
-
-  it("fails for a language it does not know", () => {
-    expect(() => SiteDataUtil.localeOf("xx")).toThrow(/Unknown locale/);
-  });
 });

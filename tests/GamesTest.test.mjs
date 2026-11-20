@@ -24,12 +24,11 @@ describe("games.json", () => {
   });
 
   it("gives a live game an https url and a soon game none", () => {
-    for (const game of games) {
-      if (game.status === "live") {
-        expect(game.url).toMatch(/^https:\/\//);
-      } else {
-        expect(game.url).toBeUndefined();
-      }
+    for (const game of games.filter((entry) => entry.status === "live")) {
+      expect(game.url).toMatch(/^https:\/\//);
+    }
+    for (const game of games.filter((entry) => entry.status === "soon")) {
+      expect(game.url).toBeUndefined();
     }
   });
 

@@ -30,10 +30,6 @@ describe("GameCard", () => {
     expect(html).toContain("a &amp; b");
   });
 
-  it("fails loudly for a game that has no card", () => {
-    expect(() => render(GameBuilder.soon({ id: "no-such-game" }))).toThrow(/no card/);
-  });
-
   it("fails when games.json and the card disagree on the status", () => {
     expect(() => render(GameBuilder.soon({ id: "zerod" }))).toThrow(/is "soon" in games.json/);
   });

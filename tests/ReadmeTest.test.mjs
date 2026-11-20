@@ -29,11 +29,16 @@ const readmeRows = () => {
 };
 
 // Why: the README must say about a game exactly what the registry and the English texts say.
+const STATUS_TO_LINK_CELL = {
+  live: (game) => `[${new URL(game.url).host}](${game.url})`,
+  soon: () => "None yet",
+};
+
 const expectedRow = (game) => [
   en.games[game.id].name,
   en.games[game.id].text,
   en.status[game.status],
-  game.status === "live" ? `[${new URL(game.url).host}](${game.url})` : "None yet",
+  STATUS_TO_LINK_CELL[game.status](game),
 ];
 
 describe("the README games table matches the site", () => {

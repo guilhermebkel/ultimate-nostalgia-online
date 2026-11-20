@@ -25,14 +25,21 @@ describe("games.json", () => {
 
   it("gives a live game an https url and a soon game none", () => {
     for (const game of games) {
-      if (game.status === "live") expect(game.url).toMatch(/^https:\/\//);
-      else expect(game.url).toBeUndefined();
+      if (game.status === "live") {
+        expect(game.url).toMatch(/^https:\/\//);
+      } else {
+        expect(game.url).toBeUndefined();
+      }
     }
   });
 
   it("puts the live games first, so the featured card leads the page", () => {
     const statuses = games.map((game) => game.status);
-    expect(statuses).toEqual([...statuses].sort((a, b) => (a === b ? 0 : a === "live" ? -1 : 1)));
+    const liveFirst = [
+      ...statuses.filter((status) => status === "live"),
+      ...statuses.filter((status) => status === "soon"),
+    ];
+    expect(statuses).toEqual(liveFirst);
   });
 
   it("has a name and a text for every game in every locale", () => {
@@ -48,7 +55,9 @@ describe("games.json", () => {
 describe("locales", () => {
   it("have exactly the same keys in every language", () => {
     const [first, ...others] = Object.values(locales).map((locale) => keysOf(locale).sort());
-    for (const keys of others) expect(keys).toEqual(first);
+    for (const keys of others) {
+      expect(keys).toEqual(first);
+    }
   });
 
   it("give every locale its own path and html lang", () => {

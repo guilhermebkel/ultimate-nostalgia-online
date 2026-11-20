@@ -28,7 +28,7 @@ for (const path of pages) {
         await expect(page.locator("main article, main section")).toHaveCount(4);
         await expect(page.locator('main a[href^="https://zerod.guilherr.me"]:not([aria-hidden])')).toBeVisible();
         await expect(page.locator('main a[href^="https://herosplay.online"]:not([aria-hidden])')).toBeVisible();
-        // One link per live game that a keyboard or a screen reader reaches; the other covers the banner for the pointer.
+        // Why: one link per live game is for a keyboard or a screen reader; the other only covers the banner for the pointer.
         await expect(page.locator("main a:not([aria-hidden]), main button")).toHaveCount(2);
       });
     });
@@ -56,7 +56,7 @@ test("answers an unknown path with the 404 page", async ({ page }) => {
 });
 
 test("the whole Zerod banner opens the game in a new tab", async ({ page, context }) => {
-  // The new tab is a page of the same context: answer its request locally instead of reaching the network.
+  // Why: the new tab is a page of the same context, so its request is answered here instead of reaching the network.
   await context.route(
     (url) => url.hostname === "zerod.guilherr.me",
     (route) => route.fulfill({ contentType: "text/html", body: "<title>zerod</title>" }),
@@ -66,7 +66,7 @@ test("the whole Zerod banner opens the game in a new tab", async ({ page, contex
   const box = await card.boundingBox();
   const [popup] = await Promise.all([
     context.waitForEvent("page"),
-    // A point of the banner that is neither the button nor the text.
+    // Why: this point of the banner is neither the button nor the text, so only the banner link can catch the click.
     page.mouse.click(box.x + box.width * 0.55, box.y + box.height * 0.3),
   ]);
   await popup.waitForLoadState();

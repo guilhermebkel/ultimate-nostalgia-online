@@ -24,14 +24,15 @@
 | ----------------------- | ---------------------------------------------------------------------------------------------------------- |
 | One page, two languages | `/` in English and `/pt-br/` in Portuguese, plain static HTML                                              |
 | SEO and GEO built in    | canonical, `hreflang`, Open Graph, JSON-LD, sitemap, `robots.txt`, `llms.txt`, tested over the built files |
-| Tailwind, no framework  | responsive from 320 px to 1920 px, the text is never built by a script                                     |
+| Next.js, static export  | responsive from 320 px to 1920 px, the text is in the HTML and never built by a script                     |
 
 ## Development
 
     nvm use            # Node 22
     pnpm install
-    pnpm dev           # builds, serves dist/ on :4173 and rebuilds on change
-    pnpm check         # format, lint, build, unit tests and e2e
+    pnpm dev           # Next dev server on :3000
+    pnpm build         # static export into dist/
+    pnpm check         # format, types, lint, quality, unit tests and e2e
 
 Playwright needs a browser once: `pnpm exec playwright install chromium`.
 

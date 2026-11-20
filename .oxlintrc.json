@@ -1,0 +1,66 @@
+{
+  "plugins": ["typescript", "react", "jsx-a11y"],
+  "jsPlugins": ["eslint-plugin-sonarjs", "./scripts/eslint-local-rules.mjs"],
+  "categories": { "correctness": "error" },
+  "env": { "builtin": true, "node": true, "browser": true },
+  "ignorePatterns": [
+    "dist/",
+    ".next/",
+    "node_modules/",
+    "next-env.d.ts",
+    "test-results/",
+    "playwright-report/",
+    "design/",
+    "public/"
+  ],
+  "rules": {
+    "curly": "error",
+    "eqeqeq": "error",
+    "no-var": "error",
+    "prefer-const": "error",
+    "no-unused-vars": "error",
+    "no-console": "error",
+    "no-magic-numbers": ["error", { "ignore": [0, 1, -1], "ignoreArrayIndexes": true }],
+    "max-lines": ["error", { "max": 150, "skipBlankLines": true, "skipComments": true }],
+    "max-depth": ["error", 3],
+    "max-params": ["error", 3],
+    "max-classes-per-file": ["error", 1],
+    "sonarjs/cognitive-complexity": ["error", 10],
+    "sonarjs/no-nested-conditional": "error",
+    "sonarjs/no-collapsible-if": "error",
+    "sonarjs/no-identical-functions": "error",
+    "sonarjs/no-duplicated-branches": "error",
+    "sonarjs/no-identical-conditions": "error",
+    "sonarjs/no-nested-template-literals": "error",
+    "sonarjs/no-duplicate-string": "error",
+    "local/comment-marker": "error",
+    "local/file-suffix": "error"
+  },
+  "overrides": [
+    {
+      "files": ["**/*.test.ts", "**/*.test.tsx", "tests/**", "e2e/**"],
+      "rules": {
+        "no-magic-numbers": "off",
+        "max-lines": "off",
+        "sonarjs/no-duplicate-string": "off",
+        "max-params": "off"
+      }
+    },
+    {
+      "files": ["scripts/**"],
+      "rules": { "no-console": "off", "no-magic-numbers": "off" }
+    },
+    {
+      "files": ["src/app/**"],
+      "rules": { "import/no-default-export": "off" }
+    },
+    {
+      "files": ["src/components/Icons/**"],
+      "rules": { "max-lines": "off", "max-params": "off" }
+    },
+    {
+      "files": ["src/scripts/**"],
+      "rules": { "no-magic-numbers": "off", "local/comment-marker": "off", "no-console": "off" }
+    }
+  ]
+}

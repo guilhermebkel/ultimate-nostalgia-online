@@ -14,12 +14,18 @@ const gameOf = (card) => ({ game_id: card.dataset.trackCard, status: card.datase
 
 const onClick = (event) => {
   // The main button and the middle button both open the link; a right click does not.
-  if (event.button > 1) return;
+  if (event.button > 1) {
+    return;
+  }
   const target = event.target.closest("[data-track-click], [data-track-link]");
-  if (!target) return;
+  if (!target) {
+    return;
+  }
   if (target.dataset.trackClick) {
     const card = cardOf(target);
-    if (card) track("game_card_click", { ...gameOf(card), placement: target.dataset.trackClick });
+    if (card) {
+      track("game_card_click", { ...gameOf(card), placement: target.dataset.trackClick });
+    }
   } else {
     track("footer_link_click", { link: target.dataset.trackLink });
   }
@@ -33,10 +39,14 @@ if (matchMedia("(hover: hover)").matches) {
     let sentCount = 0;
 
     const flush = () => {
-      if (startMs === null) return;
+      if (startMs === null) {
+        return;
+      }
       const durationMs = Math.min(performance.now() - startMs, MAX_HOVER_MS);
       startMs = null;
-      if (durationMs < MIN_HOVER_MS || sentCount >= MAX_HOVERS_PER_CARD) return;
+      if (durationMs < MIN_HOVER_MS || sentCount >= MAX_HOVERS_PER_CARD) {
+        return;
+      }
       sentCount += 1;
       track("game_card_hover", {
         ...gameOf(card),
@@ -45,11 +55,15 @@ if (matchMedia("(hover: hover)").matches) {
     };
 
     card.addEventListener("pointerenter", (event) => {
-      if (event.pointerType === "mouse") startMs = performance.now();
+      if (event.pointerType === "mouse") {
+        startMs = performance.now();
+      }
     });
     // After the tab was hidden the pointer may still be over the card: count again from the next move.
     card.addEventListener("pointermove", (event) => {
-      if (startMs === null && event.pointerType === "mouse") startMs = performance.now();
+      if (startMs === null && event.pointerType === "mouse") {
+        startMs = performance.now();
+      }
     });
     card.addEventListener("pointerleave", flush);
     addEventListener("pagehide", flush);

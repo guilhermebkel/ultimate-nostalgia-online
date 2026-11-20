@@ -9,7 +9,7 @@ test.beforeEach(async ({ page }) => {
     window.dataLayer = [];
   });
   await page.goto("/");
-  // The links open another site: keep the test on this page.
+  // Why: the links open another site, and the test has to stay on this page.
   await page.evaluate(() => document.addEventListener("click", (event) => event.preventDefault()));
 });
 

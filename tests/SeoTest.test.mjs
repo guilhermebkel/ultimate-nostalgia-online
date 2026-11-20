@@ -1,8 +1,9 @@
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
+import { readFile } from "./ReadHtml.mjs";
 
 const root = new URL("../", import.meta.url);
-const read = (path) => readFileSync(new URL(path, root), "utf8");
+const read = (path) => readFile(new URL(path, root));
 const site = JSON.parse(read("src/data/site.json"));
 const games = JSON.parse(read("src/data/games.json"));
 const locales = site.locales.map((key) => JSON.parse(read(`src/locales/${key}.json`)));
@@ -31,8 +32,9 @@ describe.each(locales)("the page $htmlLang", (locale) => {
   });
 
   it("lists every language and x-default as alternates", () => {
-    for (const other of locales)
+    for (const other of locales) {
       expect(html).toContain(`<link rel="alternate" hreflang="${other.htmlLang}" href="${site.url}${other.path}">`);
+    }
     expect(html).toContain(`<link rel="alternate" hreflang="x-default" href="${site.url}/">`);
   });
 
@@ -67,9 +69,11 @@ describe.each(locales)("the page $htmlLang", (locale) => {
   it("links only the live games, and each game is named", () => {
     for (const game of games) {
       expect(html).toContain(locale.games[game.id].name.replace(/&/g, "&amp;"));
-      if (game.status === "soon") expect(html).not.toContain(`id="${game.id}-link"`);
+      if (game.status === "soon") {
+        expect(html).not.toContain(`id="${game.id}-link"`);
+      }
     }
-    // The live game has the button and a link that covers the whole banner (hidden from keyboard and screen readers).
+    // Why: a live game has the button and a link that covers the whole banner, which is hidden from keyboard and screen readers.
     const links = html.match(/<a [^>]*href="https:\/\/zerod\.guilherr\.me"[^>]*>/g);
     expect(links).toHaveLength(2);
     expect(links.filter((tag) => tag.includes('aria-hidden="true"') && tag.includes('tabindex="-1"'))).toHaveLength(1);
@@ -79,17 +83,20 @@ describe.each(locales)("the page $htmlLang", (locale) => {
     const refs = [...html.matchAll(/(?:href|src)="(\/[^"#]*)"/g)]
       .map((match) => match[1])
       .filter((path) => path !== "/");
-    for (const path of refs)
+    for (const path of refs) {
       expect(existsSync(new URL(`dist${path}`, root)) || existsSync(new URL(`dist${path}index.html`, root)), path).toBe(
         true,
       );
+    }
   });
 });
 
 describe("the site files", () => {
   it("lists every language in the sitemap with the same host as the canonical", () => {
     const sitemap = read("dist/sitemap.xml");
-    for (const locale of locales) expect(sitemap).toContain(`<loc>${site.url}${locale.path}</loc>`);
+    for (const locale of locales) {
+      expect(sitemap).toContain(`<loc>${site.url}${locale.path}</loc>`);
+    }
   });
 
   it("points robots.txt at the sitemap and allows everything", () => {
@@ -110,22 +117,20 @@ describe("the site files", () => {
   });
 });
 
-describe("files are linked relatively", () => {
-  // Why: a project site (github.io/<repo>/) and the custom domain must both load the CSS, fonts and scripts.
-  it.each([
-    ["dist/index.html", "./"],
-    ["dist/pt-br/index.html", "../"],
-  ])("%s links its own files from %s", (file, prefix) => {
-    const html = read(file);
-    const own = [...html.matchAll(/(?:href|src)="([^"]+)"/g)]
+describe("files are linked from the site root", () => {
+  // Why: the site lives at the root of its own domain, so every file of the site is linked from "/" and nothing else.
+  it.each(["dist/index.html", "dist/pt-br/index.html"])("%s links its own files from /", (file) => {
+    const own = [...read(file).matchAll(/(?:href|src)="([^"]+)"/g)]
       .map((m) => m[1])
       .filter((url) => !/^(https?:|#|data:|mailto:)/.test(url));
     expect(own.length).toBeGreaterThan(0);
-    for (const url of own) expect(url === "./" || url.startsWith(prefix), `${url} in ${file}`).toBe(true);
+    for (const url of own) {
+      expect(url === "./" || url.startsWith("/"), `${url} in ${file}`).toBe(true);
+    }
   });
 
-  it("does not use a root-relative url in the stylesheet", () => {
-    expect(read("dist/style.css")).not.toMatch(/url\(\/[^/]/);
+  it("ships the two fonts the stylesheet names", () => {
+    expect(readdirSync(new URL("dist/fonts", root)).sort()).toEqual(["figtree.woff2", "fredoka.woff2"]);
   });
 });
 
@@ -160,7 +165,9 @@ describe("links that leave the page", () => {
 
   it.each(["dist/index.html", "dist/pt-br/index.html"])("%s keeps in-page links in the same tab", (file) => {
     const anchors = [...read(file).matchAll(/<a\s[^>]*>/g)].map((m) => m[0]);
-    for (const tag of anchors.filter((t) => /href="(#|\.\/)/.test(t))) expect(tag, tag).not.toContain("target=");
+    for (const tag of anchors.filter((t) => /href="(#|\.\/)/.test(t))) {
+      expect(tag, tag).not.toContain("target=");
+    }
   });
 });
 

@@ -4,3 +4,16 @@ dist/
 test-results/
 playwright-report/
 .lighthouseci/
+.next/
+next-env.d.ts
+*.tsbuildinfo
+# Copied into public/ by scripts/prepare.mjs
+/public/apple-touch-icon.png
+/public/favicon*
+/public/icon-*.png
+/public/maskable-512.png
+/public/site.webmanifest
+/public/fonts/
+/public/fan-tilt.js
+/public/tracking.js
+.eslintcache

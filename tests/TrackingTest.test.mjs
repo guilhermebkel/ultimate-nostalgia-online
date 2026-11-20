@@ -1,7 +1,7 @@
-import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
+import { readFile } from "./ReadHtml.mjs";
 
-const read = (file) => readFileSync(file, "utf8");
+const read = (file) => readFile(new URL(`../${file}`, import.meta.url));
 const pages = ["dist/index.html", "dist/pt-br/index.html"];
 
 describe("tracking markup", () => {

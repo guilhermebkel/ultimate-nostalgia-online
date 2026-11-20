@@ -8,12 +8,14 @@ const readJson = (path) => JSON.parse(readText(path));
 const games = readJson("src/data/games.json");
 const en = readJson("src/locales/en.json");
 
-// Reads the rows of the "## Games" table of the README: [name, description, status, link].
+// Why: the README rows are read as [name, description, status, link] so the table can be compared with games.json.
 const readmeRows = () => {
   const section = readText("README.md")
     .split(/^## /m)
     .find((part) => part.startsWith("Games\n"));
-  if (!section) throw new Error("README.md has no '## Games' section");
+  if (!section) {
+    throw new Error("README.md has no '## Games' section");
+  }
   return section
     .split("\n")
     .filter((line) => line.startsWith("|"))
@@ -26,7 +28,7 @@ const readmeRows = () => {
     );
 };
 
-// What the README must say for a game, built from the registry and the English texts.
+// Why: the README must say about a game exactly what the registry and the English texts say.
 const expectedRow = (game) => [
   en.games[game.id].name,
   en.games[game.id].text,

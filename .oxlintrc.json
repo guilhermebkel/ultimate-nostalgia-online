@@ -51,6 +51,10 @@
       }
     },
     {
+      "files": ["scripts/eslint-local-rules.mjs", "scripts/eslint-local-rules.test.mjs"],
+      "rules": { "max-lines": "off" }
+    },
+    {
       "files": ["scripts/**"],
       "rules": { "no-console": "off", "no-magic-numbers": "off" }
     },

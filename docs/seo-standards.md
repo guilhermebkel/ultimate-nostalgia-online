@@ -16,7 +16,7 @@ The site must be easy for search engines and AI assistants to read, because that
 - All the text is in the static HTML. No script builds, translates or reveals it.
 - The first thing on the page says what it is: the intro line. Keep it a plain sentence, not a slogan.
 - Facts that change (a game going live) change in `games.json` and the locales, and `lastmod` follows the last commit.
-- Use real names: "Zerod", "Pebo", "Ogro Party". The name of the hub is written "uno — Ultimate Nostalgia Online".
+- Use real names: "Zerod", "Pebo", "Ogro Party". The name of the hub is written "uno - Ultimate Nostalgia Online".
 
 ## Site files (all generated)
 

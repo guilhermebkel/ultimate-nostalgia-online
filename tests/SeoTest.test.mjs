@@ -163,3 +163,21 @@ describe("links that leave the page", () => {
     for (const tag of anchors.filter((t) => /href="(#|\.\/)/.test(t))) expect(tag, tag).not.toContain("target=");
   });
 });
+
+describe("titles use a plain hyphen", () => {
+  // Why: the title, og:title and twitter:title are shown as typed in search results and link previews.
+  it.each(["dist/index.html", "dist/pt-br/index.html", "dist/404.html"])("%s has no em dash anywhere", (file) => {
+    expect(read(file)).not.toContain("—");
+  });
+
+  it.each(["dist/index.html", "dist/pt-br/index.html"])(
+    "%s uses the same title in title, og:title and twitter:title",
+    (file) => {
+      const html = read(file);
+      const title = html.match(/<title>([^<]*)<\/title>/)[1];
+      expect(title).toBe("uno - Ultimate Nostalgia Online");
+      expect(html).toContain(`<meta property="og:title" content="${title}">`);
+      expect(html).toContain(`<meta name="twitter:title" content="${title}">`);
+    },
+  );
+});

@@ -2,7 +2,7 @@
   "htmlLang": "pt-BR",
   "ogLocale": "pt_BR",
   "path": "/pt-br/",
-  "title": "uno — Ultimate Nostalgia Online",
+  "title": "uno - Ultimate Nostalgia Online",
   "description": "uno (Ultimate Nostalgia Online): jogos famosos remasterizados com multiplayer e novas mecânicas, grátis no navegador. O Zerod já está no ar; Pebo e Ogro Party chegam em breve.",
   "ogImageAlt": "Logo do uno e a frase Ultimate Nostalgia Online. Jogos famosos remasterizados com multiplayer e novas mecânicas. Grátis no navegador.",
   "skip": "Ir para os jogos",
@@ -29,7 +29,7 @@
     }
   },
   "notFound": {
-    "title": "Página não encontrada — uno",
+    "title": "Página não encontrada - uno",
     "text": "Esta página não existe.",
     "home": "Voltar para os jogos"
   }

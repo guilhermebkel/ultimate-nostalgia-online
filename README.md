@@ -5,7 +5,6 @@
 <p align="center">
   <a href="https://github.com/guilhermebkel/ultimate-nostalgia-online/actions/workflows/ci.yml"><img src="https://github.com/guilhermebkel/ultimate-nostalgia-online/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue" alt="License: MIT"></a>
-  <a href="https://uno.guilherr.me"><img src="https://img.shields.io/badge/site-uno.guilherr.me-2f6fdd" alt="Site"></a>
 </p>
 
 **uno** (Ultimate Nostalgia Online) is a hub of famous games remastered with multiplayer and new mechanics, free to play with your friends in the browser.

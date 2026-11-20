@@ -1,5 +1,5 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test } from "./BaseHelper.mjs";
+import { expect, test } from "./fixtures.mjs";
 
 for (const path of ["/", "/pt-br/"]) {
   for (const width of [390, 1440]) {

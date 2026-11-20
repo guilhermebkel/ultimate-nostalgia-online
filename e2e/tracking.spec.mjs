@@ -1,4 +1,4 @@
-import { expect, test } from "./BaseHelper.mjs";
+import { expect, test } from "./fixtures.mjs";
 
 test.use({ viewport: { width: 1440, height: 900 } });
 

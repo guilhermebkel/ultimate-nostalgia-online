@@ -6,6 +6,7 @@ import type { Game, Locale, LocaleKey, Site } from "@/Protocols/SiteProtocol";
 
 export class SiteDataUtil {
   static readonly SITE = siteJson as Site;
+  static readonly SHARE_IMAGE = { width: 1200, height: 630 };
 
   static readonly GAMES: Game[] = gamesJson as Game[];
 

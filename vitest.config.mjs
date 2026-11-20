@@ -6,6 +6,6 @@ export default defineConfig({
   resolve: { alias: { "@": fileURLToPath(new URL("./src", import.meta.url)) } },
   test: {
     include: ["tests/**/*.test.mjs", "scripts/**/*.test.mjs", "src/**/*.test.{ts,tsx}"],
-    globalSetup: ["tests/BuildHelper.mjs"],
+    globalSetup: ["tests/build-setup.mjs"],
   },
 });

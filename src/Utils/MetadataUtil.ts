@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import { SHARE_IMAGE } from "@/constants/ShareImageConstant";
 import type { Locale, Site } from "@/Protocols/SiteProtocol";
 import { SiteDataUtil } from "@/Utils/SiteDataUtil";
 
@@ -44,7 +43,7 @@ export class MetadataUtil {
         title: locale.title,
         description: locale.description,
         url,
-        images: [{ url: image, ...SHARE_IMAGE, alt: locale.ogImageAlt }],
+        images: [{ url: image, ...SiteDataUtil.SHARE_IMAGE, alt: locale.ogImageAlt }],
         locale: locale.ogLocale,
       },
       twitter: { card: "summary_large_image", title: locale.title, description: locale.description, images: [image] },

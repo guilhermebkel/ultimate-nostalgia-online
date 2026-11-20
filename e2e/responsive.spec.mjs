@@ -1,4 +1,4 @@
-import { expect, test } from "./BaseHelper.mjs";
+import { expect, test } from "./fixtures.mjs";
 
 const viewports = [
   { name: "phone", width: 390, height: 844 },

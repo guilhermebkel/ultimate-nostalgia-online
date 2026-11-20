@@ -170,7 +170,7 @@ ${head({ site, locale, locales, games })}
 
 <header class="relative z-[2] flex flex-col items-center gap-3.5 px-gutter pt-10 pb-8 text-center hub:pb-9 motion-safe:animate-rise">
   <a class="logo-link flex-none" href="./" aria-label="${site.name}">${art.logo}</a>
-  <p class="max-w-[34ch] font-display text-[clamp(1.3rem,.9rem+1.2vw,2.1rem)] leading-[1.12] font-semibold tracking-[-.02em]">${escapeHtml(locale.intro)}</p>
+  <p class="max-w-[34ch] text-ink-brown font-display text-[clamp(1.3rem,.9rem+1.2vw,2.1rem)] leading-[1.12] font-semibold tracking-[-.02em]">${escapeHtml(locale.intro)}</p>
 </header>
 
 <main id="games" class="relative z-[2] flex-1 px-gutter pt-4 pb-6">

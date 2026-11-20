@@ -8,7 +8,17 @@
   <a href="https://uno.guilherr.me"><img src="https://img.shields.io/badge/site-uno.guilherr.me-2f6fdd" alt="Site"></a>
 </p>
 
-**uno** (Ultimate Nostalgia Online) is a hub of famous games remastered with multiplayer and new mechanics, free to play with your friends in the browser. [Zerod](https://zerod.guilherr.me) is out now; Pebo and Ogro Party are coming soon.
+**uno** (Ultimate Nostalgia Online) is a hub of famous games remastered with multiplayer and new mechanics, free to play with your friends in the browser.
+
+## Games
+
+| Game       | Description                                                                                | Status      | Link                                           |
+| ---------- | ------------------------------------------------------------------------------------------ | ----------- | ---------------------------------------------- |
+| Zerod      | A free card game for up to 12 friends. Open a room, send the code and play in the browser. | Out now     | [zerod.guilherr.me](https://zerod.guilherr.me) |
+| Pebo       | Online 3D foosball. Teams of 1, 2 or 4 players, with just a nickname.                      | Coming soon | None yet                                       |
+| Ogro Party | Nine minigames in the mud. Up to 8 players, online, in the browser.                        | Coming soon | None yet                                       |
+
+The list lives in `src/data/games.json`; the texts are in `src/locales/`.
 
 ## What you get
 

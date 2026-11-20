@@ -3,7 +3,6 @@ import type { Locale, Site } from "@/Protocols/SiteProtocol";
 import { SiteDataUtil } from "@/Utils/SiteDataUtil";
 
 const THEME_COLOR = "#F5F3EE";
-const SHARE_IMAGE = { width: 1200, height: 630 };
 
 export class MetadataUtil {
   static viewport(): Viewport {
@@ -44,7 +43,7 @@ export class MetadataUtil {
         title: locale.title,
         description: locale.description,
         url,
-        images: [{ url: image, ...SHARE_IMAGE, alt: locale.ogImageAlt }],
+        images: [{ url: image, ...SiteDataUtil.SHARE_IMAGE, alt: locale.ogImageAlt }],
         locale: locale.ogLocale,
       },
       twitter: { card: "summary_large_image", title: locale.title, description: locale.description, images: [image] },

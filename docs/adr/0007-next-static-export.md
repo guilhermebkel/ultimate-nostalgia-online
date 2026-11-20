@@ -12,7 +12,7 @@ The page grew: four cards with their own art, hover motion, two scripts and a re
 - Every component is a Server Component. The text of the page is in the static HTML. The two browser scripts (`fan-tilt.js`, `tracking.js`) stay plain files, copied to `public/` by `scripts/prepare.mjs`.
 - Each language is its own root layout (`src/app/(en)`, `src/app/(pt-br)`), because `<html lang>` belongs to the root layout. The metadata, `hreflang` and `canonical` come from `MetadataUtil`.
 - `sitemap.xml` and `llms.txt` are static route handlers built from `games.json` (`SitemapUtil`, `LlmsUtil`). `robots.txt` and `CNAME` are in `public/`.
-- A card is data plus a component: `src/components/GameCard/GameCardConfig.ts` has one entry per game, `GameCard` reads it, and a test fails when a game of `games.json` has no card (or a card has no game).
+- A card is data plus a component: `src/components/GameCard/GameCardTheme.ts` has one entry per game, `GameCard` reads it, and a test fails when a game of `games.json` has no card (or a card has no game).
 - Files are linked from the site root (`/img/...`, `/_next/...`). The site lives at the root of its own domain, so the old rule of relative links (for a project site under `github.io/<repo>/`) is dropped.
 
 ## Consequences

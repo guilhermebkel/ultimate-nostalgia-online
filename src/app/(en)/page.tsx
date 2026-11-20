@@ -1,5 +1,7 @@
 import { HubPage } from "@/components/HubPage";
 
-export default function EnglishPage() {
+const EnglishPage = () => {
   return <HubPage localeKey="en" />;
-}
+};
+
+export default EnglishPage;

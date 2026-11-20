@@ -1,6 +1,6 @@
 # SEO standards
 
-The site must be easy for search engines and AI assistants to read, because that is how people find a hub of games. Most of this is enforced by `tests/SeoTest.test.mjs`; the rest is care.
+The site must be easy for search engines and AI assistants to read, because that is how people find a hub of games. Most of this is enforced by `tests/seo.test.mjs`; the rest is care.
 
 ## Every page has
 

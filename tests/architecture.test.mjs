@@ -47,6 +47,14 @@ describe("the layers of src/", () => {
   });
 });
 
+describe("the environment", () => {
+  // Why: process.env is read in one file, so a variable has one name, one default and one place to look.
+  it("is read only in EnvUtil", () => {
+    const readers = sources.filter((file) => readFileSync(join(root, file), "utf8").includes("process.env"));
+    expect(readers.filter((file) => file !== "src/Utils/EnvUtil.ts")).toEqual([]);
+  });
+});
+
 describe("tests sit next to the file they test", () => {
   // Why: a unit test lives beside its source (`Foo.ts` and `Foo.test.ts`); tests of the built site and of the data live in tests/.
   it.each(unitTests)("%s has its source file beside it", (file) => {

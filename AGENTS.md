@@ -9,19 +9,20 @@ One pnpm package. Next.js with a static export: Server Components only, the HTML
 - `src/data/`: `site.json` (url, repository, locales, the GTM script) and `games.json` (the registry: id, `live` or `soon`, url of a live game). The single source of truth for which games exist.
 - `src/locales/`: one typed JSON per language (`en.json`, `pt-br.json`), same keys in both (tested).
 - `src/app/`: routes. One root layout per language (`(en)`, `(pt-br)`), the pages, `global-not-found.tsx` (the 404), and the static route handlers `sitemap.xml/` and `llms.txt/`. `globals.css` is the Tailwind theme (`@theme` tokens, fonts, animations) and the few pieces that utilities cannot say (the card fan, the status label).
-- `src/components/`: `HubPage`, `HubLayout`, `SiteHeader`, `SiteFooter`, `Icons/` (our own SVGs) and `GameCard/` (a root that picks `LiveGameCard` or `SoonGameCard` from `GameCardConfig.ts`, plus one file per part).
+- `src/components/`: `HubPage`, `HubLayout`, `SiteHeader`, `SiteFooter`, `Icons/` (our own SVGs) and `GameCard/` (a root that picks `LiveGameCard` or `SoonGameCard` from `GameCardTheme.ts`, plus one file per part).
 - `src/Protocols/`, `src/Utils/`, `src/Adapters/`, `src/Builders/`: types, pure helpers (metadata, JSON-LD, sitemap, `llms.txt`), the one `git` call, and test data. A layer imports only the ones before it in that list; `Builders` are imported by tests only (architecture test).
 - `src/scripts/`: the only browser scripts (`fan-tilt.js`, a pointer tilt for the art of the cards, and `tracking.js`, the events for GTM). No bundler; `scripts/prepare.mjs` copies them to `public/`.
-- `scripts/`: `build.mjs` and `dev.mjs` (copy the files outside the app into `public/`, then run Next), `prepare.mjs`, and `eslint-local-rules.mjs` (lists our lint rules, one file each in `scripts/local-rules/`: `file-suffix`, `comment-marker`, `literal-dispatch`, `map-name`, `known-keys`, `no-bare-string-field`).
+- `scripts/`: `build.mjs` and `dev.mjs` (copy the files outside the app into `public/`, then run Next), `prepare.mjs`, and `eslint-local-rules.mjs` with `eslint-local-rules.test.mjs` (all our lint rules in one file, like zerod: `file-suffix`, `comment-marker`, `literal-dispatch`, `map-name`, `known-keys`, `no-bare-string-field`).
 - `public/`: files served as they are (`CNAME`, `.nojekyll`, `robots.txt`, `og.png`, `img/`). `scripts/prepare.mjs` also copies `design/web/`, the two fonts and the browser scripts here; those copies are git-ignored.
 - `design/`: the brand kit (logo, icons, web files; `design/README.md`).
-- Every file in a mapped folder (`Adapters`, `Builders`, `Protocols`, `Utils`) ends its name with the folder's name, singular (`SitemapUtil.ts`; lint `local/file-suffix`, ADR 0008). Tests sit next to the file they test (`*.test.ts`); tests of the built site and of the data are in `tests/`. `e2e/`: Playwright (responsive, accessibility, tracking, 404).
+- Every file in a mapped folder (`Adapters`, `Builders`, `Protocols`, `Utils`) ends its name with the folder's name, singular (`SitemapUtil.ts`; lint `local/file-suffix`, ADR 0008). `tests/`, `e2e/` and `scripts/` are outside the map, in kebab-case (`seo.test.mjs`, `tracking.spec.mjs`). `process.env` is read only in `src/Utils/EnvUtil.ts`. Tests sit next to the file they test (`*.test.ts`); tests of the built site and of the data are in `tests/`. `e2e/`: Playwright (responsive, accessibility, tracking, 404); every test carries a tag from `e2e/tags.mjs`.
 - `docs/`: standards, guides and decisions. `.github/`: workflows, issue forms and the pull request template.
 
 ## Commands
 
     nvm use            # Node 22
     pnpm install
+    pnpm ensure-deps   # runs pnpm install when node_modules is missing or package.json / pnpm-lock.yaml changed since the last install (also at the start of pnpm check and pnpm check:changed)
     pnpm dev           # Next dev server on :3000
     pnpm build         # static export into dist/
     pnpm format        # Prettier (with the Tailwind class sorter)
@@ -29,14 +30,16 @@ One pnpm package. Next.js with a static export: Server Components only, the HTML
     pnpm lint          # Prettier check, tsc, Oxlint, a minimal ESLint, build and html-validate on dist/
     pnpm quality       # knip, jscpd, dpdm (cycles)
     pnpm test          # Vitest (builds first)
+    pnpm test:changed  # tests related to files changed against origin/main
     pnpm test:e2e      # Playwright on dist/ (builds first)
+    pnpm check:changed # only what the branch changed against origin/main (what the agent runs before a commit); the full pnpm check when a shared root changed
     pnpm check         # everything: lint, quality, test and e2e (CI runs it)
 
 ## How to act on a task
 
 | When                                                                                    | Read                                                | Run                            |
 | --------------------------------------------------------------------------------------- | --------------------------------------------------- | ------------------------------ |
-| Starting a session                                                                      | `README.md`, `GLOSSARY.md`                          | `nvm use`, `pnpm install`      |
+| Starting a session                                                                      | `README.md`, `GLOSSARY.md`                          | `nvm use`, `pnpm ensure-deps`  |
 | Given a GitHub issue number                                                             | `docs/agents/issue-tracker.md`                      | `gh issue view <n> --comments` |
 | Triage labels on an issue                                                               | `docs/agents/triage-labels.md`                      | none                           |
 | Domain terms or an ADR                                                                  | `docs/agents/domain.md`, `GLOSSARY.md`, `docs/adr/` | none                           |
@@ -48,10 +51,12 @@ One pnpm package. Next.js with a static export: Server Components only, the HTML
 | Brand, logo or icons                                                                    | `design/README.md`                                  | none                           |
 | Events sent to GTM or Google Analytics                                                  | `docs/tracking-standards.md`                        | `pnpm test`                    |
 | Deploying or changing the domain                                                        | `docs/deploying.md`                                 | none                           |
+| Writing or moving docs under `docs/`                                                    | `docs/docs-standards.md`                            | none                           |
+| Changing the harness (lint rules, scripts, `AGENTS.md`)                                 | `docs/harness-standards.md`                         | `pnpm check:changed`           |
 
 ## Rules
 
-- Commit once per task, after a clean `pnpm check`; CI runs it as the gate. Never raise a limit or add an ignore to pass.
+- Commit once per task, after a clean `pnpm check:changed`; CI runs the full `pnpm check` as the gate. Never raise a limit or add an ignore to pass.
 - Start new work on a branch from `main` and open a pull request; `.github/PULL_REQUEST_TEMPLATE.md` has the checklist.
 - Branch names are `<type>/<short-name>` in lowercase kebab-case: `feat` (new behavior), `fix` (bug fix) or `chore` (anything else). For issue work the name starts with the issue number: `feat/<n>-short-slug`.
 - The pull request body starts with `Closes #<n>`; one pull request closes one issue.

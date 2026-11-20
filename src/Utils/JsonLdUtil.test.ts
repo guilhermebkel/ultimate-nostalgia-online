@@ -6,7 +6,7 @@ import { SiteDataUtil } from "./SiteDataUtil";
 const site = SiteDataUtil.SITE;
 const locale = SiteDataUtil.localeOf("en");
 
-describe("JsonLdUtil.graph", () => {
+describe("JsonLdUtil.graph()", () => {
   it("keeps a soon game out of the structured data", () => {
     const { "@graph": graph } = JsonLdUtil.graph({ site, locale, games: [GameBuilder.live(), GameBuilder.soon()] });
     const apps = graph.filter((node) => node["@type"] === "WebApplication").map((node) => node.name);

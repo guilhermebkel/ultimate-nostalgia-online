@@ -10,7 +10,7 @@ type CardBase = {
   className: string;
 };
 
-export type LiveCardConfig = CardBase & {
+export type LiveCardTheme = CardBase & {
   status: "live";
   heading: "h1" | "h2";
   titleClassName: string;
@@ -18,21 +18,21 @@ export type LiveCardConfig = CardBase & {
   art: CardArt;
 };
 
-export type SoonCardConfig = CardBase & {
+export type SoonCardTheme = CardBase & {
   status: "soon";
   // Why: the wordmark replaces the visible title, so the name stays in the page for screen readers.
   title: { kind: "wordmark" } | { kind: "text"; className: string };
   art: CardArt;
 };
 
-export type CardConfig = LiveCardConfig | SoonCardConfig;
+export type CardTheme = LiveCardTheme | SoonCardTheme;
 
 export type ArtKind = CardArt["kind"];
 
 export type ArtOfKind<Kind extends ArtKind> = Extract<CardArt, { kind: Kind }>;
 
 // Why: keyed by GameId, so a game added to the union does not compile until it has a card; games.json is checked against the union by a test.
-export const GAME_ID_TO_CARD_CONFIG: Record<GameId, CardConfig> = {
+export const GAME_ID_TO_CARD_THEME: Record<GameId, CardTheme> = {
   zerod: {
     status: "live",
     heading: "h1",

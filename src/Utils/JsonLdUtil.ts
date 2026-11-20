@@ -1,4 +1,5 @@
 import type { Game, Locale, Site } from "@/Protocols/SiteProtocol";
+import { SiteDataUtil } from "@/Utils/SiteDataUtil";
 
 type JsonLdInput = { site: Site; locale: Locale; games: Game[] };
 
@@ -35,7 +36,7 @@ export class JsonLdUtil {
           inLanguage: locale.htmlLang,
           isPartOf: { "@id": `${site.url}/#website` },
           about: liveGames.map((game) => ({ "@id": JsonLdUtil.appId(game) })),
-          primaryImageOfPage: { "@type": "ImageObject", url: `${site.url}/og.png`, width: 1200, height: 630 },
+          primaryImageOfPage: { "@type": "ImageObject", url: `${site.url}/og.png`, ...SiteDataUtil.SHARE_IMAGE },
         },
       ],
     };

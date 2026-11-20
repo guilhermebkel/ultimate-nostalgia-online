@@ -4,8 +4,8 @@ import { SiteDataUtil } from "@/Utils/SiteDataUtil";
 
 export const dynamic = "force-static";
 
-export function GET() {
+export const GET = () => {
   return new Response(SitemapUtil.build(SiteDataUtil.SITE, GitAdapter.lastModified()), {
     headers: { "content-type": "application/xml; charset=utf-8" },
   });
-}
+};

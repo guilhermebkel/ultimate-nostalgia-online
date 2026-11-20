@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { readFile } from "./ReadHtml.mjs";
+import { readFile } from "./read-html.mjs";
 
 const read = (file) => readFile(new URL(`../${file}`, import.meta.url));
 const pages = ["dist/index.html", "dist/pt-br/index.html"];

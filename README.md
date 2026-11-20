@@ -32,6 +32,7 @@
     pnpm install
     pnpm dev           # Next dev server on :3000
     pnpm build         # static export into dist/
+    pnpm check:changed # what the branch changed against origin/main
     pnpm check         # format, types, lint, quality, unit tests and e2e
 
 Playwright needs a browser once: `pnpm exec playwright install chromium`.

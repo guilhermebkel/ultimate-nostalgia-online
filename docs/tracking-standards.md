@@ -62,5 +62,5 @@ Check with GTM's Preview mode and GA4's DebugView. The container is not verified
 
 ## Tests
 
-- `tests/TrackingTest.test.mjs`: the markup has the attributes, and the events of the script are the ones of this catalog.
-- `e2e/TrackingSpec.spec.mjs`: a click and a hover push the right events into `dataLayer`.
+- `tests/tracking.test.mjs`: the markup has the attributes, and the events of the script are the ones of this catalog.
+- `e2e/tracking.spec.mjs`: a click and a hover push the right events into `dataLayer`.

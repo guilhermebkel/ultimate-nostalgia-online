@@ -18,12 +18,12 @@
   --font-display: "Fredoka", ui-rounded, system-ui, sans-serif;
   --font-body: "Figtree", ui-sans-serif, system-ui, sans-serif;
 
-  --color-paper: #f3ead8;
+  --color-paper: #f5f3ee;
   --color-ink: #14110f;
   --color-ink-soft: #6b6459;
   --color-brand-navy: #17123a;
   --color-zerod: #2f6fdd;
-  --color-pebo: #848c8d;
+  --color-pebo: #667071;
   --color-ogro: #6f7264;
   --color-card-blue: #397be9;
   --color-card-red: #f14a43;
@@ -128,6 +128,10 @@
   .status::after {
     content: ":";
     margin-left: -8px;
+  }
+  .status[data-status="soon"] i {
+    background: var(--color-brand-yellow);
+    box-shadow: 0 0 0 4px rgb(255 187 0 / 0.3);
   }
   .status[data-status="live"] i {
     background: var(--color-card-green);

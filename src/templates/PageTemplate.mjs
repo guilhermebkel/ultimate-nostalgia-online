@@ -40,10 +40,10 @@ const gameHtml = ({ game, locale, art }) => {
   }
 
   const SOON =
-    "group flex min-h-[220px] flex-col justify-end pt-[50px] pr-[clamp(20px,2.2vw,32px)] pb-[clamp(16px,1.8vw,26px)] pl-[clamp(20px,2.2vw,32px)] hub:min-h-[240px]";
+    "group flex min-h-[220px] flex-col justify-end pt-[50px] pr-[clamp(20px,2.2vw,32px)] pb-[clamp(16px,1.8vw,26px)] pl-[clamp(20px,2.2vw,32px)] text-white hub:min-h-[240px]";
   const STATUS_POSITION =
     "[&>.status]:absolute [&>.status]:top-[clamp(16px,1.8vw,24px)] [&>.status]:left-[clamp(20px,2.2vw,32px)]";
-  const COPY = "relative z-[4] grayscale-[.9] brightness-[.97] hub:max-w-[62%]";
+  const COPY = "relative z-[4] text-white grayscale-[.9] brightness-[.97] hub:max-w-[62%]";
   const BODY = "mt-1.5 max-w-[30ch] text-[.9rem] leading-[1.4] font-medium";
 
   if (game.id === "pebo") {
@@ -60,10 +60,10 @@ const gameHtml = ({ game, locale, art }) => {
   }
 
   return `
-    <article aria-labelledby="${game.id}-title" data-tilt-card="10" class="${SLAB} ${SOON} ${STATUS_POSITION} overflow-visible bg-ogro [&_.status]:text-white motion-safe:animate-pop-3">
+    <article aria-labelledby="${game.id}-title" data-tilt-card="10" class="${SLAB} ${SOON} ${STATUS_POSITION} overflow-visible bg-ogro motion-safe:animate-pop-3">
       ${status}
       <div data-tilt-target class="absolute right-0 bottom-[5%] z-[3] w-[108px] rotate-[calc(6deg+var(--tilt,0)*1deg)] [filter:drop-shadow(0_14px_16px_rgb(0_0_0/.3))_grayscale(.9)_brightness(.97)] transition-[rotate] duration-[400ms] ease-out hub:right-[-2%] hub:bottom-[3%] hub:w-[clamp(150px,15vw,230px)] motion-safe:animate-bob-fast" aria-hidden="true">${art.ogre}</div>
-      <div class="${COPY} text-white">
+      <div class="${COPY}">
         <h2 id="${game.id}-title" class="font-display text-[clamp(2.2rem,.8rem+2.6vw,3.6rem)] leading-[.92] font-bold tracking-[-.03em]">${escapeHtml(text.name)}</h2>
         <p class="${BODY}">${escapeHtml(text.text)}</p>
       </div>
@@ -131,7 +131,7 @@ const head = ({ site, locale, locales, games }) => {
 ${alternates}
 <link rel="alternate" hreflang="x-default" href="${site.url}/">
 <meta name="robots" content="index, follow, max-image-preview:large">
-<meta name="theme-color" content="#F3EAD8">
+<meta name="theme-color" content="#F5F3EE">
 <link rel="icon" href="${rootOf(locale)}favicon.ico" sizes="48x48">
 <link rel="icon" href="${rootOf(locale)}favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="${rootOf(locale)}apple-touch-icon.png">

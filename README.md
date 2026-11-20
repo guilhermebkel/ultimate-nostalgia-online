@@ -18,17 +18,13 @@
 | Pebo       | Online 3D foosball. Teams of 1, 2 or 4 players, with just a nickname.                      | Coming soon | None yet                                       |
 | Ogro Party | Nine minigames in the mud. Up to 8 players, online, in the browser.                        | Coming soon | None yet                                       |
 
-The list lives in `src/data/games.json`; the texts are in `src/locales/`. `tests/ReadmeTest.test.mjs` fails when this table and the site disagree.
-
 ## What you get
 
 |                         |                                                                                                            |
 | ----------------------- | ---------------------------------------------------------------------------------------------------------- |
 | One page, two languages | `/` in English and `/pt-br/` in Portuguese, plain static HTML                                              |
-| A registry of games     | `src/data/games.json` feeds the cards, the structured data, the sitemap and `llms.txt`                     |
 | SEO and GEO built in    | canonical, `hreflang`, Open Graph, JSON-LD, sitemap, `robots.txt`, `llms.txt`, tested over the built files |
 | Tailwind, no framework  | responsive from 320 px to 1920 px, the text is never built by a script                                     |
-| A harness for agents    | `AGENTS.md`, standards, ADRs, issue forms and a CI gate                                                    |
 
 ## Development
 
@@ -37,25 +33,7 @@ The list lives in `src/data/games.json`; the texts are in `src/locales/`. `tests
     pnpm dev           # builds, serves dist/ on :4173 and rebuilds on change
     pnpm check         # format, lint, build, unit tests and e2e
 
-The commands are in [`AGENTS.md`](AGENTS.md). Playwright needs a browser once: `pnpm exec playwright install chromium`.
-
-## How it works
-
-`scripts/build.mjs` runs the Tailwind CLI, renders one page per locale from `src/data/`, `src/locales/` and `src/templates/PageTemplate.mjs`, writes `404.html`, `sitemap.xml` and `llms.txt`, and copies `public/`, `design/web/` and the fonts into `dist/`. The decisions behind it are in [`docs/adr/`](docs/adr/).
-
-## Repository layout
-
-| Path                                        | What is in it                                              |
-| ------------------------------------------- | ---------------------------------------------------------- |
-| `src/data/`                                 | `site.json` and `games.json`                               |
-| `src/locales/`                              | one JSON per language, same keys                           |
-| `src/templates/`                            | the page template (pure)                                   |
-| `src/art/`, `src/scripts/`, `src/input.css` | drawings, the tilt script, the Tailwind theme              |
-| `scripts/`                                  | build and dev                                              |
-| `public/`                                   | files copied as they are (`CNAME`, `robots.txt`, `og.png`) |
-| `design/`                                   | the brand kit ([`design/README.md`](design/README.md))     |
-| `tests/`, `e2e/`                            | Vitest and Playwright                                      |
-| `docs/`                                     | standards, guides and decisions                            |
+Playwright needs a browser once: `pnpm exec playwright install chromium`.
 
 ## Deploys
 

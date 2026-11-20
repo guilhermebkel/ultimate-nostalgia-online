@@ -43,14 +43,14 @@ const gameHtml = ({ game, locale, art }) => {
     "group flex min-h-[220px] flex-col justify-end pt-[50px] pr-[clamp(20px,2.2vw,32px)] pb-[clamp(16px,1.8vw,26px)] pl-[clamp(20px,2.2vw,32px)] hub:min-h-[240px]";
   const STATUS_POSITION =
     "[&>.status]:absolute [&>.status]:top-[clamp(16px,1.8vw,24px)] [&>.status]:left-[clamp(20px,2.2vw,32px)]";
-  const COPY = "relative z-[4] grayscale-[.6] brightness-[.97] hub:max-w-[62%]";
+  const COPY = "relative z-[4] grayscale-[.9] brightness-[.97] hub:max-w-[62%]";
   const BODY = "mt-1.5 max-w-[30ch] text-[.9rem] leading-[1.4] font-medium";
 
   if (game.id === "pebo") {
     return `
     <article aria-labelledby="${game.id}-title" class="${SLAB} ${SOON} ${STATUS_POSITION} overflow-visible bg-pebo motion-safe:animate-pop-2">
       ${status}
-      <img class="absolute right-[4%] bottom-[-3%] z-[3] h-full w-auto origin-bottom rotate-[4deg] [filter:drop-shadow(0_14px_16px_rgb(0_0_0/.3))_grayscale(.6)_brightness(.97)] transition-[rotate] duration-[400ms] ease-out group-hover:-rotate-1 hub:right-[6%] hub:h-[104%] motion-safe:animate-bob-slow" src="${rootOf(locale)}img/pebo-figure.png" width="225" height="532" alt="" aria-hidden="true">
+      <img class="absolute right-[4%] bottom-[-3%] z-[3] h-full w-auto origin-bottom rotate-[4deg] [filter:drop-shadow(0_14px_16px_rgb(0_0_0/.3))_grayscale(.9)_brightness(.97)] transition-[rotate] duration-[400ms] ease-out group-hover:-rotate-1 hub:right-[6%] hub:h-[104%] motion-safe:animate-bob-slow" src="${rootOf(locale)}img/pebo-figure.png" width="225" height="532" alt="" aria-hidden="true">
       <div class="${COPY}">
         <h2 id="${game.id}-title" class="sr-only">${escapeHtml(text.name)}</h2>
         <div aria-hidden="true">${art.peboWordmark}</div>
@@ -62,7 +62,7 @@ const gameHtml = ({ game, locale, art }) => {
   return `
     <article aria-labelledby="${game.id}-title" class="${SLAB} ${SOON} ${STATUS_POSITION} overflow-visible bg-ogro motion-safe:animate-pop-3">
       ${status}
-      <div class="absolute right-0 bottom-[5%] z-[3] w-[108px] rotate-6 [filter:drop-shadow(0_14px_16px_rgb(0_0_0/.3))_grayscale(.6)_brightness(.97)] transition-[rotate] duration-[400ms] ease-out group-hover:-rotate-3 hub:right-[-2%] hub:bottom-[3%] hub:w-[clamp(150px,15vw,230px)] motion-safe:animate-bob-fast" aria-hidden="true">${art.ogre}</div>
+      <div class="absolute right-0 bottom-[5%] z-[3] w-[108px] rotate-6 [filter:drop-shadow(0_14px_16px_rgb(0_0_0/.3))_grayscale(.9)_brightness(.97)] transition-[rotate] duration-[400ms] ease-out group-hover:-rotate-3 hub:right-[-2%] hub:bottom-[3%] hub:w-[clamp(150px,15vw,230px)] motion-safe:animate-bob-fast" aria-hidden="true">${art.ogre}</div>
       <div class="${COPY}">
         <h2 id="${game.id}-title" class="font-display text-[clamp(2.2rem,.8rem+2.6vw,3.6rem)] leading-[.92] font-bold tracking-[-.03em]">${escapeHtml(text.name)}</h2>
         <p class="${BODY}">${escapeHtml(text.text)}</p>

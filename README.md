@@ -53,11 +53,40 @@ Every push to `main` is published to GitHub Pages by `.github/workflows/deploy.y
 
 ## FAQ
 
-**Can I add a game?** Yes, see [`docs/adding-a-game.md`](docs/adding-a-game.md).
+<details>
+<summary><b>Are the games free?</b></summary>
 
-**Why is there no language switch?** Each language is its own URL ([ADR 0003](docs/adr/0003-locales-as-separate-urls.md)).
+Yes. They run in the browser, with no install.
 
-**Is it affiliated with Mattel or the card game UNO?** No. "uno" here is short for Ultimate Nostalgia Online (see the warning in [`design/README.md`](design/README.md)).
+</details>
+
+<details>
+<summary><b>Do I need an account to play?</b></summary>
+
+No. The hub has no accounts and stores nothing. Each game asks only for a nickname.
+
+</details>
+
+<details>
+<summary><b>Can I add a game?</b></summary>
+
+Yes, see [`docs/adding-a-game.md`](docs/adding-a-game.md).
+
+</details>
+
+<details>
+<summary><b>Why is there no language switch?</b></summary>
+
+Each language is its own URL ([ADR 0003](docs/adr/0003-locales-as-separate-urls.md)).
+
+</details>
+
+<details>
+<summary><b>Is it affiliated with Mattel or the card game UNO?</b></summary>
+
+No. "uno" here is short for Ultimate Nostalgia Online (see the warning in [`design/README.md`](design/README.md)).
+
+</details>
 
 ## Contributing
 

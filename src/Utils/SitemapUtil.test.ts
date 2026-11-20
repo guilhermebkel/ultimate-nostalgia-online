@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { SitemapUtil } from "./SitemapUtil";
 import { SiteDataUtil } from "./SiteDataUtil";
 
-describe("SitemapUtil.build", () => {
+describe("SitemapUtil.build()", () => {
   const xml = SitemapUtil.build(SiteDataUtil.SITE, "2026-11-20");
 
   it("lists one url per language with its last modified date", () => {

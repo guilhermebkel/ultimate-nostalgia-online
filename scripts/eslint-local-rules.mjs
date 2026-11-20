@@ -1,5 +1,7 @@
 // Why: Oxlint loads this file as a JS plugin (.oxlintrc.json), so each rule is written once, here, for both linters. zerod keeps its rules in one file too.
-import { basename, extname } from "node:path";
+import { existsSync, readFileSync } from "node:fs";
+import { basename, dirname, extname, join, resolve } from "node:path";
+import tseslint from "typescript-eslint";
 
 const WRAPPER_TYPE_NAMES = new Set(["Partial", "Readonly", "Required"]);
 
@@ -396,6 +398,384 @@ const noBareStringField = {
   },
 };
 
+const getFileStem = (filename) => {
+  const base = filename.split(/[\\/]/).at(-1) ?? "";
+  return base.replace(/\.[^.]+$/, "");
+};
+
+const DESCRIBE_TARGET = /^([A-Z]\w*)\.(\w+)\(\)$/;
+
+const HIDDEN_ACCESSIBILITY = new Set(["private", "protected"]);
+
+const TEST_SUFFIX = /\.test$/;
+
+const SOURCE_EXTENSION = ".ts";
+
+const isPublicMember = (member) => {
+  const isNamed = member.key?.type === "Identifier";
+  return isNamed && !HIDDEN_ACCESSIBILITY.has(member.accessibility) && member.kind !== "constructor";
+};
+
+const listPublicMethods = (sourcePath, className) => {
+  const { ast: program } = tseslint.parser.parseForESLint(readFileSync(sourcePath, "utf8"), { sourceType: "module" });
+  const declarations = program.body.map((node) => node.declaration ?? node);
+  const classNode = declarations.find((node) => node.type === "ClassDeclaration" && node.id?.name === className);
+  const members = classNode?.body.body ?? [];
+  return new Set(members.filter((member) => isPublicMember(member)).map((member) => member.key.name));
+};
+
+const getCalleeName = (statement) => {
+  return statement.expression?.callee?.name;
+};
+
+const describeTarget = {
+  meta: {
+    type: "suggestion",
+    messages: {
+      format:
+        'Name the outer describe "{{className}}.<method>()": the class this file tests and the public method the tests go through.',
+      otherClass: 'This file tests {{className}}; the outer describe names "{{named}}".',
+      notPublic: '{{className}} has no public method "{{method}}" in {{source}}; test through a public method.',
+      outside: 'Put this test inside a describe named "{{className}}.<method>()".',
+    },
+  },
+  create(context) {
+    const className = getFileStem(context.filename).replace(TEST_SUFFIX, "");
+    const testFolder = dirname(resolve(context.filename));
+    const sourcePath = join(testFolder, `${className}${SOURCE_EXTENSION}`);
+    let publicMethods;
+    const listMethodsOfSource = () => {
+      publicMethods ??= existsSync(sourcePath) ? listPublicMethods(sourcePath, className) : new Set();
+      return publicMethods;
+    };
+    const checkDescribe = (call) => {
+      const title = call.arguments[0];
+      const match = DESCRIBE_TARGET.exec(typeof title?.value === "string" ? title.value : "");
+      if (!match) {
+        context.report({ node: title ?? call, messageId: "format", data: { className } });
+        return;
+      }
+      const [, named, method] = match;
+      if (named !== className) {
+        context.report({ node: title, messageId: "otherClass", data: { className, named } });
+        return;
+      }
+      if (!listMethodsOfSource().has(method)) {
+        context.report({
+          node: title,
+          messageId: "notPublic",
+          data: { className, method, source: `${className}${SOURCE_EXTENSION}` },
+        });
+      }
+    };
+    const reportOutside = (call) => {
+      context.report({ node: call, messageId: "outside", data: { className } });
+    };
+    const CALLEE_TO_CHECK = { describe: checkDescribe, it: reportOutside, test: reportOutside };
+    return {
+      Program(program) {
+        for (const statement of program.body) {
+          const name = getCalleeName(statement);
+          const check = Object.hasOwn(CALLEE_TO_CHECK, name ?? "") ? CALLEE_TO_CHECK[name] : undefined;
+          check?.(statement.expression);
+        }
+      },
+    };
+  },
+};
+
+const EXPORT_TYPES = new Set(["ExportNamedDeclaration", "ExportDefaultDeclaration"]);
+
+const FUNCTION_TYPES = new Set(["ArrowFunctionExpression", "FunctionExpression"]);
+
+const COMPONENT_NAME = /^[A-Z]/;
+
+const findTopLevelDeclaration = (node) => {
+  let current = node;
+  while (current.parent && current.parent.type !== "Program") {
+    current = current.parent;
+  }
+  return current;
+};
+
+const DECLARATION_TO_COMPONENT = new Map([
+  [
+    "VariableDeclaration",
+    (declaration) => {
+      const [variable] = declaration.declarations;
+      return FUNCTION_TYPES.has(variable?.init?.type) ? variable.id : undefined;
+    },
+  ],
+  ["FunctionDeclaration", (declaration) => declaration.id ?? undefined],
+]);
+
+const findDeclaredComponent = (statement) => {
+  const declaration = EXPORT_TYPES.has(statement.type) ? statement.declaration : statement;
+  const identifier = declaration ? DECLARATION_TO_COMPONENT.get(declaration.type)?.(declaration) : undefined;
+  return identifier && COMPONENT_NAME.test(identifier.name) ? { name: identifier.name, node: identifier } : undefined;
+};
+
+const findMainComponentName = (filename) => {
+  const parts = filename.replaceAll("\\", "/").split("/");
+  const stem = (parts.pop() ?? "").replace(/\.tsx$/, "");
+  if (stem !== "index") {
+    return stem;
+  }
+  return parts.pop();
+};
+
+const oneComponentPerFile = {
+  meta: {
+    type: "suggestion",
+    messages: {
+      extra:
+        '"{{name}}" is a second component in this file. Make a folder named after the main component: Main/index.tsx plus one file per subcomponent (Main/{{name}}.tsx).',
+    },
+  },
+  create(context) {
+    const statementToComponent = new Map();
+    const record = (node) => {
+      const statement = findTopLevelDeclaration(node);
+      const component = findDeclaredComponent(statement);
+      if (component && !statementToComponent.has(statement)) {
+        statementToComponent.set(statement, component);
+      }
+    };
+    return {
+      JSXElement(node) {
+        record(node);
+      },
+      JSXFragment(node) {
+        record(node);
+      },
+      "Program:exit"() {
+        const components = [...statementToComponent.values()];
+        const mainName = findMainComponentName(context.filename);
+        const hasMain = components.some(({ name }) => name === mainName);
+        const extras = hasMain ? components.filter(({ name }) => name !== mainName) : components.slice(1);
+        for (const { name, node } of extras) {
+          context.report({ node, messageId: "extra", data: { name } });
+        }
+      },
+    };
+  },
+};
+
+const OWN_ICONS_FOLDER = "components/Icons/";
+
+const noInlineSvg = {
+  meta: {
+    type: "problem",
+    messages: {
+      inlineSvg:
+        'An inline <svg> belongs only in components/Icons/. For a standard icon use the icon library (lucide-react, through <Icon name="..." />); for an icon of our own add a file to components/Icons/ and say in it why the library has no equal.',
+    },
+  },
+  create(context) {
+    const filename = context.filename.replaceAll("\\", "/");
+    if (filename.includes(OWN_ICONS_FOLDER)) {
+      return {};
+    }
+    return {
+      "JSXOpeningElement[name.name='svg']"(node) {
+        context.report({ node, messageId: "inlineSvg" });
+      },
+    };
+  },
+};
+
+const E2E_TAGS = ["@critical-flow", "@needs-browser"];
+
+// Why: the same tag repeats in every test, so specs may name it through the constants of e2e/tags.ts.
+const E2E_TAG_CONSTANTS = ["CRITICAL_FLOW", "NEEDS_BROWSER"];
+
+const tagValues = (tagProperty) => {
+  return tagProperty.value.elements ?? [tagProperty.value];
+};
+
+const NODE_TYPE_TO_IS_ALLOWED_TAG = new Map([
+  ["Literal", (node) => E2E_TAGS.includes(node.value)],
+  ["Identifier", (node) => E2E_TAG_CONSTANTS.includes(node.name)],
+]);
+
+const isAllowedTag = (value) => {
+  return NODE_TYPE_TO_IS_ALLOWED_TAG.get(value?.type)?.(value) ?? false;
+};
+
+const e2eTag = {
+  meta: {
+    type: "problem",
+    messages: {
+      missing: `Give this test a tag: test("...", { tag: "@critical-flow" }, ...). Allowed tags: ${E2E_TAGS.join(", ")}.`,
+      unknown: `Use only these tags: ${E2E_TAGS.join(", ")}.`,
+    },
+  },
+  create(context) {
+    return {
+      "CallExpression[callee.type='Identifier'][callee.name='test']"(node) {
+        const options = node.arguments.find((argument) => argument.type === "ObjectExpression");
+        const tagProperty = options?.properties.find(
+          (property) => property.type === "Property" && property.key.name === "tag",
+        );
+        if (tagProperty === undefined) {
+          context.report({ node, messageId: "missing" });
+          return;
+        }
+        for (const value of tagValues(tagProperty).filter((candidate) => !isAllowedTag(candidate))) {
+          context.report({ node: value ?? tagProperty, messageId: "unknown" });
+        }
+      },
+    };
+  },
+};
+
+const noFixedWait = {
+  meta: {
+    type: "problem",
+    messages: {
+      fixed:
+        "Wait for the condition, not for time: use an expect that retries (toBeVisible, expect.poll) or a fake timer.",
+    },
+  },
+  create(context) {
+    return {
+      "CallExpression[callee.name=/^(waitForTimeout|setTimeout)$/], CallExpression[callee.property.name=/^(waitForTimeout|setTimeout)$/]"(
+        node,
+      ) {
+        context.report({ node, messageId: "fixed" });
+      },
+    };
+  },
+};
+
+const noTestRetries = {
+  meta: {
+    type: "problem",
+    messages: {
+      retries:
+        "Do not retry tests: a test that passes on a rerun hides a flaky test. Fix its cause and keep `retries` at 0.",
+    },
+  },
+  create(context) {
+    return {
+      "Property[key.name='retries']"(node) {
+        const isZero = node.value.type === "Literal" && node.value.value === 0;
+        if (!isZero) {
+          context.report({ node, messageId: "retries" });
+        }
+      },
+    };
+  },
+};
+
+const NOT_OWN_THIS_SCOPE_TYPES = new Set(["FunctionDeclaration", "FunctionExpression", "ClassBody"]);
+
+const IGNORED_NODE_KEYS = new Set(["parent", "loc", "range", "typeAnnotation"]);
+
+const getChildNodes = (node) => {
+  return Object.entries(node)
+    .filter(([key]) => !IGNORED_NODE_KEYS.has(key))
+    .flatMap(([, value]) => (Array.isArray(value) ? value : [value]))
+    .filter((value) => typeof value?.type === "string");
+};
+
+const isPropertyName = (node) => {
+  const { parent } = node;
+  return !parent.computed && (parent.property === node || parent.key === node);
+};
+
+const isOwnThisOrArguments = (node) => {
+  const isArgumentsName = node.name === "arguments" && !isPropertyName(node);
+  return node.type === "ThisExpression" || isArgumentsName;
+};
+
+const readOwnThisOrArguments = (node) => {
+  // Why: an arrow has no `this` or `arguments` of its own, so a function that reads them has to stay a function.
+  if (isOwnThisOrArguments(node)) {
+    return true;
+  }
+  if (NOT_OWN_THIS_SCOPE_TYPES.has(node.type)) {
+    return false;
+  }
+  return getChildNodes(node).some(readOwnThisOrArguments);
+};
+
+const isAssertionSignature = (node) => {
+  return node.returnType?.typeAnnotation?.type === "TSTypePredicate" && node.returnType.typeAnnotation.asserts === true;
+};
+
+const isConvertible = (node) => {
+  // Why: an arrow cannot be a generator, cannot declare an assertion signature and has its own `this`, so these stay functions.
+  return !node.generator && !isAssertionSignature(node) && !getChildNodes(node).some(readOwnThisOrArguments);
+};
+
+const arrowFunction = {
+  meta: {
+    type: "suggestion",
+    fixable: "code",
+    messages: {
+      declaration: 'Use an arrow function instead of the function declaration "{{ name }}".',
+      expression: 'Use an arrow function instead of the function expression assigned to "{{ name }}".',
+    },
+  },
+  create(context) {
+    const { sourceCode } = context;
+
+    const buildArrow = (node, afterName) => {
+      // Why: an arrow keeps the parameters, the return type and the body text; only the `function` keyword goes.
+      const asyncPrefix = node.async ? "async " : "";
+      const signature = sourceCode.text.slice(afterName, node.body.range[0]).trim();
+      return `${asyncPrefix}${signature} => ${sourceCode.getText(node.body)}`;
+    };
+
+    const reportDeclaration = (node) => {
+      const { id } = node;
+      // Why: an overloaded function needs its signatures declared with `function`, so the implementation keeps the form too.
+      const isOverloaded = id && sourceCode.getDeclaredVariables(node)[0]?.defs.length > 1;
+      if (isOverloaded || !isConvertible(node)) {
+        return;
+      }
+      const name = id?.name ?? "default";
+      const arrow = buildArrow(
+        node,
+        id ? id.range[1] : sourceCode.getFirstToken(node, { filter: (token) => token.value === "function" }).range[1],
+      );
+      const isDefaultExport = node.parent.type === "ExportDefaultDeclaration";
+      const fix = (fixer) => {
+        if (isDefaultExport && id) {
+          return fixer.replaceText(node.parent, `const ${name} = ${arrow};\n\nexport default ${name};`);
+        }
+        if (isDefaultExport) {
+          return fixer.replaceText(node.parent, `export default ${arrow};`);
+        }
+        return fixer.replaceText(node, `const ${name} = ${arrow};`);
+      };
+      context.report({ node: id ?? node, messageId: "declaration", data: { name }, fix });
+    };
+
+    const reportExpression = (declarator, node) => {
+      if (!isConvertible(node)) {
+        return;
+      }
+      const name = declarator.id.name;
+      const functionKeyword = sourceCode.getFirstToken(node, { filter: (token) => token.value === "function" });
+      const arrow = buildArrow(node, node.id ? node.id.range[1] : functionKeyword.range[1]);
+      context.report({
+        node,
+        messageId: "expression",
+        data: { name },
+        fix: (fixer) => fixer.replaceText(node, arrow),
+      });
+    };
+
+    return {
+      FunctionDeclaration: reportDeclaration,
+      "VariableDeclarator[id.type='Identifier'][init.type='FunctionExpression']": (node) =>
+        reportExpression(node, node.init),
+    };
+  },
+};
+
 export default {
   meta: { name: "local" },
   rules: {
@@ -405,5 +785,12 @@ export default {
     "map-name": mapName,
     "known-keys": knownKeys,
     "no-bare-string-field": noBareStringField,
+    "describe-target": describeTarget,
+    "one-component-per-file": oneComponentPerFile,
+    "no-inline-svg": noInlineSvg,
+    "e2e-tag": e2eTag,
+    "no-fixed-wait": noFixedWait,
+    "no-test-retries": noTestRetries,
+    "arrow-function": arrowFunction,
   },
 };

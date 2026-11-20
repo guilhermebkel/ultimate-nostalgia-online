@@ -7,6 +7,8 @@ import { SiteDataUtil } from "@/Utils/SiteDataUtil";
 export const metadata = MetadataUtil.page(SiteDataUtil.SITE, SiteDataUtil.localeOf("pt-br"));
 export const viewport = MetadataUtil.viewport();
 
-export default function PortugueseLayout({ children }: { children: ReactNode }) {
+const PortugueseLayout = ({ children }: { children: ReactNode }) => {
   return <HubLayout localeKey="pt-br">{children}</HubLayout>;
-}
+};
+
+export default PortugueseLayout;

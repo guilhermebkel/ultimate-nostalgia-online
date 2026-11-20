@@ -3,7 +3,7 @@ import { GameBuilder } from "@/Builders/GameBuilder";
 import { LlmsUtil } from "./LlmsUtil";
 import { SiteDataUtil } from "./SiteDataUtil";
 
-describe("LlmsUtil.build", () => {
+describe("LlmsUtil.build()", () => {
   const text = LlmsUtil.build([GameBuilder.live(), GameBuilder.soon()], SiteDataUtil.localeOf("en"));
 
   it("links a live game and lists a soon game without a link", () => {

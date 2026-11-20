@@ -8,7 +8,7 @@ const locale = SiteDataUtil.localeOf(SiteDataUtil.SITE.defaultLocale);
 // Why: Next adds the noindex tag to a not-found page by itself, so the metadata does not repeat it.
 export const metadata: Metadata = { title: locale.notFound.title };
 
-export default function GlobalNotFound() {
+const GlobalNotFound = () => {
   return (
     <html lang={locale.htmlLang}>
       <body className="flex min-h-dvh flex-col items-center justify-center gap-6 bg-paper p-6 font-body text-ink">
@@ -23,4 +23,6 @@ export default function GlobalNotFound() {
       </body>
     </html>
   );
-}
+};
+
+export default GlobalNotFound;

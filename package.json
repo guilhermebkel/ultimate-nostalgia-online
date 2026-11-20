@@ -8,6 +8,7 @@
     "node": ">=22"
   },
   "scripts": {
+    "ensure-deps": "node scripts/ensure-deps.mjs",
     "dev": "node scripts/dev.mjs",
     "build": "node scripts/build.mjs",
     "format": "prettier --write .",
@@ -19,8 +20,10 @@
     "lint": "pnpm format:check && pnpm typecheck && pnpm lint:oxlint && pnpm lint:eslint && pnpm build && pnpm lint:html",
     "quality": "knip && jscpd && dpdm --no-warning --no-tree --exit-code circular:1 --transform \"src/**/*.{ts,tsx}\"",
     "test": "vitest run",
+    "test:changed": "node scripts/test-changed.mjs",
     "test:e2e": "pnpm build && playwright test",
-    "check": "pnpm lint && pnpm quality && pnpm test && pnpm test:e2e"
+    "check:changed": "node scripts/check-changed.mjs",
+    "check": "pnpm ensure-deps && pnpm lint && pnpm quality && pnpm test && pnpm test:e2e"
   },
   "pnpm": {
     "onlyBuiltDependencies": [

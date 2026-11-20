@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react";
+import { CardWheelIcon } from "@/components/Icons/CardWheelIcon";
 
 type FanCard = { k: number; z: number; color: string; symbol?: string; className?: string };
 
@@ -10,16 +11,6 @@ const FAN_CARDS: FanCard[] = [
   { k: 2, z: 5, color: "var(--color-card-dark)", className: "dark" },
 ];
 
-const WHEEL = [
-  { fill: "#F14A43", d: "M128.00 48.00A80.00 80.00 0 0 1 208.00 128.00L180.99 128.00A52.99 52.99 0 0 0 128.00 75.01Z" },
-  {
-    fill: "#FDCC31",
-    d: "M208.00 128.00A80.00 80.00 0 0 1 128.00 208.00L128.00 180.99A52.99 52.99 0 0 0 180.99 128.00Z",
-  },
-  { fill: "#44C875", d: "M128.00 208.00A80.00 80.00 0 0 1 48.00 128.00L75.01 128.00A52.99 52.99 0 0 0 128.00 180.99Z" },
-  { fill: "#397BE9", d: "M48.00 128.00A80.00 80.00 0 0 1 128.00 48.00L128.00 75.01A52.99 52.99 0 0 0 75.01 128.00Z" },
-];
-
 const cardStyle = (card: FanCard) => ({ "--k": card.k, "--z": card.z, "--c": card.color }) as CSSProperties;
 
 export const FanArt = () => (
@@ -27,13 +18,7 @@ export const FanArt = () => (
     {FAN_CARDS.map((card) => (
       <div key={card.k} className={card.className ? `pc ${card.className}` : "pc"} style={cardStyle(card)}>
         {card.symbol === undefined ? (
-          <svg viewBox="0 0 256 256" aria-hidden="true">
-            <g>
-              {WHEEL.map((slice) => (
-                <path key={slice.fill} fill={slice.fill} d={slice.d} />
-              ))}
-            </g>
-          </svg>
+          <CardWheelIcon />
         ) : (
           <>
             <span className="co a">{card.symbol}</span>

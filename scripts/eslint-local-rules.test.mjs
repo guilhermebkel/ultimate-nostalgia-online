@@ -1,3 +1,4 @@
+import { fileURLToPath } from "node:url";
 import { RuleTester } from "eslint";
 import tseslint from "typescript-eslint";
 import { afterAll, describe, it } from "vitest";
@@ -243,6 +244,141 @@ ruleTester.run("no-bare-string-field", rules["no-bare-string-field"], {
       name: "kind, status, mode and phase",
       code: "type A = { kind: string; status: string | null; mode: string; phase: string };",
       errors: [{ messageId: "bare" }, { messageId: "bare" }, { messageId: "bare" }, { messageId: "bare" }],
+    },
+  ],
+});
+
+const BOX_FILE = "/repo/src/components/Box.tsx";
+const SPEC_FILE = "/repo/e2e/tracking.spec.mjs";
+const UTIL_TEST = fileURLToPath(new URL("../src/Utils/SitemapUtil.test.ts", import.meta.url));
+
+ruleTester.run("e2e-tag", rules["e2e-tag"], {
+  valid: [
+    { name: "a literal tag", code: 'test("a", { tag: "@critical-flow" }, async () => {});', filename: SPEC_FILE },
+    { name: "a tag constant", code: 'test("a", { tag: NEEDS_BROWSER }, async () => {});', filename: SPEC_FILE },
+    {
+      name: "both tags",
+      code: 'test("a", { tag: [CRITICAL_FLOW, NEEDS_BROWSER] }, async () => {});',
+      filename: SPEC_FILE,
+    },
+  ],
+  invalid: [
+    { name: "no tag", code: 'test("a", async () => {});', filename: SPEC_FILE, errors: [{ messageId: "missing" }] },
+    {
+      name: "an unknown tag",
+      code: 'test("a", { tag: "@slow" }, async () => {});',
+      filename: SPEC_FILE,
+      errors: [{ messageId: "unknown" }],
+    },
+  ],
+});
+
+ruleTester.run("no-fixed-wait", rules["no-fixed-wait"], {
+  valid: [
+    { name: "an expect that retries", code: "await expect(page.locator('a')).toBeVisible();" },
+    { name: "a wait on a condition", code: "await page.waitForFunction(() => window.ready);" },
+  ],
+  invalid: [
+    { name: "waitForTimeout", code: "await page.waitForTimeout(500);", errors: [{ messageId: "fixed" }] },
+    { name: "setTimeout", code: "setTimeout(done, 500);", errors: [{ messageId: "fixed" }] },
+  ],
+});
+
+ruleTester.run("no-test-retries", rules["no-test-retries"], {
+  valid: [{ name: "retries at zero", code: "export default { retries: 0 };" }],
+  invalid: [{ name: "retries above zero", code: "export default { retries: 2 };", errors: [{ messageId: "retries" }] }],
+});
+
+ruleTester.run("no-inline-svg", rules["no-inline-svg"], {
+  valid: [
+    {
+      name: "an svg in the own icons",
+      code: "const A = () => <svg />;",
+      filename: "/repo/src/components/Icons/ArrowIcon.tsx",
+    },
+    { name: "a component without svg", code: "const A = () => <div />;", filename: BOX_FILE },
+  ],
+  invalid: [
+    {
+      name: "an svg outside the icons",
+      code: "const A = () => <svg />;",
+      filename: "/repo/src/components/GameCard/Art.tsx",
+      errors: [{ messageId: "inlineSvg" }],
+    },
+  ],
+});
+
+ruleTester.run("one-component-per-file", rules["one-component-per-file"], {
+  valid: [
+    {
+      name: "one component named after the file",
+      code: "export const Box = () => <div />;",
+      filename: BOX_FILE,
+    },
+    {
+      name: "the root of a folder",
+      code: "export const Card = () => <div />;",
+      filename: "/repo/src/components/Card/index.tsx",
+    },
+  ],
+  invalid: [
+    {
+      name: "a second component",
+      code: "const Title = () => <h2 />;\nexport const Box = () => <Title />;",
+      filename: BOX_FILE,
+      errors: [{ messageId: "extra" }],
+    },
+  ],
+});
+
+ruleTester.run("arrow-function", rules["arrow-function"], {
+  valid: [
+    { name: "an arrow", code: "const build = () => 1;" },
+    { name: "a function that reads this", code: "function read() { return this.value; }" },
+    { name: "a generator", code: "function* walk() { yield 1; }" },
+  ],
+  invalid: [
+    {
+      name: "a function declaration",
+      code: "function build() { return 1; }",
+      output: "const build = () => { return 1; };",
+      errors: [{ messageId: "declaration" }],
+    },
+    {
+      name: "a function expression",
+      code: "const build = function () { return 1; };",
+      output: "const build = () => { return 1; };",
+      errors: [{ messageId: "expression" }],
+    },
+  ],
+});
+
+ruleTester.run("describe-target", rules["describe-target"], {
+  valid: [
+    {
+      name: "a describe named after the class and a public method",
+      code: 'describe("SitemapUtil.build()", () => {});',
+      filename: UTIL_TEST,
+    },
+  ],
+  invalid: [
+    {
+      name: "a describe without the method",
+      code: 'describe("SitemapUtil", () => {});',
+      filename: UTIL_TEST,
+      errors: [{ messageId: "format" }],
+    },
+    {
+      name: "a method the class does not have",
+      code: 'describe("SitemapUtil.missing()", () => {});',
+      filename: UTIL_TEST,
+      errors: [{ messageId: "notPublic" }],
+    },
+    {
+      name: "a test outside a describe",
+      code: 'it("a", () => {});',
+      filename: UTIL_TEST,
+      errors: [{ messageId: "outside" }],
     },
   ],
 });

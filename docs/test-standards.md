@@ -26,3 +26,7 @@ A unit test sits next to its source file (`Foo.test.ts`); a test in `tests/` or 
 - Tests do not touch the network: the Playwright base test (`e2e/fixtures.mjs`) aborts every request that leaves localhost, which includes the GTM script.
 - A bug gets a failing test first, then the fix.
 - Visual changes are looked at by a person or an agent in 390 px and 1440 px; the tests above catch what a screenshot does not (overflow, overlap, contrast), not the look.
+- **Every e2e test carries a tag (lint `local/e2e-tag`).** `CRITICAL_FLOW` for a flow that proves the page works across components, `NEEDS_BROWSER` for what only a real browser provides (layout, overflow, contrast); the constants are in `e2e/tags.mjs`.
+- **Wait for the condition, never for time (lint `local/no-fixed-wait`).** In `e2e/`, `tests/` and unit tests, use an `expect` that retries, `waitForFunction` or `expect.poll`, never `waitForTimeout` or `setTimeout`.
+- **A flaky test is fixed, not retried (lint `local/no-test-retries`).** `retries` stays at 0.
+- **A test of a `Utils` class is named by its method (lint `local/describe-target`).** The outer `describe` is `"SitemapUtil.build()"`: the class and a public method it has.

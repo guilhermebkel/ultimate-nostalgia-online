@@ -28,10 +28,13 @@ The site is small on purpose: data and texts go in, static HTML comes out. Keep 
 - **Known values are typed, never `string` (lint: `local/known-keys`, `local/no-bare-string-field`).** When every key of a `Record` or every item of an array or `Set` is written in the code, type it with a union (`Record<GameId, CardConfig>`, `readonly GameId[]`). A property named `type`, `kind`, `state`, `status`, `role`, `mode` or `phase` is typed with a declared union, not `string`.
 - **Maps are named `keyToValue` (lint: `local/map-name`).** Every `Record` or `Map` is `GAME_ID_TO_CARD_CONFIG` or `localeKeyToLocale`. A `Record<string, unknown>` is a plain object and is exempt.
 - **A map, not a chain of comparisons (lint: `local/literal-dispatch`).** When code decides what to do by comparing a value with fixed strings (`art.kind === "fan"`, then `"image"`, then the rest), the decision is a `Record<Union, Handler>`, so a new member of the union does not compile until it has its handler (`ART_KIND_TO_RENDERER`, `STATUS_TO_CARD`). A single guard that leaves early is allowed, and so is a comparison that only becomes a value (`isMouse`). The rule applies to tests too.
+- **Arrow functions (lint `local/arrow-function`, autofix).** A function is an arrow unless it reads `this`, is a generator or declares an assertion signature; Next.js default exports are `const Page = () => ...; export default Page;`.
+- **One component per file (lint `local/one-component-per-file`).** A second component gets its own file in the same folder.
+- **Inline `<svg>` only in `src/components/Icons/` (lint `local/no-inline-svg`).**
 
 ## Before committing
 
-Run `pnpm check` (format, types, Oxlint, ESLint, build, knip, jscpd, dpdm, tests and e2e). Prettier sorts the Tailwind classes; do not fight it. Never raise a limit or add an ignore to make a check pass.
+Before the commit run `pnpm check:changed`; CI runs the full `pnpm check` (format, types, Oxlint, ESLint, build, knip, jscpd, dpdm, tests and e2e). Prettier sorts the Tailwind classes; do not fight it. Never raise a limit or add an ignore to make a check pass.
 
 ## Hover motion
 

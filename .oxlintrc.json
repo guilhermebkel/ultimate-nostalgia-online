@@ -33,6 +33,7 @@
     "sonarjs/no-identical-conditions": "error",
     "sonarjs/no-nested-template-literals": "error",
     "sonarjs/no-duplicate-string": "error",
+    "local/arrow-function": "error",
     "local/comment-marker": "error",
     "local/file-suffix": "error",
     "local/literal-dispatch": "error",
@@ -53,6 +54,30 @@
     {
       "files": ["scripts/eslint-local-rules.mjs", "scripts/eslint-local-rules.test.mjs"],
       "rules": { "max-lines": "off" }
+    },
+    {
+      "files": ["src/Utils/**/*.test.ts"],
+      "rules": { "local/describe-target": "error" }
+    },
+    {
+      "files": ["src/components/**/*.tsx"],
+      "rules": { "local/one-component-per-file": "error" }
+    },
+    {
+      "files": ["src/app/**/*.{ts,tsx}", "src/components/**/*.{ts,tsx}"],
+      "rules": { "local/no-inline-svg": "error" }
+    },
+    {
+      "files": ["e2e/*.spec.mjs"],
+      "rules": { "local/e2e-tag": "error" }
+    },
+    {
+      "files": ["e2e/**", "tests/**", "**/*.test.ts", "**/*.test.tsx"],
+      "rules": { "local/no-fixed-wait": "error" }
+    },
+    {
+      "files": ["e2e/**", "playwright.config.mjs"],
+      "rules": { "local/no-test-retries": "error" }
     },
     {
       "files": ["scripts/**"],

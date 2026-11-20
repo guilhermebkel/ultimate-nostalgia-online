@@ -8,6 +8,8 @@
 | The README table of games says what the site says (names, texts, status, links)                                        | Vitest              | `tests/ReadmeTest.test.mjs`       |
 | The template does what it says: links a live game, disables a soon game, escapes text, keeps soon games out of JSON-LD | Vitest              | `tests/PageTemplateTest.test.mjs` |
 | What search engines and AI assistants read in the built files                                                          | Vitest over `dist/` | `tests/SeoTest.test.mjs`          |
+| The markup and the script agree with the tracking catalog                                                              | Vitest over `dist/` | `tests/TrackingTest.test.mjs`     |
+| A click and a hover push the right events into `dataLayer`                                                             | Playwright          | `e2e/TrackingSpec.spec.mjs`       |
 | The page works at real widths: no horizontal scroll, the fan below the button, the 404                                 | Playwright          | `e2e/ResponsiveSpec.spec.mjs`     |
 | Nothing breaks WCAG A or AA                                                                                            | Playwright with axe | `e2e/AccessibilitySpec.spec.mjs`  |
 

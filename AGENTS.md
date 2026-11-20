@@ -11,7 +11,7 @@ One pnpm package, no framework and no client-side rendering: the HTML is built o
 - `src/templates/PageTemplate.mjs`: renders a page from data, locale and art. Pure; no IO. Styles are Tailwind utilities written in the markup.
 - `src/art/`: the drawings (logo, card fan, ogre, Pebo wordmark, arrow) as inline SVG and HTML.
 - `src/input.css`: the Tailwind theme (`@theme` tokens, fonts, animations) and the few pieces that utilities cannot say (the card fan, the status label).
-- `src/scripts/`: the only browser script (`fan-tilt.js`, a pointer tilt for the card fan). No bundler.
+- `src/scripts/`: the only browser scripts (`fan-tilt.js`, a pointer tilt for the art of the cards, and `tracking.js`, the events for GTM). No bundler.
 - `scripts/`: `build.mjs` (CSS, one page per locale, `404.html`, `sitemap.xml`, `llms.txt`, copies) and `dev.mjs`.
 - `public/`: files copied as they are (`CNAME`, `robots.txt`, `og.png`, `img/`).
 - `design/`: the brand kit (logo, icons, web files; `design/README.md`). `design/web/` is copied to the site root by the build.
@@ -44,6 +44,7 @@ One pnpm package, no framework and no client-side rendering: the HTML is built o
 | Anything that search engines or AI assistants read (head, JSON-LD, sitemap, `llms.txt`) | `docs/seo-standards.md`                             | `pnpm test`                    |
 | Adding a game                                                                           | `docs/adding-a-game.md`                             | `pnpm check`                   |
 | Brand, logo or icons                                                                    | `design/README.md`                                  | none                           |
+| Events sent to GTM or Google Analytics                                                  | `docs/tracking-standards.md`                        | `pnpm test`                    |
 | Deploying or changing the domain                                                        | `docs/deploying.md`                                 | none                           |
 
 ## Rules
@@ -56,6 +57,6 @@ One pnpm package, no framework and no client-side rendering: the HTML is built o
 - A game exists in one place, `src/data/games.json`. The page, the structured data, the sitemap and `llms.txt` are built from it; never list a game by hand elsewhere.
 - Rules that cannot fail live in code with a test, never only in a comment: a `soon` game has no link and no structured data; every page has one `h1`, a canonical, `hreflang` alternates and a 1200×630 share image; no horizontal scroll from 320 px; no accessibility violation at WCAG AA.
 - The text of the page is in the static HTML. No script builds, translates or reveals content.
-- No tracking beyond the owner's GTM script (`site.json`, ADR 0005). Do not add other third-party scripts, fonts or images. Fonts are self-hosted.
+- No tracking beyond the owner's GTM script (`site.json`, ADR 0005) and the events that `src/scripts/tracking.js` pushes into its `dataLayer` (ADR 0006, `docs/tracking-standards.md`). Do not add other third-party scripts, fonts or images. Fonts are self-hosted.
 - Brand kit files are copied, not edited by hand: change `design/` on purpose and keep `design/README.md` in step.
 - When behavior or vocabulary changes, update `GLOSSARY.md`, the docs or an ADR in the same pull request.

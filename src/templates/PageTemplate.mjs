@@ -29,24 +29,24 @@ const gameHtml = ({ game, locale, art }) => {
 
   if (game.id === "heros-play") {
     return `
-    <section id="${game.id}" aria-labelledby="${game.id}-title" class="${SLAB} col-span-full flex min-h-[420px] flex-col justify-center overflow-visible bg-heros p-(--pad) pb-[calc(var(--pad)+var(--pw)+36px)] text-[#f6e7c8] [--pad:clamp(24px,3.2vw,48px)] [--pw:min(62vw,300px)] hub:min-h-[340px] hub:pb-(--pad) motion-safe:animate-pop-2">
+    <section id="${game.id}" aria-labelledby="${game.id}-title" data-track-card="${game.id}" data-track-status="live" data-tilt-card="8" class="group ${SLAB} col-span-full flex min-h-[420px] flex-col justify-center overflow-visible bg-heros p-(--pad) pb-[calc(var(--pad)+var(--pw)+36px)] text-[#f6e7c8] [--pad:clamp(24px,3.2vw,48px)] [--pw:min(62vw,300px)] hub:min-h-[340px] hub:pb-(--pad) motion-safe:animate-pop-2">
       ${status}
       <h2 id="${game.id}-title" class="relative z-[2] mt-[14px] font-display text-[clamp(2.6rem,1rem+4.4vw,5.2rem)] leading-[.95] font-bold tracking-[-.03em]">${escapeHtml(text.name)}</h2>
       <p class="relative z-[2] mt-4 max-w-[40ch] text-[clamp(1rem,.9rem+.4vw,1.1875rem)] font-medium">${escapeHtml(text.text)}</p>
-      <a class="absolute inset-0 z-[9] rounded-[inherit]" href="${escapeHtml(game.url)}" ${NEW_TAB} aria-hidden="true" tabindex="-1"></a>
-      <div class="relative z-[10] mt-[22px]"><a class="${BUTTON_LIVE}" href="${escapeHtml(game.url)}" ${NEW_TAB}><span>${escapeHtml(locale.cta.live)}</span>${art.arrow}</a></div>
-      <img class="absolute left-1/2 bottom-[24px] z-[3] w-(--pw) -translate-x-1/2 rotate-[-4deg] rounded-[10px] shadow-[0_18px_34px_rgb(0_0_0/.45)] hub:top-1/2 hub:right-[5%] hub:left-auto hub:bottom-auto hub:translate-x-0 hub:w-[clamp(240px,24vw,360px)] hub:-translate-y-1/2" src="${rootOf(locale)}img/heros-play.webp" width="560" height="550" alt="" aria-hidden="true">
+      <a class="absolute inset-0 z-[9] rounded-[inherit]" href="${escapeHtml(game.url)}" ${NEW_TAB} data-track-click="banner" aria-hidden="true" tabindex="-1"></a>
+      <div class="relative z-[10] mt-[22px]"><a class="${BUTTON_LIVE}" href="${escapeHtml(game.url)}" ${NEW_TAB} data-track-click="button"><span>${escapeHtml(locale.cta.live)}</span>${art.arrow}</a></div>
+      <img data-tilt-target class="absolute left-1/2 bottom-[24px] z-[3] w-(--pw) -translate-x-1/2 rotate-[calc(-4deg+var(--tilt,0)*1deg)] rounded-[10px] transition-[rotate] duration-[400ms] ease-out shadow-[0_18px_34px_rgb(0_0_0/.45)] hub:top-1/2 hub:right-[5%] hub:left-auto hub:bottom-auto hub:translate-x-0 hub:w-[clamp(240px,24vw,360px)] hub:-translate-y-1/2" src="${rootOf(locale)}img/heros-play.webp" width="560" height="550" alt="" aria-hidden="true">
     </section>`;
   }
 
   if (game.status === "live") {
     return `
-    <section id="${game.id}" aria-labelledby="${game.id}-title" data-tilt-card="8" class="group ${SLAB} col-span-full flex min-h-[600px] flex-col justify-center bg-zerod p-(--pad) pb-[calc(var(--pad)+var(--cw)*1.75+28px)] text-white [--cw:min(25vw,130px)] [--pad:clamp(24px,3.2vw,48px)] hub:min-h-0 hub:pb-(--pad) hub:[--cw:clamp(112px,min(10vw,18vh),160px)] motion-safe:animate-pop-1">
+    <section id="${game.id}" aria-labelledby="${game.id}-title" data-track-card="${game.id}" data-track-status="live" data-tilt-card="8" class="group ${SLAB} col-span-full flex min-h-[600px] flex-col justify-center bg-zerod p-(--pad) pb-[calc(var(--pad)+var(--cw)*1.75+28px)] text-white [--cw:min(25vw,130px)] [--pad:clamp(24px,3.2vw,48px)] hub:min-h-0 hub:pb-(--pad) hub:[--cw:clamp(112px,min(10vw,18vh),160px)] motion-safe:animate-pop-1">
       ${status}
       <h1 id="${game.id}-title" class="relative z-[2] mt-[18px] font-display text-[clamp(3.4rem,1rem+6vw,7rem)] leading-[.92] font-bold tracking-[-.03em]">${escapeHtml(text.name)}</h1>
       <p class="relative z-[2] mt-[18px] max-w-[40ch] text-[clamp(1rem,.9rem+.4vw,1.1875rem)] font-medium text-white">${escapeHtml(text.text)}</p>
-      <a class="absolute inset-0 z-[9] rounded-[inherit]" href="${escapeHtml(game.url)}" ${NEW_TAB} aria-hidden="true" tabindex="-1"></a>
-      <div class="relative z-[10] mt-[22px]"><a class="${BUTTON_LIVE}" href="${escapeHtml(game.url)}" ${NEW_TAB}><span>${escapeHtml(locale.cta.live)}</span>${art.arrow}</a></div>
+      <a class="absolute inset-0 z-[9] rounded-[inherit]" href="${escapeHtml(game.url)}" ${NEW_TAB} data-track-click="banner" aria-hidden="true" tabindex="-1"></a>
+      <div class="relative z-[10] mt-[22px]"><a class="${BUTTON_LIVE}" href="${escapeHtml(game.url)}" ${NEW_TAB} data-track-click="button"><span>${escapeHtml(locale.cta.live)}</span>${art.arrow}</a></div>
       ${art.fan}
     </section>`;
   }
@@ -60,9 +60,9 @@ const gameHtml = ({ game, locale, art }) => {
 
   if (game.id === "pebo") {
     return `
-    <article aria-labelledby="${game.id}-title" data-tilt-card="10" class="${SLAB} ${SOON} ${STATUS_POSITION} overflow-visible bg-pebo motion-safe:animate-pop-2">
+    <article aria-labelledby="${game.id}-title" data-track-card="${game.id}" data-track-status="soon" data-tilt-card="10" class="${SLAB} ${SOON} ${STATUS_POSITION} overflow-visible bg-pebo motion-safe:animate-pop-2">
       ${status}
-      <img data-tilt-target class="absolute right-[4%] bottom-[-3%] z-[3] h-full w-auto origin-bottom rotate-[calc(4deg+var(--tilt,0)*1deg)] [filter:drop-shadow(0_14px_16px_rgb(0_0_0/.3))_grayscale(.9)_brightness(.97)] transition-[rotate] duration-[400ms] ease-out hub:right-[6%] hub:h-[104%] motion-safe:animate-bob-slow" src="${rootOf(locale)}img/pebo-figure.png" width="225" height="532" alt="" aria-hidden="true">
+      <img data-tilt-target class="absolute right-[4%] bottom-[-3%] z-[3] h-full w-auto origin-bottom rotate-[calc(4deg+var(--tilt,0)*1deg)] [filter:drop-shadow(0_14px_16px_rgb(0_0_0/.3))_grayscale(.9)_brightness(.97)] transition-[rotate,scale] duration-[400ms] ease-out group-hover:scale-[1.05] hub:right-[6%] hub:h-[104%] motion-safe:animate-bob-slow" src="${rootOf(locale)}img/pebo-figure.png" width="225" height="532" alt="" aria-hidden="true">
       <div class="${COPY}">
         <h2 id="${game.id}-title" class="sr-only">${escapeHtml(text.name)}</h2>
         <div aria-hidden="true">${art.peboWordmark}</div>
@@ -72,9 +72,9 @@ const gameHtml = ({ game, locale, art }) => {
   }
 
   return `
-    <article aria-labelledby="${game.id}-title" data-tilt-card="10" class="${SLAB} ${SOON} ${STATUS_POSITION} overflow-visible bg-ogro motion-safe:animate-pop-3">
+    <article aria-labelledby="${game.id}-title" data-track-card="${game.id}" data-track-status="soon" data-tilt-card="10" class="${SLAB} ${SOON} ${STATUS_POSITION} overflow-visible bg-ogro motion-safe:animate-pop-3">
       ${status}
-      <div data-tilt-target class="absolute right-0 bottom-[5%] z-[3] w-[108px] rotate-[calc(6deg+var(--tilt,0)*1deg)] [filter:drop-shadow(0_14px_16px_rgb(0_0_0/.3))_grayscale(.9)_brightness(.97)] transition-[rotate] duration-[400ms] ease-out hub:right-[-2%] hub:bottom-[3%] hub:w-[clamp(150px,15vw,230px)] motion-safe:animate-bob-fast" aria-hidden="true">${art.ogre}</div>
+      <div data-tilt-target class="absolute right-0 bottom-[5%] z-[3] w-[108px] rotate-[calc(6deg+var(--tilt,0)*1deg)] [filter:drop-shadow(0_14px_16px_rgb(0_0_0/.3))_grayscale(.9)_brightness(.97)] transition-[rotate,scale] duration-[400ms] ease-out group-hover:scale-[1.05] hub:right-[-2%] hub:bottom-[3%] hub:w-[clamp(150px,15vw,230px)] motion-safe:animate-bob-fast" aria-hidden="true">${art.ogre}</div>
       <div class="${COPY}">
         <h2 id="${game.id}-title" class="font-display text-[clamp(2.2rem,.8rem+2.6vw,3.6rem)] leading-[.92] font-bold tracking-[-.03em]">${escapeHtml(text.name)}</h2>
         <p class="${BODY}">${escapeHtml(text.text)}</p>
@@ -193,12 +193,13 @@ ${head({ site, locale, locales, games })}
 <footer class="relative z-[2] flex min-h-24 items-center justify-between gap-4 px-gutter pt-6 pb-7 text-[.9375rem] font-semibold text-ink-soft max-[560px]:items-start">
   <p class="max-[560px]:[&>span:not([aria-hidden])]:block"><span class="font-semibold">${expansion}</span><span class="max-[560px]:hidden" aria-hidden="true"> · </span><span>${escapeHtml(locale.moreGames)}</span></p>
   <nav class="flex flex-wrap justify-end gap-x-6 gap-y-1 max-[560px]:flex-col max-[560px]:items-end" aria-label="${escapeHtml(locale.feedbackLink)}">
-    <a class="${FOOTER_LINK}" href="${site.feedbackUrl}" ${NEW_TAB}>${escapeHtml(locale.feedbackLink)}</a>
-    <a class="${FOOTER_LINK}" href="${site.repo}/issues/new/choose" ${NEW_TAB}>${escapeHtml(locale.issueLink)}</a>
-    <a class="${FOOTER_LINK}" href="${site.repo}" ${NEW_TAB}>${escapeHtml(locale.githubLink)}</a>
+    <a class="${FOOTER_LINK}" href="${site.feedbackUrl}" ${NEW_TAB} data-track-link="feedback">${escapeHtml(locale.feedbackLink)}</a>
+    <a class="${FOOTER_LINK}" href="${site.repo}/issues/new/choose" ${NEW_TAB} data-track-link="issue">${escapeHtml(locale.issueLink)}</a>
+    <a class="${FOOTER_LINK}" href="${site.repo}" ${NEW_TAB} data-track-link="github">${escapeHtml(locale.githubLink)}</a>
   </nav>
 </footer>
 <script src="${rootOf(locale)}fan-tilt.js" defer></script>
+<script src="${rootOf(locale)}tracking.js" defer></script>
 </body>
 </html>
 `;

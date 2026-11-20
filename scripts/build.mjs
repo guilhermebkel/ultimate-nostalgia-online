@@ -86,6 +86,7 @@ const build = async () => {
   await cp(join(root, "public"), dist, { recursive: true });
   await cp(join(root, "design/web"), dist, { recursive: true });
   await cp(join(root, "src/scripts/fan-tilt.js"), join(dist, "fan-tilt.js"));
+  await cp(join(root, "src/scripts/tracking.js"), join(dist, "tracking.js"));
   await cp(
     join(root, "node_modules/@fontsource-variable/fredoka/files/fredoka-latin-wght-normal.woff2"),
     join(dist, "fonts/fredoka.woff2"),

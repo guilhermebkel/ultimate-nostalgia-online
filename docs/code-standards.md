@@ -21,10 +21,19 @@ The site is small on purpose: data and texts go in, static HTML comes out. Keep 
 ## JavaScript
 
 - The build is Node ESM (`.mjs`), one export per concern, no classes unless state needs one.
-- The browser gets one tiny script (`src/scripts/fan-tilt.js`), loaded with `defer`, that only adds a pointer tilt to the art of the cards (`data-tilt-card`, `data-tilt-target`). The page works without it.
+- The browser gets two tiny scripts, both loaded with `defer`: `src/scripts/fan-tilt.js` adds a pointer tilt to the art of the cards (`data-tilt-card`, `data-tilt-target`), and `src/scripts/tracking.js` sends events to GTM (`docs/tracking-standards.md`). The page works without them.
 - No framework, no bundler, no runtime dependency: everything in `package.json` is a dev dependency.
 - Names say what a thing is. Booleans are `is`, `has` or `should`. Units are in the name (`delayMs`).
 
 ## Before committing
 
 Run `pnpm check`. Prettier sorts the Tailwind classes; do not fight it. Never raise a limit or add an ignore to make a check pass.
+
+## Hover motion
+
+Every card lifts a little (`SLAB`). The art inside tells the state of the game:
+
+- **Out now:** the art follows the pointer (`data-tilt-card` and `data-tilt-target`, set by `fan-tilt.js`), and the arrow of the button slides forward.
+- **Coming soon:** the art floats (`bob`), follows the pointer less strictly and grows by 5% ("peeks"). There is no button to move.
+
+All of it respects `prefers-reduced-motion` and is skipped on devices that cannot hover.

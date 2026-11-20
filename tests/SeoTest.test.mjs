@@ -125,3 +125,18 @@ describe("files are linked relatively", () => {
     expect(read("dist/style.css")).not.toMatch(/url\(\/[^/]/);
   });
 });
+
+describe("the footer feedback links", () => {
+  // Why: a visitor without a GitHub account must still have a way to send feedback.
+  it.each([
+    ["dist/index.html", "Send feedback", "Report an issue"],
+    ["dist/pt-br/index.html", "Enviar feedback", "Reportar um problema"],
+  ])("%s links the feedback page, the issue chooser and the repository", (file, feedback, issue) => {
+    const html = read(file);
+    expect(html).toContain(`href="https://mail.guilherr.me/">${feedback}</a>`);
+    expect(html).toContain(
+      `href="https://github.com/guilhermebkel/ultimate-nostalgia-online/issues/new/choose">${issue}</a>`,
+    );
+    expect(html).toContain('href="https://github.com/guilhermebkel/ultimate-nostalgia-online">GitHub</a>');
+  });
+});

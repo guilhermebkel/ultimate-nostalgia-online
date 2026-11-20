@@ -178,7 +178,11 @@ ${head({ site, locale, locales, games })}
 
 <footer class="relative z-[2] flex min-h-24 items-center justify-between gap-4 px-gutter pt-6 pb-7 text-[.9375rem] font-semibold text-ink-soft max-[560px]:items-start">
   <p class="max-[560px]:[&>span:not([aria-hidden])]:block"><span class="font-semibold">${expansion}</span><span class="max-[560px]:hidden" aria-hidden="true"> · </span><span>${escapeHtml(locale.moreGames)}</span></p>
-  <a class="border-b-2 border-current py-1.5 text-inherit no-underline" href="${site.repo}">${escapeHtml(locale.githubLink)}</a>
+  <nav class="flex flex-wrap justify-end gap-x-6 gap-y-1 max-[560px]:flex-col max-[560px]:items-end" aria-label="${escapeHtml(locale.feedbackLink)}">
+    <a class="border-b-2 border-current py-1.5 text-inherit no-underline" href="${site.feedbackUrl}">${escapeHtml(locale.feedbackLink)}</a>
+    <a class="border-b-2 border-current py-1.5 text-inherit no-underline" href="${site.repo}/issues/new/choose">${escapeHtml(locale.issueLink)}</a>
+    <a class="border-b-2 border-current py-1.5 text-inherit no-underline" href="${site.repo}">${escapeHtml(locale.githubLink)}</a>
+  </nav>
 </footer>
 <script src="${rootOf(locale)}fan-tilt.js" defer></script>
 </body>

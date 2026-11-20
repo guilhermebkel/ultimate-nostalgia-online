@@ -13,7 +13,7 @@
   "feedbackLink": "Enviar feedback",
   "issueLink": "Reportar um problema",
   "status": { "live": "Disponível", "soon": "Em breve" },
-  "cta": { "live": "Jogar agora", "soon": "Ainda não disponível" },
+  "cta": { "live": "Jogar agora" },
   "games": {
     "zerod": {
       "name": "Zerod",

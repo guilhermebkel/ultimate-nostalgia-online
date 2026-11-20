@@ -17,13 +17,13 @@ const render = (games, overrides = {}) =>
   renderPage({ site, locale: { ...locale, ...overrides }, locales, games, art });
 
 describe("renderPage", () => {
-  it("links a live game and disables a soon game", () => {
+  it("links a live game and gives a soon game no button", () => {
     const html = render([
       { id: "zerod", status: "live", url: "https://zerod.example" },
       { id: "pebo", status: "soon" },
     ]);
     expect(html).toContain('href="https://zerod.example"');
-    expect(html.match(/aria-disabled="true"/g)).toHaveLength(1);
+    expect(html).not.toContain("aria-disabled");
   });
 
   it("escapes the texts that come from the locale files", () => {

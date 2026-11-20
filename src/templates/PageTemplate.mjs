@@ -16,7 +16,6 @@ const FOOTER_LINK =
 const BUTTON =
   "inline-flex items-center gap-3 whitespace-nowrap rounded-[14px] font-display font-semibold no-underline transition-[translate,background-color] duration-150 ease-out";
 const BUTTON_LIVE = `${BUTTON} h-14 bg-white px-[26px] text-[1.15rem] text-ink hover:-translate-y-0.5 hover:bg-[#ffe27a] active:translate-y-px max-[420px]:w-full max-[420px]:justify-center`;
-const BUTTON_SOON = `${BUTTON} pointer-events-none h-12 cursor-not-allowed bg-black/16 px-[22px] text-[1.02rem] text-white/85`;
 
 const alternateLocales = (site, locales) =>
   site.locales.map((key) => ({ key, hreflang: locales[key].htmlLang, href: `${site.url}${locales[key].path}` }));
@@ -46,7 +45,6 @@ const gameHtml = ({ game, locale, art }) => {
     "[&>.status]:absolute [&>.status]:top-[clamp(16px,1.8vw,24px)] [&>.status]:left-[clamp(20px,2.2vw,32px)]";
   const COPY = "relative z-[4] grayscale-[.6] brightness-[.97] hub:max-w-[62%]";
   const BODY = "mt-1.5 max-w-[30ch] text-[.9rem] leading-[1.4] font-medium";
-  const ACTIONS = "relative z-[8] mt-3";
 
   if (game.id === "pebo") {
     return `
@@ -58,7 +56,6 @@ const gameHtml = ({ game, locale, art }) => {
         <div aria-hidden="true">${art.peboWordmark}</div>
         <p class="${BODY}">${escapeHtml(text.text)}</p>
       </div>
-      <div class="${ACTIONS}"><span class="${BUTTON_SOON}" aria-disabled="true">${escapeHtml(locale.cta.soon)}</span></div>
     </article>`;
   }
 
@@ -70,7 +67,6 @@ const gameHtml = ({ game, locale, art }) => {
         <h2 id="${game.id}-title" class="font-display text-[clamp(2.2rem,.8rem+2.6vw,3.6rem)] leading-[.92] font-bold tracking-[-.03em]">${escapeHtml(text.name)}</h2>
         <p class="${BODY}">${escapeHtml(text.text)}</p>
       </div>
-      <div class="${ACTIONS}"><span class="${BUTTON_SOON}" aria-disabled="true">${escapeHtml(locale.cta.soon)}</span></div>
     </article>`;
 };
 

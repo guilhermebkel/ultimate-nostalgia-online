@@ -11,12 +11,11 @@ const NEW_TAB = 'target="_blank" rel="noopener"';
 
 // Footer link: an underline that fills with the card yellow on hover and focus.
 const FOOTER_LINK =
-  "-mx-1.5 rounded-md bg-[linear-gradient(var(--color-card-yellow),var(--color-card-yellow))] bg-size-[100%_2px] bg-bottom bg-no-repeat px-1.5 py-1.5 text-inherit no-underline transition-[background-size,color] duration-200 ease-out hover:bg-size-[100%_100%] hover:text-ink focus-visible:bg-size-[100%_100%] focus-visible:text-ink motion-reduce:transition-none";
+  "-mx-1.5 rounded-md bg-[linear-gradient(var(--color-brand-yellow),var(--color-brand-yellow))] bg-size-[100%_2px] bg-bottom bg-no-repeat px-1.5 py-1.5 text-inherit no-underline transition-[background-size,color] duration-200 ease-out hover:bg-size-[100%_100%] hover:text-ink focus-visible:bg-size-[100%_100%] focus-visible:text-ink motion-reduce:transition-none";
 
 const BUTTON =
   "inline-flex items-center gap-3 whitespace-nowrap rounded-[14px] font-display font-semibold no-underline transition-[translate,background-color] duration-150 ease-out";
 const BUTTON_LIVE = `${BUTTON} h-14 bg-white px-[26px] text-[1.15rem] text-ink hover:-translate-y-0.5 hover:bg-[#ffe27a] active:translate-y-px max-[420px]:w-full max-[420px]:justify-center`;
-const BUTTON_SOON = `${BUTTON} pointer-events-none h-12 cursor-not-allowed bg-black/16 px-[22px] text-[1.02rem] text-white/85`;
 
 const alternateLocales = (site, locales) =>
   site.locales.map((key) => ({ key, hreflang: locales[key].htmlLang, href: `${site.url}${locales[key].path}` }));
@@ -41,36 +40,33 @@ const gameHtml = ({ game, locale, art }) => {
   }
 
   const SOON =
-    "group flex min-h-[300px] flex-col justify-end pt-[50px] pr-[clamp(20px,2.2vw,32px)] pb-[clamp(16px,1.8vw,26px)] pl-[clamp(20px,2.2vw,32px)] hub:min-h-0";
+    "group flex min-h-[220px] flex-col justify-end pt-[50px] pr-[clamp(20px,2.2vw,32px)] pb-[clamp(16px,1.8vw,26px)] pl-[clamp(20px,2.2vw,32px)] hub:min-h-[240px]";
   const STATUS_POSITION =
     "[&>.status]:absolute [&>.status]:top-[clamp(16px,1.8vw,24px)] [&>.status]:left-[clamp(20px,2.2vw,32px)]";
-  const COPY = "relative z-[4] grayscale-[.6] brightness-[.97] hub:max-w-[62%]";
+  const COPY = "relative z-[4] grayscale-[.9] brightness-[.97] hub:max-w-[62%]";
   const BODY = "mt-1.5 max-w-[30ch] text-[.9rem] leading-[1.4] font-medium";
-  const ACTIONS = "relative z-[8] mt-3";
 
   if (game.id === "pebo") {
     return `
     <article aria-labelledby="${game.id}-title" class="${SLAB} ${SOON} ${STATUS_POSITION} overflow-visible bg-pebo motion-safe:animate-pop-2">
       ${status}
-      <img class="absolute right-[4%] bottom-[-3%] z-[3] h-full w-auto origin-bottom rotate-[4deg] [filter:drop-shadow(0_14px_16px_rgb(0_0_0/.3))_grayscale(.6)_brightness(.97)] transition-[rotate] duration-[400ms] ease-out group-hover:-rotate-1 hub:right-[6%] hub:h-[104%] motion-safe:animate-bob-slow" src="${rootOf(locale)}img/pebo-figure.png" width="225" height="532" alt="" aria-hidden="true">
+      <img class="absolute right-[4%] bottom-[-3%] z-[3] h-full w-auto origin-bottom rotate-[4deg] [filter:drop-shadow(0_14px_16px_rgb(0_0_0/.3))_grayscale(.9)_brightness(.97)] transition-[rotate] duration-[400ms] ease-out group-hover:-rotate-1 hub:right-[6%] hub:h-[104%] motion-safe:animate-bob-slow" src="${rootOf(locale)}img/pebo-figure.png" width="225" height="532" alt="" aria-hidden="true">
       <div class="${COPY}">
         <h2 id="${game.id}-title" class="sr-only">${escapeHtml(text.name)}</h2>
         <div aria-hidden="true">${art.peboWordmark}</div>
         <p class="${BODY}">${escapeHtml(text.text)}</p>
       </div>
-      <div class="${ACTIONS}"><span class="${BUTTON_SOON}" aria-disabled="true">${escapeHtml(locale.cta.soon)}</span></div>
     </article>`;
   }
 
   return `
     <article aria-labelledby="${game.id}-title" class="${SLAB} ${SOON} ${STATUS_POSITION} overflow-visible bg-ogro motion-safe:animate-pop-3">
       ${status}
-      <div class="absolute right-0 bottom-[5%] z-[3] w-[108px] rotate-6 [filter:drop-shadow(0_14px_16px_rgb(0_0_0/.3))_grayscale(.6)_brightness(.97)] transition-[rotate] duration-[400ms] ease-out group-hover:-rotate-3 hub:right-[-2%] hub:bottom-[3%] hub:w-[clamp(150px,15vw,230px)] motion-safe:animate-bob-fast" aria-hidden="true">${art.ogre}</div>
+      <div class="absolute right-0 bottom-[5%] z-[3] w-[108px] rotate-6 [filter:drop-shadow(0_14px_16px_rgb(0_0_0/.3))_grayscale(.9)_brightness(.97)] transition-[rotate] duration-[400ms] ease-out group-hover:-rotate-3 hub:right-[-2%] hub:bottom-[3%] hub:w-[clamp(150px,15vw,230px)] motion-safe:animate-bob-fast" aria-hidden="true">${art.ogre}</div>
       <div class="${COPY}">
         <h2 id="${game.id}-title" class="font-display text-[clamp(2.2rem,.8rem+2.6vw,3.6rem)] leading-[.92] font-bold tracking-[-.03em]">${escapeHtml(text.name)}</h2>
         <p class="${BODY}">${escapeHtml(text.text)}</p>
       </div>
-      <div class="${ACTIONS}"><span class="${BUTTON_SOON}" aria-disabled="true">${escapeHtml(locale.cta.soon)}</span></div>
     </article>`;
 };
 
@@ -174,13 +170,13 @@ ${head({ site, locale, locales, games })}
 <a class="fixed top-2 left-2 z-[1000] -translate-y-[200%] rounded-lg bg-white px-4 py-2 text-black focus-visible:translate-y-0" href="#games">${escapeHtml(locale.skip)}</a>
 <div class="grain" aria-hidden="true"></div>
 
-<header class="relative z-[2] flex flex-col items-center gap-3.5 px-gutter pt-10 pb-5 text-center motion-safe:animate-rise">
+<header class="relative z-[2] flex flex-col items-center gap-3.5 px-gutter pt-10 pb-8 text-center hub:pb-9 motion-safe:animate-rise">
   <a class="flex-none" href="./" aria-label="${site.name}">${art.logo}</a>
   <p class="max-w-[34ch] font-display text-[clamp(1.3rem,.9rem+1.2vw,2.1rem)] leading-[1.12] font-semibold tracking-[-.02em]">${escapeHtml(locale.intro)}</p>
 </header>
 
 <main id="games" class="relative z-[2] flex-1 px-gutter pt-4 pb-6">
-  <div class="grid grid-cols-1 gap-5 hub:min-h-[440px] hub:grid-cols-2 hub:grid-rows-[minmax(0,1.15fr)_minmax(0,1fr)]">${games.map((game) => gameHtml({ game, locale, art })).join("\n")}
+  <div class="grid grid-cols-1 gap-5 hub:grid-cols-2">${games.map((game) => gameHtml({ game, locale, art })).join("\n")}
   </div>
 </main>
 

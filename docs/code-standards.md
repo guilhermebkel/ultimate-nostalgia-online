@@ -15,7 +15,7 @@ The site is small on purpose: data and texts go in, static HTML comes out. Keep 
 - Responsive means mobile first: write the phone layout, then add `hub:` for the desktop one. Check every change at 390 px and at 1440 px, and keep 320 px free of horizontal scroll.
 - Animations are `motion-safe:` or inside `prefers-reduced-motion: no-preference`. Motion never carries meaning.
 - Transforms use the individual properties (`translate`, `rotate`, `scale`) so that an animation and a hover do not fight.
-- Use semantic elements: one `h1`, `h2` per card, `header`, `main`, `footer`. Decorative art has `aria-hidden="true"`; a disabled button is a `span` with `aria-disabled="true"`, never a link to nowhere.
+- Use semantic elements: one `h1`, `h2` per card, `header`, `main`, `footer`. Decorative art has `aria-hidden="true"`; a soon game has no button and no link.
 - Text colors must reach WCAG AA contrast on their background (4.5:1 for small text). The accessibility test fails otherwise; change the color, not the test.
 
 ## JavaScript

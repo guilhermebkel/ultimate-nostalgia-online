@@ -27,7 +27,7 @@ for (const path of pages) {
         await page.goto(path);
         await expect(page.locator("main article, main section")).toHaveCount(3);
         await expect(page.locator('main a[href^="https://zerod.guilherr.me"]:not([aria-hidden])')).toBeVisible();
-        await expect(page.locator('main [aria-disabled="true"]')).toHaveCount(2);
+        await expect(page.locator("main a:not([aria-hidden]), main button")).toHaveCount(1);
         // One link a keyboard or a screen reader reaches; the other covers the banner for the pointer.
         await expect(page.locator("main a:not([aria-hidden])")).toHaveCount(1);
       });

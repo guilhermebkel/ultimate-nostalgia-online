@@ -40,7 +40,7 @@ const gameHtml = ({ game, locale, art }) => {
   }
 
   const SOON =
-    "group flex min-h-[300px] flex-col justify-end pt-[50px] pr-[clamp(20px,2.2vw,32px)] pb-[clamp(16px,1.8vw,26px)] pl-[clamp(20px,2.2vw,32px)] hub:min-h-0";
+    "group flex min-h-[220px] flex-col justify-end pt-[50px] pr-[clamp(20px,2.2vw,32px)] pb-[clamp(16px,1.8vw,26px)] pl-[clamp(20px,2.2vw,32px)] hub:min-h-[240px]";
   const STATUS_POSITION =
     "[&>.status]:absolute [&>.status]:top-[clamp(16px,1.8vw,24px)] [&>.status]:left-[clamp(20px,2.2vw,32px)]";
   const COPY = "relative z-[4] grayscale-[.6] brightness-[.97] hub:max-w-[62%]";
@@ -176,7 +176,7 @@ ${head({ site, locale, locales, games })}
 </header>
 
 <main id="games" class="relative z-[2] flex-1 px-gutter pt-4 pb-6">
-  <div class="grid grid-cols-1 gap-5 hub:min-h-[440px] hub:grid-cols-2 hub:grid-rows-[minmax(0,1.15fr)_minmax(0,1fr)]">${games.map((game) => gameHtml({ game, locale, art })).join("\n")}
+  <div class="grid grid-cols-1 gap-5 hub:grid-cols-2">${games.map((game) => gameHtml({ game, locale, art })).join("\n")}
   </div>
 </main>
 

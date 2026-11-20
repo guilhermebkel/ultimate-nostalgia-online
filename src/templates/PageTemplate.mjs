@@ -146,7 +146,24 @@ ${alternates}
 <link rel="preload" href="/fonts/fredoka.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/figtree.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/style.css">
-<script async src="${site.gtmScript}"></script>
+<script>
+      // Loads the owner's GTM script after the page is done, when the browser is idle (ADR 0005).
+      (function () {
+        var src = ${JSON.stringify(site.gtmScript)};
+        function add() {
+          var s = document.createElement("script");
+          s.async = true;
+          s.src = src;
+          document.head.appendChild(s);
+        }
+        function idle() {
+          if ("requestIdleCallback" in window) requestIdleCallback(add, { timeout: 4000 });
+          else setTimeout(add, 2000);
+        }
+        if (document.readyState === "complete") idle();
+        else window.addEventListener("load", idle);
+      })();
+    </script>
 <script type="application/ld+json">${JSON.stringify(jsonLd({ site, locale, games }))}</script>`;
 };
 

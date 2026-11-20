@@ -8,7 +8,7 @@
   <a href="https://uno.guilherr.me"><img src="https://img.shields.io/badge/site-uno.guilherr.me-2f6fdd" alt="Site"></a>
 </p>
 
-**uno** (Ultimate Nostalgia Online) is the hub of games at [uno.guilherr.me](https://uno.guilherr.me): famous games remastered with multiplayer and new mechanics, free to play with your friends in the browser. [Zerod](https://zerod.guilherr.me) is out now; Pebo and Ogro Party are coming soon.
+**uno** (Ultimate Nostalgia Online) is a hub of famous games remastered with multiplayer and new mechanics, free to play with your friends in the browser. [Zerod](https://zerod.guilherr.me) is out now; Pebo and Ogro Party are coming soon.
 
 ## What you get
 

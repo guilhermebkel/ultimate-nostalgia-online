@@ -146,29 +146,7 @@ ${alternates}
 <link rel="preload" href="/fonts/fredoka.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/figtree.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/style.css">
-<script>
-      // Loads the owner's GTM script on the first interaction, or after 6 s, so it never competes with the first paint (ADR 0005).
-      (function () {
-        var src = ${JSON.stringify(site.gtmScript)};
-        var events = ["pointerdown", "keydown", "scroll", "touchstart"];
-        var done = false;
-        function add() {
-          if (done) return;
-          done = true;
-          events.forEach(function (e) {
-            removeEventListener(e, add);
-          });
-          var s = document.createElement("script");
-          s.async = true;
-          s.src = src;
-          document.head.appendChild(s);
-        }
-        events.forEach(function (e) {
-          addEventListener(e, add, { passive: true, once: true });
-        });
-        setTimeout(add, 6000);
-      })();
-    </script>
+<script async src="${site.gtmScript}"></script>
 <script type="application/ld+json">${JSON.stringify(jsonLd({ site, locale, games }))}</script>`;
 };
 

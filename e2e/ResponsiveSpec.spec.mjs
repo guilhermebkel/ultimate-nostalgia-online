@@ -72,3 +72,16 @@ test("the whole Zerod banner opens the game in a new tab", async ({ page, contex
   await popup.waitForLoadState();
   expect(popup.url()).toContain("zerod.guilherr.me");
 });
+
+for (const width of [390, 1440]) {
+  test(`the logo and the intro are centered under each other at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto("/");
+    const logo = await page.locator("header a svg").first().boundingBox();
+    const intro = await page.locator("header p").boundingBox();
+    const middle = (box) => box.x + box.width / 2;
+    expect(Math.abs(middle(logo) - width / 2)).toBeLessThan(2);
+    expect(Math.abs(middle(intro) - width / 2)).toBeLessThan(2);
+    expect(intro.y).toBeGreaterThan(logo.y + logo.height);
+  });
+}

@@ -166,7 +166,7 @@ export const renderPage = ({ site, locale, locales, games, art }) => {
 <head>
 ${head({ site, locale, locales, games })}
 </head>
-<body class="flex min-h-dvh flex-col overflow-x-clip bg-paper font-body text-base leading-normal text-ink antialiased">
+<body class="flex min-h-dvh flex-col overflow-x-clip bg-paper bg-[url(img/paper.png)] bg-size-[384px_384px] bg-blend-multiply font-body text-base leading-normal text-ink antialiased">
 <a class="fixed top-2 left-2 z-[1000] -translate-y-[200%] rounded-lg bg-white px-4 py-2 text-black focus-visible:translate-y-0" href="#games">${escapeHtml(locale.skip)}</a>
 <div class="grain" aria-hidden="true"></div>
 

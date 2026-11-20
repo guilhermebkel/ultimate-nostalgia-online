@@ -3,10 +3,10 @@
   "ogLocale": "en_US",
   "path": "/",
   "title": "uno — Ultimate Nostalgia Online",
-  "description": "uno (Ultimate Nostalgia Online): famous games remastered with multiplayer and new mechanics. Play Zerod with up to 12 friends; Pebo and Ogro Party are coming soon.",
+  "description": "uno (Ultimate Nostalgia Online): famous games remastered with multiplayer and new mechanics, free in your browser. Zerod is out now; Pebo and Ogro Party are coming soon.",
   "ogImageAlt": "uno logo and the line Ultimate Nostalgia Online. Famous games remastered with multiplayer and new mechanics.",
   "skip": "Skip to the games",
-  "intro": "Famous games remastered with multiplayer and new mechanics to have fun with your friends.",
+  "intro": "Famous games remastered with multiplayer and new mechanics, free to play with your friends in the browser.",
   "expansion": ["Ultimate", "Nostalgia", "Online"],
   "moreGames": "More games on the way.",
   "githubLink": "GitHub",
@@ -15,11 +15,11 @@
   "games": {
     "zerod": {
       "name": "Zerod",
-      "text": "A card game for up to 12 friends. Open a room, send the code and play in the browser."
+      "text": "A free card game for up to 12 friends. Open a room, send the code and play in the browser."
     },
     "pebo": {
       "name": "Pebo",
-      "text": "Online 3D foosball. Even teams of 1, 2 or 4, with a nickname and nothing else."
+      "text": "Online 3D foosball. Teams of 1, 2 or 4 players, with just a nickname."
     },
     "ogro-party": {
       "name": "Ogro Party",

@@ -2,7 +2,7 @@
   "htmlLang": "en",
   "ogLocale": "en_US",
   "path": "/",
-  "title": "uno — Ultimate Nostalgia Online",
+  "title": "uno - Ultimate Nostalgia Online",
   "description": "uno (Ultimate Nostalgia Online): famous games remastered with multiplayer and new mechanics, free in your browser. Zerod is out now; Pebo and Ogro Party are coming soon.",
   "ogImageAlt": "uno logo and the line Ultimate Nostalgia Online. Famous games remastered with multiplayer and new mechanics. Free in your browser.",
   "skip": "Skip to the games",
@@ -28,5 +28,5 @@
       "text": "Nine minigames in the mud. Up to 8 players, online, in the browser."
     }
   },
-  "notFound": { "title": "Page not found — uno", "text": "This page does not exist.", "home": "Back to the games" }
+  "notFound": { "title": "Page not found - uno", "text": "This page does not exist.", "home": "Back to the games" }
 }

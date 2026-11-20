@@ -1,8 +1,5 @@
 <p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="design/svg/logo-dark.svg">
-    <img src="design/svg/logo-light.svg" alt="uno, Ultimate Nostalgia Online" width="320">
-  </picture>
+  <img src="design/png/social-preview.png" alt="uno, Ultimate Nostalgia Online: famous games remastered with multiplayer and new mechanics, free in your browser" width="640">
 </p>
 
 <p align="center">
@@ -11,11 +8,7 @@
   <a href="https://uno.guilherr.me"><img src="https://img.shields.io/badge/site-uno.guilherr.me-2f6fdd" alt="Site"></a>
 </p>
 
-<p align="center">
-  <img src="design/png/social-preview.png" alt="uno: famous games remastered with multiplayer and new mechanics" width="640">
-</p>
-
-**uno** (Ultimate Nostalgia Online) is the hub of games at [uno.guilherr.me](https://uno.guilherr.me): famous games remastered with multiplayer and new mechanics to have fun with your friends. [Zerod](https://zerod.guilherr.me) is live; Pebo and Ogro Party are coming soon.
+**uno** (Ultimate Nostalgia Online) is the hub of games at [uno.guilherr.me](https://uno.guilherr.me): famous games remastered with multiplayer and new mechanics, free to play with your friends in the browser. [Zerod](https://zerod.guilherr.me) is out now; Pebo and Ogro Party are coming soon.
 
 ## What you get
 

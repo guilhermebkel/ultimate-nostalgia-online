@@ -106,3 +106,22 @@ describe("the site files", () => {
     expect(llms).toContain("## Coming soon");
   });
 });
+
+describe("files are linked relatively", () => {
+  // Why: a project site (github.io/<repo>/) and the custom domain must both load the CSS, fonts and scripts.
+  it.each([
+    ["dist/index.html", "./"],
+    ["dist/pt-br/index.html", "../"],
+  ])("%s links its own files from %s", (file, prefix) => {
+    const html = read(file);
+    const own = [...html.matchAll(/(?:href|src)="([^"]+)"/g)]
+      .map((m) => m[1])
+      .filter((url) => !/^(https?:|#|data:|mailto:)/.test(url));
+    expect(own.length).toBeGreaterThan(0);
+    for (const url of own) expect(url === "./" || url.startsWith(prefix), `${url} in ${file}`).toBe(true);
+  });
+
+  it("does not use a root-relative url in the stylesheet", () => {
+    expect(read("dist/style.css")).not.toMatch(/url\(\/[^/]/);
+  });
+});

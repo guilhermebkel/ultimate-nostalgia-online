@@ -14,6 +14,9 @@ const BUTTON_SOON = `${BUTTON} pointer-events-none h-12 cursor-not-allowed bg-bl
 const alternateLocales = (site, locales) =>
   site.locales.map((key) => ({ key, hreflang: locales[key].htmlLang, href: `${site.url}${locales[key].path}` }));
 
+// Pages link their files relatively, so the site also works under a path (github.io/<repo>/) and from a folder.
+const rootOf = (locale) => "../".repeat(locale.path.split("/").filter(Boolean).length) || "./";
+
 const gameHtml = ({ game, locale, art }) => {
   const text = locale.games[game.id];
   const status = `<span class="status" data-status="${game.status}"><i></i><span>${escapeHtml(locale.status[game.status])}</span></span>`;
@@ -41,7 +44,7 @@ const gameHtml = ({ game, locale, art }) => {
     return `
     <article aria-labelledby="${game.id}-title" class="${SLAB} ${SOON} ${STATUS_POSITION} overflow-visible bg-pebo motion-safe:animate-pop-2">
       ${status}
-      <img class="absolute right-[4%] bottom-[-3%] z-[3] h-full w-auto origin-bottom rotate-[4deg] [filter:drop-shadow(0_14px_16px_rgb(0_0_0/.3))_grayscale(.6)_brightness(.97)] transition-[rotate] duration-[400ms] ease-out group-hover:-rotate-1 hub:right-[6%] hub:h-[104%] motion-safe:animate-bob-slow" src="/img/pebo-figure.png" width="225" height="532" alt="" aria-hidden="true">
+      <img class="absolute right-[4%] bottom-[-3%] z-[3] h-full w-auto origin-bottom rotate-[4deg] [filter:drop-shadow(0_14px_16px_rgb(0_0_0/.3))_grayscale(.6)_brightness(.97)] transition-[rotate] duration-[400ms] ease-out group-hover:-rotate-1 hub:right-[6%] hub:h-[104%] motion-safe:animate-bob-slow" src="${rootOf(locale)}img/pebo-figure.png" width="225" height="532" alt="" aria-hidden="true">
       <div class="${COPY}">
         <h2 id="${game.id}-title" class="sr-only">${escapeHtml(text.name)}</h2>
         <div aria-hidden="true">${art.peboWordmark}</div>
@@ -125,10 +128,10 @@ ${alternates}
 <link rel="alternate" hreflang="x-default" href="${site.url}/">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="theme-color" content="#F5F3EE">
-<link rel="icon" href="/favicon.ico" sizes="48x48">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<link rel="manifest" href="/site.webmanifest">
+<link rel="icon" href="${rootOf(locale)}favicon.ico" sizes="48x48">
+<link rel="icon" href="${rootOf(locale)}favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="${rootOf(locale)}apple-touch-icon.png">
+<link rel="manifest" href="${rootOf(locale)}site.webmanifest">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="${site.name}">
 <meta property="og:title" content="${escapeHtml(locale.title)}">
@@ -143,9 +146,9 @@ ${alternates}
 <meta name="twitter:title" content="${escapeHtml(locale.title)}">
 <meta name="twitter:description" content="${escapeHtml(locale.description)}">
 <meta name="twitter:image" content="${site.url}/og.png">
-<link rel="preload" href="/fonts/fredoka.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/fonts/figtree.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/style.css">
+<link rel="preload" href="${rootOf(locale)}fonts/fredoka.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="${rootOf(locale)}fonts/figtree.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="${rootOf(locale)}style.css">
 <script async src="${site.gtmScript}"></script>
 <script type="application/ld+json">${JSON.stringify(jsonLd({ site, locale, games }))}</script>`;
 };
@@ -164,7 +167,7 @@ ${head({ site, locale, locales, games })}
 <div class="grain" aria-hidden="true"></div>
 
 <header class="relative z-[2] flex flex-col items-start gap-2.5 px-gutter pt-10 pb-6 hub:flex-row hub:items-center hub:gap-[clamp(16px,2vw,28px)] motion-safe:animate-rise">
-  <a class="flex-none" href="${locale.path}" aria-label="${site.name}">${art.logo}</a>
+  <a class="flex-none" href="./" aria-label="${site.name}">${art.logo}</a>
   <p class="max-w-[40ch] font-display text-[clamp(1.3rem,.9rem+1.2vw,2.1rem)] leading-[1.12] font-semibold tracking-[-.02em]">${escapeHtml(locale.intro)}</p>
 </header>
 
@@ -177,7 +180,7 @@ ${head({ site, locale, locales, games })}
   <p class="max-[560px]:[&>span:not([aria-hidden])]:block"><span class="font-semibold">${expansion}</span><span class="max-[560px]:hidden" aria-hidden="true"> · </span><span>${escapeHtml(locale.moreGames)}</span></p>
   <a class="border-b-2 border-current py-1.5 text-inherit no-underline" href="${site.repo}">${escapeHtml(locale.githubLink)}</a>
 </footer>
-<script src="/fan-tilt.js" defer></script>
+<script src="${rootOf(locale)}fan-tilt.js" defer></script>
 </body>
 </html>
 `;
@@ -190,8 +193,8 @@ export const renderNotFound = ({ site, locale, art }) => `<!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${escapeHtml(locale.notFound.title)}</title>
 <meta name="robots" content="noindex">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="/style.css">
+<link rel="icon" href="${site.url}/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="${site.url}/style.css">
 </head>
 <body class="flex min-h-dvh flex-col items-center justify-center gap-6 bg-paper p-6 font-body text-ink">
 ${art.logo}

@@ -47,10 +47,6 @@ The commands are in [`AGENTS.md`](AGENTS.md). Playwright needs a browser once: `
 | `tests/`, `e2e/`                            | Vitest and Playwright                                      |
 | `docs/`                                     | standards, guides and decisions                            |
 
-## Privacy
-
-The site has no accounts and stores nothing. It loads one third-party script, the owner's Google Tag Manager file from `static.guilherr.me` ([ADR 0005](docs/adr/0005-gtm-script.md)). Fonts are self-hosted.
-
 ## Deploys
 
 Every push to `main` is published to GitHub Pages by `.github/workflows/deploy.yml`. One-time setup (Pages source, DNS, HTTPS) is in [`docs/deploying.md`](docs/deploying.md).

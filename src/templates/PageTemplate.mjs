@@ -40,10 +40,10 @@ const gameHtml = ({ game, locale, art }) => {
   }
 
   const SOON =
-    "group flex min-h-[220px] flex-col justify-end pt-[50px] pr-[clamp(20px,2.2vw,32px)] pb-[clamp(16px,1.8vw,26px)] pl-[clamp(20px,2.2vw,32px)] hub:min-h-[240px]";
+    "group flex min-h-[220px] flex-col justify-end pt-[50px] pr-[clamp(20px,2.2vw,32px)] pb-[clamp(16px,1.8vw,26px)] pl-[clamp(20px,2.2vw,32px)] text-white hub:min-h-[240px]";
   const STATUS_POSITION =
     "[&>.status]:absolute [&>.status]:top-[clamp(16px,1.8vw,24px)] [&>.status]:left-[clamp(20px,2.2vw,32px)]";
-  const COPY = "relative z-[4] grayscale-[.9] brightness-[.97] hub:max-w-[62%]";
+  const COPY = "relative z-[4] text-white grayscale-[.9] brightness-[.97] hub:max-w-[62%]";
   const BODY = "mt-1.5 max-w-[30ch] text-[.9rem] leading-[1.4] font-medium";
 
   if (game.id === "pebo") {
@@ -158,21 +158,19 @@ ${alternates}
 };
 
 export const renderPage = ({ site, locale, locales, games, art }) => {
-  const expansion = locale.expansion
-    .map((word) => `<b class="font-extrabold text-ink">${escapeHtml(word[0])}</b>${escapeHtml(word.slice(1))}`)
-    .join(" ");
+  const expansion = locale.expansion.map(escapeHtml).join(" ");
   return `<!DOCTYPE html>
 <html lang="${locale.htmlLang}">
 <head>
 ${head({ site, locale, locales, games })}
 </head>
-<body class="flex min-h-dvh flex-col overflow-x-clip bg-paper font-body text-base leading-normal text-ink antialiased">
+<body class="flex min-h-dvh flex-col overflow-x-clip bg-paper bg-[url(img/paper.png)] bg-size-[384px_384px] bg-blend-multiply font-body text-base leading-normal text-ink antialiased">
 <a class="fixed top-2 left-2 z-[1000] -translate-y-[200%] rounded-lg bg-white px-4 py-2 text-black focus-visible:translate-y-0" href="#games">${escapeHtml(locale.skip)}</a>
 <div class="grain" aria-hidden="true"></div>
 
 <header class="relative z-[2] flex flex-col items-center gap-3.5 px-gutter pt-10 pb-8 text-center hub:pb-9 motion-safe:animate-rise">
   <a class="logo-link flex-none" href="./" aria-label="${site.name}">${art.logo}</a>
-  <p class="max-w-[34ch] font-display text-[clamp(1.3rem,.9rem+1.2vw,2.1rem)] leading-[1.12] font-semibold tracking-[-.02em]">${escapeHtml(locale.intro)}</p>
+  <p class="max-w-[34ch] text-brand-navy font-display text-[clamp(1.3rem,.9rem+1.2vw,2.1rem)] leading-[1.12] font-semibold tracking-[-.02em]">${escapeHtml(locale.intro)}</p>
 </header>
 
 <main id="games" class="relative z-[2] flex-1 px-gutter pt-4 pb-6">

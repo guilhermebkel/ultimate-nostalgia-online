@@ -8,5 +8,5 @@ Text the visitor reads lives in `src/locales/<locale>.json`, in English and pt-B
 - Numbers are exact and match the game (12 players, 9 minigames, up to 8 players). If a game changes, change the text in the same pull request.
 - pt-BR is written, not translated word by word: "Pebolim 3D online", not "Futebol de mesa 3D online". Use "você", the short form of the verb and no regional slang.
 - Names are not translated: Zerod, Pebo, Ogro Party, uno.
-- The expansion is "Ultimate Nostalgia Online" in both languages, with the three initials in bold in the footer.
+- The expansion is "Ultimate Nostalgia Online" in both languages, written as plain text in the footer.
 - Alt text: decorative art has an empty `alt`; the share image has its own text in `ogImageAlt`.

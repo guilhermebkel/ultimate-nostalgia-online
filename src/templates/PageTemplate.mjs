@@ -170,7 +170,7 @@ ${head({ site, locale, locales, games })}
 <a class="fixed top-2 left-2 z-[1000] -translate-y-[200%] rounded-lg bg-white px-4 py-2 text-black focus-visible:translate-y-0" href="#games">${escapeHtml(locale.skip)}</a>
 <div class="grain" aria-hidden="true"></div>
 
-<header class="relative z-[2] flex flex-col items-center gap-3.5 px-gutter pt-10 pb-5 text-center motion-safe:animate-rise">
+<header class="relative z-[2] flex flex-col items-center gap-3.5 px-gutter pt-10 pb-8 text-center hub:pb-9 motion-safe:animate-rise">
   <a class="flex-none" href="./" aria-label="${site.name}">${art.logo}</a>
   <p class="max-w-[34ch] font-display text-[clamp(1.3rem,.9rem+1.2vw,2.1rem)] leading-[1.12] font-semibold tracking-[-.02em]">${escapeHtml(locale.intro)}</p>
 </header>

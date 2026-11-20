@@ -1,0 +1,40 @@
+{
+  "name": "ultimate-nostalgia-online",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.28.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "build": "node scripts/build.mjs",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint:html": "html-validate dist",
+    "lint": "pnpm format:check && pnpm build && pnpm lint:html",
+    "test": "vitest run",
+    "test:e2e": "pnpm build && playwright test",
+    "check": "pnpm lint && pnpm test && pnpm test:e2e"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@parcel/watcher",
+      "esbuild"
+    ]
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
+    "@fontsource-variable/figtree": "^5.3.0",
+    "@fontsource-variable/fredoka": "^5.3.0",
+    "@playwright/test": "^1.65.1",
+    "@tailwindcss/cli": "^4.3.5",
+    "html-validate": "^11.21.1",
+    "prettier": "^3.10.1",
+    "prettier-plugin-tailwindcss": "^0.8.1",
+    "serve": "^14.2.8",
+    "tailwindcss": "^4.3.5",
+    "vitest": "^5.1.1"
+  }
+}

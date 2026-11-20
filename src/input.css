@@ -1,0 +1,235 @@
+@import "tailwindcss" source("../src");
+
+@font-face {
+  font-family: "Fredoka";
+  src: url("/fonts/fredoka.woff2") format("woff2");
+  font-weight: 300 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Figtree";
+  src: url("/fonts/figtree.woff2") format("woff2");
+  font-weight: 300 900;
+  font-display: swap;
+}
+
+@theme {
+  --font-display: "Fredoka", ui-rounded, system-ui, sans-serif;
+  --font-body: "Figtree", ui-sans-serif, system-ui, sans-serif;
+
+  --color-paper: #f5f3ee;
+  --color-ink: #14110f;
+  --color-ink-soft: #6b6459;
+  --color-zerod: #2f6fdd;
+  --color-pebo: #6e9698;
+  --color-ogro: #a6ae92;
+  --color-card-blue: #397be9;
+  --color-card-red: #f14a43;
+  --color-card-yellow: #fdcc31;
+  --color-card-green: #44c875;
+  --color-card-dark: oklch(0.15 0.02 258);
+
+  --breakpoint-hub: 900px;
+  --spacing-gutter: clamp(12px, 2.6vw, 36px);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --animate-pop-1: pop 800ms var(--ease-out) 150ms backwards;
+  --animate-pop-2: pop 800ms var(--ease-out) 320ms backwards;
+  --animate-pop-3: pop 800ms var(--ease-out) 460ms backwards;
+  --animate-rise: rise 600ms var(--ease-out) backwards;
+  --animate-bob-slow: bob 4.6s ease-in-out 1.2s infinite;
+  --animate-bob-fast: bob 3.8s ease-in-out 0.6s infinite;
+
+  @keyframes pop {
+    0% {
+      opacity: 0;
+      translate: 0 46px;
+      scale: 0.94;
+    }
+    60% {
+      opacity: 1;
+      translate: 0 -6px;
+      scale: 1.01;
+    }
+    100% {
+      opacity: 1;
+      translate: 0 0;
+      scale: 1;
+    }
+  }
+  @keyframes rise {
+    from {
+      opacity: 0;
+      translate: 0 14px;
+    }
+  }
+  @keyframes bob {
+    0%,
+    100% {
+      translate: 0 0;
+    }
+    50% {
+      translate: 0 -9px;
+    }
+  }
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  h1,
+  h2 {
+    text-wrap: balance;
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-ink);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+}
+
+/* Paper grain over the whole page. */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  pointer-events: none;
+  opacity: 0.09;
+  mix-blend-mode: multiply;
+  filter: url(#grain);
+  background: #fff;
+}
+
+/* Status label: "OUT NOW:" and "COMING SOON:" with a colored dot. */
+@layer components {
+  .status {
+    position: relative;
+    z-index: 6;
+    display: inline-flex;
+    align-items: center;
+    align-self: flex-start;
+    gap: 8px;
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .status i {
+    width: 9px;
+    height: 9px;
+    flex: none;
+    border-radius: 50%;
+    background: #d9d6cc;
+  }
+  .status::after {
+    content: ":";
+    margin-left: -8px;
+  }
+  .status[data-status="live"] i {
+    background: var(--color-card-green);
+    box-shadow: 0 0 0 4px rgb(68 200 117 / 0.3);
+  }
+}
+
+/* The fan of Zerod cards. Sizes come from --cw (card width) set on the Zerod section. */
+.fan {
+  position: absolute;
+  left: 50%;
+  bottom: calc(var(--pad) + var(--cw) * 0.29);
+  z-index: 3;
+  width: 0;
+  height: calc(var(--cw) * 1.5);
+  rotate: calc(var(--tilt, 0) * 1deg);
+  transition: rotate 500ms var(--ease-out);
+  filter: drop-shadow(0 14px 18px rgb(10 20 60 / 0.35));
+}
+
+@media (min-width: 900px) {
+  .fan {
+    left: calc(100% - var(--pad) - var(--cw) * 1.48);
+  }
+}
+
+.pc {
+  position: absolute;
+  left: calc(var(--cw) * -0.5);
+  bottom: 0;
+  z-index: var(--z);
+  display: grid;
+  place-items: center;
+  width: var(--cw);
+  aspect-ratio: 2 / 3;
+  border-radius: calc(var(--cw) * 0.1);
+  color: #fff;
+  background: var(--c);
+  transform-origin: 50% 190%;
+  transform: rotate(calc(var(--k) * 11deg));
+  transition: transform 320ms var(--ease-out);
+  box-shadow:
+    inset 0 0 0 calc(var(--cw) * 0.03) rgb(255 255 255 / 0.2),
+    inset 0 1px 0 rgb(255 255 255 / 0.35);
+}
+
+.pc:hover {
+  z-index: 9;
+  transform: rotate(calc(var(--k) * 11deg)) translateY(calc(var(--cw) * -0.14));
+}
+
+.pc .n {
+  margin-top: -4%;
+  font-family: var(--font-display);
+  font-size: calc(var(--cw) * 0.56);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  text-shadow: 0 calc(var(--cw) * 0.012) 0 rgb(0 0 0 / 0.22);
+}
+
+.pc .co {
+  position: absolute;
+  font-family: var(--font-display);
+  font-size: calc(var(--cw) * 0.14);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.pc .co.a {
+  top: 6%;
+  left: 9%;
+}
+
+.pc .co.b {
+  right: 9%;
+  bottom: 6%;
+  rotate: 180deg;
+}
+
+.pc.dark svg {
+  width: 62%;
+  height: auto;
+}
+
+.pc.y {
+  color: var(--color-ink);
+}
+
+.pc.y .n {
+  text-shadow: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .pc {
+    animation: deal 820ms var(--ease-out) backwards;
+    animation-delay: calc((var(--k) + 2) * 80ms + 150ms);
+  }
+  @keyframes deal {
+    from {
+      transform: translateY(calc(var(--cw) * 1.6)) rotate(0deg);
+      opacity: 0;
+    }
+  }
+}

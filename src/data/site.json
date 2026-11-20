@@ -1,0 +1,12 @@
+{
+  "url": "https://uno.guilherr.me",
+  "name": "uno",
+  "repo": "https://github.com/guilhermebkel/ultimate-nostalgia-online",
+  "author": {
+    "name": "guilhermebkel",
+    "url": "https://github.com/guilhermebkel"
+  },
+  "defaultLocale": "en",
+  "locales": ["en", "pt-br"],
+  "gtmScript": "https://static.guilherr.me/js/gtm.js"
+}

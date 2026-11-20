@@ -1,0 +1,65 @@
+name: Bug in a game or in the site
+description: Something does not work as the game, the site or the docs say.
+title: "[bug] "
+labels: ["bug", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Never paste real nicknames, chat, room codes, session secrets or other private content.** Describe the shape ("a room of 12 where the third player reconnects") or use invented data.
+        Bugs of every game of the hub are reported here. Triage adds the `game:` label and may move the issue to the repository of the game.
+  - type: dropdown
+    id: game
+    attributes:
+      label: Where
+      description: The game, or the hub site itself (cards, language, links, page speed).
+      options:
+        - Zerod
+        - Pebo
+        - Ogro Party
+        - The hub site (uno.guilherr.me)
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What was done and what was seen, on which screen.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What was expected
+      description: Cite the rule, the glossary term or the docs when there is one.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: How to reproduce
+      description: Steps with invented data. Say if it was not reproduced yet.
+  - type: input
+    id: device
+    attributes:
+      label: Device and browser
+      description: Like "iPhone 14, Safari 18" or "Windows laptop, Chrome 131".
+    validations:
+      required: true
+  - type: input
+    id: time-utc
+    attributes:
+      label: Approximate time (UTC)
+      description: When it happened, when known, like 2026-11-20 14:30 UTC.
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: Screenshots, a short recording, the size of the room. No private content.
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Privacy
+      options:
+        - label: This issue has no real user data, private content or secrets.
+          required: true

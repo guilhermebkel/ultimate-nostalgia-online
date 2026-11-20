@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Zerod issues (code of the game)
+    url: https://github.com/guilhermebkel/zerod/issues
+    about: Problems in how Zerod is built. Problems you saw while playing are welcome here, with the game chosen in the form.
+  - name: Pebo issues (code of the game)
+    url: https://github.com/guilhermebkel/pebo/issues
+    about: Problems in how Pebo is built. Problems you saw while playing are welcome here, with the game chosen in the form.

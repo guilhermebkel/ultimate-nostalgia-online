@@ -11,7 +11,7 @@ const NEW_TAB = 'target="_blank" rel="noopener"';
 
 // Footer link: an underline that fills with the card yellow on hover and focus.
 const FOOTER_LINK =
-  "-mx-1.5 rounded-md bg-[linear-gradient(var(--color-card-yellow),var(--color-card-yellow))] bg-size-[100%_2px] bg-bottom bg-no-repeat px-1.5 py-1.5 text-inherit no-underline transition-[background-size,color] duration-200 ease-out hover:bg-size-[100%_100%] hover:text-ink focus-visible:bg-size-[100%_100%] focus-visible:text-ink motion-reduce:transition-none";
+  "-mx-1.5 rounded-md bg-[linear-gradient(var(--color-brand-yellow),var(--color-brand-yellow))] bg-size-[100%_2px] bg-bottom bg-no-repeat px-1.5 py-1.5 text-inherit no-underline transition-[background-size,color] duration-200 ease-out hover:bg-size-[100%_100%] hover:text-ink focus-visible:bg-size-[100%_100%] focus-visible:text-ink motion-reduce:transition-none";
 
 const BUTTON =
   "inline-flex items-center gap-3 whitespace-nowrap rounded-[14px] font-display font-semibold no-underline transition-[translate,background-color] duration-150 ease-out";

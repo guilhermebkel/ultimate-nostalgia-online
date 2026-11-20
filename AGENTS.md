@@ -15,7 +15,7 @@ One pnpm package. Next.js with a static export: Server Components only, the HTML
 - `scripts/`: `build.mjs` and `dev.mjs` (copy the files outside the app into `public/`, then run Next), `prepare.mjs`, and `eslint-local-rules.mjs` (lists our lint rules, one file each in `scripts/local-rules/`: `file-suffix`, `comment-marker`, `literal-dispatch`, `map-name`, `known-keys`, `no-bare-string-field`).
 - `public/`: files served as they are (`CNAME`, `.nojekyll`, `robots.txt`, `og.png`, `img/`). `scripts/prepare.mjs` also copies `design/web/`, the two fonts and the browser scripts here; those copies are git-ignored.
 - `design/`: the brand kit (logo, icons, web files; `design/README.md`).
-- Every file in a mapped folder (`Adapters`, `Builders`, `Protocols`, `Utils`) ends its name with the folder's name, singular (`SitemapUtil.ts`; lint `local/file-suffix`, ADR 0008). Tests sit next to the file they test (`*.test.ts`); tests of the built site and of the data are in `tests/`. `e2e/`: Playwright (responsive, accessibility, tracking, 404).
+- Every file in a mapped folder (`Adapters`, `Builders`, `Protocols`, `Utils`, `scripts/local-rules/` as `Rule` or `Helper`, `tests/` and `e2e/` helpers as `Helper`) ends its name with the folder's name, singular (`SitemapUtil.ts`; lint `local/file-suffix`, ADR 0008). A test in `tests/` or `e2e/` is named by its subject (`Seo.test.mjs`, `Tracking.spec.mjs`). Tests sit next to the file they test (`*.test.ts`); tests of the built site and of the data are in `tests/`. `e2e/`: Playwright (responsive, accessibility, tracking, 404).
 - `docs/`: standards, guides and decisions. `.github/`: workflows, issue forms and the pull request template.
 
 ## Commands

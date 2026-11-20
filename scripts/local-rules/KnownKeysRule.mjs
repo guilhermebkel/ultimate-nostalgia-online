@@ -1,4 +1,4 @@
-import { isStringKeyword, WRAPPER_TYPE_NAMES } from "./TypeNodeHelpers.mjs";
+import { isStringKeyword, WRAPPER_TYPE_NAMES } from "./TypeNodeHelper.mjs";
 
 const LIST_TYPE_NAMES = new Set(["Array", "ReadonlyArray"]);
 const SET_TYPE_NAMES = new Set(["Set", "ReadonlySet"]);

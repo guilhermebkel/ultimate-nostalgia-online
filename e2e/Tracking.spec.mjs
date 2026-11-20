@@ -1,4 +1,4 @@
-import { expect, test } from "./BaseTest.mjs";
+import { expect, test } from "./BaseHelper.mjs";
 
 test.use({ viewport: { width: 1440, height: 900 } });
 

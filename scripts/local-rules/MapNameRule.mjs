@@ -1,4 +1,4 @@
-import { WRAPPER_TYPE_NAMES } from "./TypeNodeHelpers.mjs";
+import { WRAPPER_TYPE_NAMES } from "./TypeNodeHelper.mjs";
 
 const MAP_TYPE_NAMES = new Set(["Record", "Map", "ReadonlyMap"]);
 const MAP_NAME = /To[A-Z0-9]|_TO_/;

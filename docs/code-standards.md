@@ -6,7 +6,7 @@ The site is small on purpose: data and texts go in, static HTML comes out. Keep 
 
 - A fact about a game (its id, its status, its url) is in `src/data/games.json`. Its words are in `src/locales/<locale>.json`. Its card (the art and the classes) is one entry in `src/components/GameCard/GameCardConfig.ts`. The page reads all three; nothing else lists a game.
 - Components are pure Server Components: no file reads, no clock, no network. The only `git` call is `GitAdapter`, used by the sitemap route; the data are imported through `SiteDataUtil`.
-- The code is TypeScript. Names, layers and comments follow ADR 0008 (`file-suffix`, `Why:` comments, tests next to the file).
+- The code is TypeScript. Names, layers and comments follow ADR 0008 (`file-suffix` with one written pattern per folder, `Why:` comments, tests next to the file).
 - A new language is a new file in `src/locales/` plus its code in `site.json`. The tests fail until it has every key.
 
 ## Markup and styles

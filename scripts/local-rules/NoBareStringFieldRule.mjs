@@ -1,4 +1,4 @@
-import { isStringKeyword } from "./TypeNodeHelpers.mjs";
+import { isStringKeyword } from "./TypeNodeHelper.mjs";
 
 const BARE_STRING_FIELD_NAMES = new Set(["type", "kind", "state", "status", "role", "mode", "phase"]);
 const NULLISH_TYPE_KEYWORDS = new Set(["TSNullKeyword", "TSUndefinedKeyword"]);

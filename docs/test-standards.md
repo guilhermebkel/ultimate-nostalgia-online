@@ -4,18 +4,18 @@
 
 | What must be proven                                                                                          | Level               | Where                                  |
 | ------------------------------------------------------------------------------------------------------------ | ------------------- | -------------------------------------- |
-| The data are valid: unique ids, statuses, the same keys in every locale                                      | Vitest              | `tests/GamesTest.test.mjs`             |
-| The README table of games says what the site says (names, texts, status, links)                              | Vitest              | `tests/ReadmeTest.test.mjs`            |
+| The data are valid: unique ids, statuses, the same keys in every locale                                      | Vitest              | `tests/Games.test.mjs`                 |
+| The README table of games says what the site says (names, texts, status, links)                              | Vitest              | `tests/Readme.test.mjs`                |
 | The cards do what they say: link a live game twice, give a soon game no link, escape text, one card per game | Vitest              | `src/components/GameCard/*.test.ts(x)` |
 | The helpers behind the metadata, JSON-LD, sitemap and `llms.txt`                                             | Vitest              | `src/Utils/*.test.ts`                  |
-| The layers, the file suffixes and the tests next to their source                                             | Vitest              | `tests/ArchitectureTest.test.mjs`      |
-| What search engines and AI assistants read in the built files                                                | Vitest over `dist/` | `tests/SeoTest.test.mjs`               |
-| The markup and the script agree with the tracking catalog                                                    | Vitest over `dist/` | `tests/TrackingTest.test.mjs`          |
-| A click and a hover push the right events into `dataLayer`                                                   | Playwright          | `e2e/TrackingSpec.spec.mjs`            |
-| The page works at real widths: no horizontal scroll, the fan below the button, the 404                       | Playwright          | `e2e/ResponsiveSpec.spec.mjs`          |
-| Nothing breaks WCAG A or AA                                                                                  | Playwright with axe | `e2e/AccessibilitySpec.spec.mjs`       |
+| The layers, the file suffixes and the tests next to their source                                             | Vitest              | `tests/Architecture.test.mjs`          |
+| What search engines and AI assistants read in the built files                                                | Vitest over `dist/` | `tests/Seo.test.mjs`                   |
+| The markup and the script agree with the tracking catalog                                                    | Vitest over `dist/` | `tests/Tracking.test.mjs`              |
+| A click and a hover push the right events into `dataLayer`                                                   | Playwright          | `e2e/Tracking.spec.mjs`                |
+| The page works at real widths: no horizontal scroll, the fan below the button, the 404                       | Playwright          | `e2e/Responsive.spec.mjs`              |
+| Nothing breaks WCAG A or AA                                                                                  | Playwright with axe | `e2e/Accessibility.spec.mjs`           |
 
-A unit test sits next to its source file; a test across files, over the data or over `dist/` is in `tests/`. Tests read `dist/` through `tests/ReadHtml.mjs`, which writes React's HTML in its plain form (`/>`, `hrefLang`). Pick the lowest level that can prove it. A rule about the HTML text is a Vitest test over `dist/`, not a browser test.
+A unit test sits next to its source file (`Foo.test.ts`); a test in `tests/` or `e2e/` is named by its subject, without repeating `Test` or `Spec` (`Seo.test.mjs`, `Tracking.spec.mjs`), and its helpers end in `Helper` (ADR 0008); a test across files, over the data or over `dist/` is in `tests/`. Tests read `dist/` through `tests/HtmlHelper.mjs`, which writes React's HTML in its plain form (`/>`, `hrefLang`). Pick the lowest level that can prove it. A rule about the HTML text is a Vitest test over `dist/`, not a browser test.
 
 ## Rules
 
@@ -23,6 +23,6 @@ A unit test sits next to its source file; a test across files, over the data or 
 - Expected values are written by hand in the test, never computed with the code under test.
 - Assertions are exact (`toBe`, `toEqual`), not `toBeTruthy` where a value is known.
 - A test has no `if` and no loop that hides which case failed; use `describe.each` or `it.each`.
-- Tests do not touch the network: the Playwright base test (`e2e/BaseTest.mjs`) aborts every request that leaves localhost, which includes the GTM script.
+- Tests do not touch the network: the Playwright base test (`e2e/BaseHelper.mjs`) aborts every request that leaves localhost, which includes the GTM script.
 - A bug gets a failing test first, then the fix.
 - Visual changes are looked at by a person or an agent in 390 px and 1440 px; the tests above catch what a screenshot does not (overflow, overlap, contrast), not the look.

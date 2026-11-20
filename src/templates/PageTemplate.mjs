@@ -60,10 +60,10 @@ const gameHtml = ({ game, locale, art }) => {
   }
 
   return `
-    <article aria-labelledby="${game.id}-title" data-tilt-card="10" class="${SLAB} ${SOON} ${STATUS_POSITION} overflow-visible bg-ogro motion-safe:animate-pop-3">
+    <article aria-labelledby="${game.id}-title" data-tilt-card="10" class="${SLAB} ${SOON} ${STATUS_POSITION} overflow-visible bg-ogro [&_.status]:text-white motion-safe:animate-pop-3">
       ${status}
       <div data-tilt-target class="absolute right-0 bottom-[5%] z-[3] w-[108px] rotate-[calc(6deg+var(--tilt,0)*1deg)] [filter:drop-shadow(0_14px_16px_rgb(0_0_0/.3))_grayscale(.9)_brightness(.97)] transition-[rotate] duration-[400ms] ease-out hub:right-[-2%] hub:bottom-[3%] hub:w-[clamp(150px,15vw,230px)] motion-safe:animate-bob-fast" aria-hidden="true">${art.ogre}</div>
-      <div class="${COPY}">
+      <div class="${COPY} text-white">
         <h2 id="${game.id}-title" class="font-display text-[clamp(2.2rem,.8rem+2.6vw,3.6rem)] leading-[.92] font-bold tracking-[-.03em]">${escapeHtml(text.name)}</h2>
         <p class="${BODY}">${escapeHtml(text.text)}</p>
       </div>

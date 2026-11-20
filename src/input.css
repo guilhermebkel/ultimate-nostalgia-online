@@ -232,3 +232,33 @@
     }
   }
 }
+
+/* The three tiles of the logo hop one after the other when the pointer is over it. */
+@media (prefers-reduced-motion: no-preference) {
+  .logo-link:hover svg g {
+    animation: hop 520ms var(--ease-out) backwards;
+  }
+  .logo-link:hover svg g:nth-of-type(2) {
+    animation-delay: 70ms;
+  }
+  .logo-link:hover svg g:nth-of-type(3) {
+    animation-delay: 140ms;
+  }
+  @keyframes hop {
+    40% {
+      translate: 0 -9px;
+    }
+  }
+}
+
+/* The arrow of the play button moves forward when the banner, the button or its focus is hit. */
+.cta svg {
+  transition: translate 200ms var(--ease-out);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .group:hover .cta svg,
+  .cta:hover svg,
+  .cta:focus-visible svg {
+    translate: 4px 0;
+  }
+}

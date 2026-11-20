@@ -21,7 +21,7 @@ The site is small on purpose: data and texts go in, static HTML comes out. Keep 
 ## JavaScript
 
 - The build is Node ESM (`.mjs`), one export per concern, no classes unless state needs one.
-- The browser gets one tiny script (`src/scripts/fan-tilt.js`), loaded with `defer`, that only adds a pointer tilt. The page works without it.
+- The browser gets one tiny script (`src/scripts/fan-tilt.js`), loaded with `defer`, that only adds a pointer tilt to the art of the cards (`data-tilt-card`, `data-tilt-target`). The page works without it.
 - No framework, no bundler, no runtime dependency: everything in `package.json` is a dev dependency.
 - Names say what a thing is. Booleans are `is`, `has` or `should`. Units are in the name (`delayMs`).
 

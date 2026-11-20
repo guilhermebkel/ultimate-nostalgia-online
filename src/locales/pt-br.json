@@ -10,6 +10,8 @@
   "expansion": ["Ultimate", "Nostalgia", "Online"],
   "moreGames": "Mais jogos a caminho.",
   "githubLink": "GitHub",
+  "feedbackLink": "Enviar feedback",
+  "issueLink": "Reportar um problema",
   "status": { "live": "Disponível", "soon": "Em breve" },
   "cta": { "live": "Jogar agora", "soon": "Ainda não disponível" },
   "games": {

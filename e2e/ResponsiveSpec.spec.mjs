@@ -73,6 +73,18 @@ test("the whole Zerod banner opens the game in a new tab", async ({ page, contex
   expect(popup.url()).toContain("zerod.guilherr.me");
 });
 
+test("the art of a coming soon card follows the pointer", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/");
+  const card = page.locator("[data-tilt-card]").nth(1);
+  const art = card.locator("[data-tilt-target]");
+  const box = await card.boundingBox();
+  await page.mouse.move(box.x + box.width * 0.9, box.y + box.height / 2);
+  await expect.poll(() => art.evaluate((element) => element.style.getPropertyValue("--tilt"))).not.toBe("");
+  await page.mouse.move(box.x - 20, box.y - 20);
+  await expect.poll(() => art.evaluate((element) => element.style.getPropertyValue("--tilt"))).toBe("0");
+});
+
 for (const width of [390, 1440]) {
   test(`the logo and the intro are centered under each other at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 });

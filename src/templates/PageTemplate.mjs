@@ -15,7 +15,7 @@ const FOOTER_LINK =
 
 const BUTTON =
   "inline-flex items-center gap-3 whitespace-nowrap rounded-[14px] font-display font-semibold no-underline transition-[translate,background-color] duration-150 ease-out";
-const BUTTON_LIVE = `${BUTTON} h-14 bg-white px-[26px] text-[1.15rem] text-ink hover:-translate-y-0.5 hover:bg-[#ffe27a] active:translate-y-px max-[420px]:w-full max-[420px]:justify-center`;
+const BUTTON_LIVE = `${BUTTON} h-14 bg-white px-[26px] text-[1.15rem] text-ink hover:-translate-y-0.5 hover:bg-[#ffe27a] active:translate-y-px max-[420px]:w-full max-[420px]:justify-center cta`;
 
 const alternateLocales = (site, locales) =>
   site.locales.map((key) => ({ key, hreflang: locales[key].htmlLang, href: `${site.url}${locales[key].path}` }));
@@ -29,7 +29,7 @@ const gameHtml = ({ game, locale, art }) => {
 
   if (game.status === "live") {
     return `
-    <section id="${game.id}" aria-labelledby="${game.id}-title" class="${SLAB} col-span-full flex min-h-[600px] flex-col justify-center bg-zerod p-(--pad) pb-[calc(var(--pad)+var(--cw)*1.75+28px)] text-white [--cw:min(25vw,130px)] [--pad:clamp(24px,3.2vw,48px)] hub:min-h-0 hub:pb-(--pad) hub:[--cw:clamp(112px,min(10vw,18vh),160px)] motion-safe:animate-pop-1">
+    <section id="${game.id}" aria-labelledby="${game.id}-title" data-tilt-card="8" class="group ${SLAB} col-span-full flex min-h-[600px] flex-col justify-center bg-zerod p-(--pad) pb-[calc(var(--pad)+var(--cw)*1.75+28px)] text-white [--cw:min(25vw,130px)] [--pad:clamp(24px,3.2vw,48px)] hub:min-h-0 hub:pb-(--pad) hub:[--cw:clamp(112px,min(10vw,18vh),160px)] motion-safe:animate-pop-1">
       ${status}
       <h1 id="${game.id}-title" class="relative z-[2] mt-[18px] font-display text-[clamp(3.4rem,1rem+6vw,7rem)] leading-[.92] font-bold tracking-[-.03em]">${escapeHtml(text.name)}</h1>
       <p class="relative z-[2] mt-[18px] max-w-[40ch] text-[clamp(1rem,.9rem+.4vw,1.1875rem)] font-medium text-white">${escapeHtml(text.text)}</p>
@@ -48,9 +48,9 @@ const gameHtml = ({ game, locale, art }) => {
 
   if (game.id === "pebo") {
     return `
-    <article aria-labelledby="${game.id}-title" class="${SLAB} ${SOON} ${STATUS_POSITION} overflow-visible bg-pebo motion-safe:animate-pop-2">
+    <article aria-labelledby="${game.id}-title" data-tilt-card="10" class="${SLAB} ${SOON} ${STATUS_POSITION} overflow-visible bg-pebo motion-safe:animate-pop-2">
       ${status}
-      <img class="absolute right-[4%] bottom-[-3%] z-[3] h-full w-auto origin-bottom rotate-[4deg] [filter:drop-shadow(0_14px_16px_rgb(0_0_0/.3))_grayscale(.9)_brightness(.97)] transition-[rotate] duration-[400ms] ease-out group-hover:-rotate-1 hub:right-[6%] hub:h-[104%] motion-safe:animate-bob-slow" src="${rootOf(locale)}img/pebo-figure.png" width="225" height="532" alt="" aria-hidden="true">
+      <img data-tilt-target class="absolute right-[4%] bottom-[-3%] z-[3] h-full w-auto origin-bottom rotate-[calc(4deg+var(--tilt,0)*1deg)] [filter:drop-shadow(0_14px_16px_rgb(0_0_0/.3))_grayscale(.9)_brightness(.97)] transition-[rotate] duration-[400ms] ease-out hub:right-[6%] hub:h-[104%] motion-safe:animate-bob-slow" src="${rootOf(locale)}img/pebo-figure.png" width="225" height="532" alt="" aria-hidden="true">
       <div class="${COPY}">
         <h2 id="${game.id}-title" class="sr-only">${escapeHtml(text.name)}</h2>
         <div aria-hidden="true">${art.peboWordmark}</div>
@@ -60,9 +60,9 @@ const gameHtml = ({ game, locale, art }) => {
   }
 
   return `
-    <article aria-labelledby="${game.id}-title" class="${SLAB} ${SOON} ${STATUS_POSITION} overflow-visible bg-ogro motion-safe:animate-pop-3">
+    <article aria-labelledby="${game.id}-title" data-tilt-card="10" class="${SLAB} ${SOON} ${STATUS_POSITION} overflow-visible bg-ogro motion-safe:animate-pop-3">
       ${status}
-      <div class="absolute right-0 bottom-[5%] z-[3] w-[108px] rotate-6 [filter:drop-shadow(0_14px_16px_rgb(0_0_0/.3))_grayscale(.9)_brightness(.97)] transition-[rotate] duration-[400ms] ease-out group-hover:-rotate-3 hub:right-[-2%] hub:bottom-[3%] hub:w-[clamp(150px,15vw,230px)] motion-safe:animate-bob-fast" aria-hidden="true">${art.ogre}</div>
+      <div data-tilt-target class="absolute right-0 bottom-[5%] z-[3] w-[108px] rotate-[calc(6deg+var(--tilt,0)*1deg)] [filter:drop-shadow(0_14px_16px_rgb(0_0_0/.3))_grayscale(.9)_brightness(.97)] transition-[rotate] duration-[400ms] ease-out hub:right-[-2%] hub:bottom-[3%] hub:w-[clamp(150px,15vw,230px)] motion-safe:animate-bob-fast" aria-hidden="true">${art.ogre}</div>
       <div class="${COPY}">
         <h2 id="${game.id}-title" class="font-display text-[clamp(2.2rem,.8rem+2.6vw,3.6rem)] leading-[.92] font-bold tracking-[-.03em]">${escapeHtml(text.name)}</h2>
         <p class="${BODY}">${escapeHtml(text.text)}</p>
@@ -171,7 +171,7 @@ ${head({ site, locale, locales, games })}
 <div class="grain" aria-hidden="true"></div>
 
 <header class="relative z-[2] flex flex-col items-center gap-3.5 px-gutter pt-10 pb-8 text-center hub:pb-9 motion-safe:animate-rise">
-  <a class="flex-none" href="./" aria-label="${site.name}">${art.logo}</a>
+  <a class="logo-link flex-none" href="./" aria-label="${site.name}">${art.logo}</a>
   <p class="max-w-[34ch] font-display text-[clamp(1.3rem,.9rem+1.2vw,2.1rem)] leading-[1.12] font-semibold tracking-[-.02em]">${escapeHtml(locale.intro)}</p>
 </header>
 

@@ -1,5 +1,6 @@
 [
   { "id": "zerod", "status": "live", "url": "https://zerod.guilherr.me" },
+  { "id": "heros-play", "status": "live", "url": "https://herosplay.online/" },
   { "id": "pebo", "status": "soon" },
   { "id": "ogro-party", "status": "soon" }
 ]

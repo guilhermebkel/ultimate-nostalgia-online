@@ -150,7 +150,7 @@ describe("links that leave the page", () => {
     (file) => {
       const anchors = [...read(file).matchAll(/<a\s[^>]*>/g)].map((m) => m[0]);
       const external = anchors.filter((tag) => /href="https?:\/\//.test(tag));
-      expect(external.length).toBe(5);
+      expect(external.length).toBe(7);
       for (const tag of external) {
         expect(tag, tag).toContain('target="_blank"');
         expect(tag, tag).toContain('rel="noopener"');

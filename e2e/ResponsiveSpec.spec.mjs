@@ -23,13 +23,13 @@ for (const path of pages) {
         expect(overflow).toBe(0);
       });
 
-      test("shows the three games and only Zerod is playable", async ({ page }) => {
+      test("shows the four games and only Zerod and Hero's Play are playable", async ({ page }) => {
         await page.goto(path);
-        await expect(page.locator("main article, main section")).toHaveCount(3);
+        await expect(page.locator("main article, main section")).toHaveCount(4);
         await expect(page.locator('main a[href^="https://zerod.guilherr.me"]:not([aria-hidden])')).toBeVisible();
-        await expect(page.locator("main a:not([aria-hidden]), main button")).toHaveCount(1);
-        // One link a keyboard or a screen reader reaches; the other covers the banner for the pointer.
-        await expect(page.locator("main a:not([aria-hidden])")).toHaveCount(1);
+        await expect(page.locator('main a[href^="https://herosplay.online"]:not([aria-hidden])')).toBeVisible();
+        // One link per live game that a keyboard or a screen reader reaches; the other covers the banner for the pointer.
+        await expect(page.locator("main a:not([aria-hidden]), main button")).toHaveCount(2);
       });
     });
   }
@@ -76,8 +76,9 @@ test("the whole Zerod banner opens the game in a new tab", async ({ page, contex
 test("the art of a coming soon card follows the pointer", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/");
-  const card = page.locator("[data-tilt-card]").nth(1);
+  const card = page.locator("[data-tilt-card]").filter({ hasText: "Pebo" });
   const art = card.locator("[data-tilt-target]");
+  await card.scrollIntoViewIfNeeded();
   const box = await card.boundingBox();
   await page.mouse.move(box.x + box.width * 0.9, box.y + box.height / 2);
   await expect.poll(() => art.evaluate((element) => element.style.getPropertyValue("--tilt"))).not.toBe("");

@@ -15,6 +15,7 @@ body:
       description: The game, or the hub site itself (cards, language, links, page speed).
       options:
         - Zerod
+        - Hero's Play
         - Pebo
         - Ogro Party
         - The hub site (uno.guilherr.me)

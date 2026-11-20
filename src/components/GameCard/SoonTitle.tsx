@@ -1,8 +1,8 @@
 import { PeboWordmarkIcon } from "@/components/Icons/PeboWordmarkIcon";
-import type { SoonCardConfig } from "./GameCardConfig";
+import type { SoonCardTheme } from "./GameCardTheme";
 
-export const SoonTitle = ({ config, id, name }: { config: SoonCardConfig; id: string; name: string }) => {
-  if (config.title.kind === "wordmark") {
+export const SoonTitle = ({ theme, id, name }: { theme: SoonCardTheme; id: string; name: string }) => {
+  if (theme.title.kind === "wordmark") {
     return (
       <>
         <h2 id={id} className="sr-only">
@@ -15,7 +15,7 @@ export const SoonTitle = ({ config, id, name }: { config: SoonCardConfig; id: st
     );
   }
   return (
-    <h2 id={id} className={`font-display leading-[.92] font-bold tracking-[-.03em] ${config.title.className}`}>
+    <h2 id={id} className={`font-display leading-[.92] font-bold tracking-[-.03em] ${theme.title.className}`}>
       {name}
     </h2>
   );

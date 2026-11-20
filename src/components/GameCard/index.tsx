@@ -1,7 +1,7 @@
 import type { ReactElement } from "react";
 import type { Game, GameStatus, Locale } from "@/Protocols/SiteProtocol";
-import type { CardConfig, LiveCardConfig, SoonCardConfig } from "./GameCardConfig";
-import { GAME_ID_TO_CARD_CONFIG } from "./GameCardConfig";
+import type { CardTheme, LiveCardTheme, SoonCardTheme } from "./GameCardTheme";
+import { GAME_ID_TO_CARD_THEME } from "./GameCardTheme";
 import { LiveGameCard } from "./LiveGameCard";
 import { SoonGameCard } from "./SoonGameCard";
 
@@ -9,34 +9,34 @@ type GameCardProps = { game: Game; locale: Locale };
 
 type GameText = { name: string; text: string };
 
-type CardProps = { game: Game; config: CardConfig; locale: Locale; text: GameText };
+type CardProps = { game: Game; theme: CardTheme; locale: Locale; text: GameText };
 
-const isLiveConfig = (config: CardConfig): config is LiveCardConfig => config.status === "live";
+const isLiveTheme = (theme: CardTheme): theme is LiveCardTheme => theme.status === "live";
 
-const isSoonConfig = (config: CardConfig): config is SoonCardConfig => config.status === "soon";
+const isSoonTheme = (theme: CardTheme): theme is SoonCardTheme => theme.status === "soon";
 
-const buildMismatchError = ({ game, config }: CardProps): Error =>
-  new Error(`Game "${game.id}" is "${game.status}" in games.json but its card is "${config.status}".`);
+const buildMismatchError = ({ game, theme }: CardProps): Error =>
+  new Error(`Game "${game.id}" is "${game.status}" in games.json but its card is "${theme.status}".`);
 
 const STATUS_TO_CARD: Record<GameStatus, (props: CardProps) => ReactElement> = {
   live: (props) => {
-    const { game, config, locale, text } = props;
-    if (!isLiveConfig(config) || game.url === undefined) {
+    const { game, theme, locale, text } = props;
+    if (!isLiveTheme(theme) || game.url === undefined) {
       throw buildMismatchError(props);
     }
-    return <LiveGameCard game={{ ...game, url: game.url }} config={config} locale={locale} text={text} />;
+    return <LiveGameCard game={{ ...game, url: game.url }} theme={theme} locale={locale} text={text} />;
   },
   soon: (props) => {
-    const { game, config, locale, text } = props;
-    if (!isSoonConfig(config) || game.url !== undefined) {
+    const { game, theme, locale, text } = props;
+    if (!isSoonTheme(theme) || game.url !== undefined) {
       throw buildMismatchError(props);
     }
-    return <SoonGameCard game={game} config={config} locale={locale} text={text} />;
+    return <SoonGameCard game={game} theme={theme} locale={locale} text={text} />;
   },
 };
 
 export const GameCard = ({ game, locale }: GameCardProps) => {
-  const config = GAME_ID_TO_CARD_CONFIG[game.id];
+  const theme = GAME_ID_TO_CARD_THEME[game.id];
   const text: GameText = locale.games[game.id];
-  return STATUS_TO_CARD[game.status]({ game, config, locale, text });
+  return STATUS_TO_CARD[game.status]({ game, theme, locale, text });
 };

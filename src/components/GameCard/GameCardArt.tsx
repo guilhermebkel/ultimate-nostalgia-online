@@ -1,7 +1,7 @@
 import type { ReactElement } from "react";
 import { OgreIcon } from "@/components/Icons/OgreIcon";
 import { FanArt } from "./FanArt";
-import type { ArtKind, ArtOfKind, CardArt } from "./GameCardConfig";
+import type { ArtKind, ArtOfKind, CardArt } from "./GameCardTheme";
 
 type GameCardArtProps = { art: CardArt };
 

@@ -1,32 +1,32 @@
 import type { Game, Locale } from "@/Protocols/SiteProtocol";
 import { GameCardArt } from "./GameCardArt";
 import { SLAB, SOON_BODY, SOON_CARD, SOON_COPY } from "./GameCardClasses";
-import type { SoonCardConfig } from "./GameCardConfig";
+import type { SoonCardTheme } from "./GameCardTheme";
 import { GameCardStatus } from "./GameCardStatus";
 import { SoonTitle } from "./SoonTitle";
 
 type SoonGameCardProps = {
   game: Game;
-  config: SoonCardConfig;
+  theme: SoonCardTheme;
   locale: Locale;
   text: { name: string; text: string };
 };
 
 // Why: a coming-soon card is not a link, so nothing on it can lead to a game that does not exist yet.
-export const SoonGameCard = ({ game, config, locale, text }: SoonGameCardProps) => {
+export const SoonGameCard = ({ game, theme, locale, text }: SoonGameCardProps) => {
   const titleId = `${game.id}-title`;
   return (
     <article
       aria-labelledby={titleId}
       data-track-card={game.id}
       data-track-status="soon"
-      data-tilt-card={config.tilt}
-      className={`${SLAB} ${SOON_CARD} ${config.className}`}
+      data-tilt-card={theme.tilt}
+      className={`${SLAB} ${SOON_CARD} ${theme.className}`}
     >
       <GameCardStatus status="soon" label={locale.status.soon} />
-      <GameCardArt art={config.art} />
+      <GameCardArt art={theme.art} />
       <div className={SOON_COPY}>
-        <SoonTitle config={config} id={titleId} name={text.name} />
+        <SoonTitle theme={theme} id={titleId} name={text.name} />
         <p className={SOON_BODY}>{text.text}</p>
       </div>
     </article>

@@ -8,7 +8,7 @@ The owner measures all their sites with Google Tag Manager, served from their ow
 
 ## Decision
 
-The page loads that script with `async` in the head, so every visit is counted. the URL is in `site.json`. No other third-party script, font or image is allowed. Fonts are self-hosted. Tests and e2e abort every request that leaves localhost.
+The page loads that script with `async` in the head, so every visit is counted. The URL is in `site.json`. No other third-party script, font or image is allowed. Fonts are self-hosted. Tests and e2e abort every request that leaves localhost.
 
 ## Consequences
 

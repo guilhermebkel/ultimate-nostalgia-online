@@ -1,8 +1,5 @@
 <p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="design/svg/logo-dark.svg">
-    <img src="design/svg/logo-light.svg" alt="uno, Ultimate Nostalgia Online" width="320">
-  </picture>
+  <img src="design/png/social-preview.png" alt="uno, Ultimate Nostalgia Online: famous games remastered with multiplayer and new mechanics, free in your browser" width="640">
 </p>
 
 <p align="center">
@@ -11,11 +8,17 @@
   <a href="https://uno.guilherr.me"><img src="https://img.shields.io/badge/site-uno.guilherr.me-2f6fdd" alt="Site"></a>
 </p>
 
-<p align="center">
-  <img src="design/png/social-preview.png" alt="uno: famous games remastered with multiplayer and new mechanics" width="640">
-</p>
+**uno** (Ultimate Nostalgia Online) is a hub of famous games remastered with multiplayer and new mechanics, free to play with your friends in the browser.
 
-**uno** (Ultimate Nostalgia Online) is the hub of games at [uno.guilherr.me](https://uno.guilherr.me): famous games remastered with multiplayer and new mechanics to have fun with your friends. [Zerod](https://zerod.guilherr.me) is live; Pebo and Ogro Party are coming soon.
+## Games
+
+| Game       | Description                                                                                | Status      | Link                                           |
+| ---------- | ------------------------------------------------------------------------------------------ | ----------- | ---------------------------------------------- |
+| Zerod      | A free card game for up to 12 friends. Open a room, send the code and play in the browser. | Out now     | [zerod.guilherr.me](https://zerod.guilherr.me) |
+| Pebo       | Online 3D foosball. Teams of 1, 2 or 4 players, with just a nickname.                      | Coming soon | None yet                                       |
+| Ogro Party | Nine minigames in the mud. Up to 8 players, online, in the browser.                        | Coming soon | None yet                                       |
+
+The list lives in `src/data/games.json`; the texts are in `src/locales/`. `tests/ReadmeTest.test.mjs` fails when this table and the site disagree.
 
 ## What you get
 
@@ -54,21 +57,46 @@ The commands are in [`AGENTS.md`](AGENTS.md). Playwright needs a browser once: `
 | `tests/`, `e2e/`                            | Vitest and Playwright                                      |
 | `docs/`                                     | standards, guides and decisions                            |
 
-## Privacy
-
-The site has no accounts and stores nothing. It loads one third-party script, the owner's Google Tag Manager file from `static.guilherr.me` ([ADR 0005](docs/adr/0005-gtm-script.md)). Fonts are self-hosted.
-
 ## Deploys
 
 Every push to `main` is published to GitHub Pages by `.github/workflows/deploy.yml`. One-time setup (Pages source, DNS, HTTPS) is in [`docs/deploying.md`](docs/deploying.md).
 
 ## FAQ
 
-**Can I add a game?** Yes, see [`docs/adding-a-game.md`](docs/adding-a-game.md).
+<details>
+<summary><b>Are the games free?</b></summary>
 
-**Why is there no language switch?** Each language is its own URL ([ADR 0003](docs/adr/0003-locales-as-separate-urls.md)).
+Yes. They run in the browser, with no install.
 
-**Is it affiliated with Mattel or the card game UNO?** No. "uno" here is short for Ultimate Nostalgia Online (see the warning in [`design/README.md`](design/README.md)).
+</details>
+
+<details>
+<summary><b>Do I need an account to play?</b></summary>
+
+No. The hub has no accounts and stores nothing. Each game asks only for a nickname.
+
+</details>
+
+<details>
+<summary><b>Can I add a game?</b></summary>
+
+Yes, see [`docs/adding-a-game.md`](docs/adding-a-game.md).
+
+</details>
+
+<details>
+<summary><b>Why is there no language switch?</b></summary>
+
+Each language is its own URL ([ADR 0003](docs/adr/0003-locales-as-separate-urls.md)).
+
+</details>
+
+<details>
+<summary><b>Is it affiliated with Mattel or the card game UNO?</b></summary>
+
+No. "uno" here is short for Ultimate Nostalgia Online (see the warning in [`design/README.md`](design/README.md)).
+
+</details>
 
 ## Contributing
 

@@ -2,14 +2,14 @@
 
 @font-face {
   font-family: "Fredoka";
-  src: url("/fonts/fredoka.woff2") format("woff2");
+  src: url("fonts/fredoka.woff2") format("woff2");
   font-weight: 300 700;
   font-display: swap;
 }
 
 @font-face {
   font-family: "Figtree";
-  src: url("/fonts/figtree.woff2") format("woff2");
+  src: url("fonts/figtree.woff2") format("woff2");
   font-weight: 300 900;
   font-display: swap;
 }
@@ -96,7 +96,7 @@
   inset: 0;
   z-index: 90;
   pointer-events: none;
-  background: url("/img/grain.png") repeat;
+  background: url("img/grain.png") repeat;
   background-size: 160px 160px;
 }
 

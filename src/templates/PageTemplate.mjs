@@ -27,6 +27,18 @@ const gameHtml = ({ game, locale, art }) => {
   const text = locale.games[game.id];
   const status = `<span class="status" data-status="${game.status}"><i></i><span>${escapeHtml(locale.status[game.status])}</span></span>`;
 
+  if (game.id === "heros-play") {
+    return `
+    <section id="${game.id}" aria-labelledby="${game.id}-title" class="${SLAB} col-span-full flex min-h-[420px] flex-col justify-center overflow-visible bg-heros p-(--pad) pb-[calc(var(--pad)+var(--pw)+36px)] text-[#f6e7c8] [--pad:clamp(24px,3.2vw,48px)] [--pw:min(62vw,300px)] hub:min-h-[340px] hub:pb-(--pad) motion-safe:animate-pop-2">
+      ${status}
+      <h2 id="${game.id}-title" class="relative z-[2] mt-[14px] font-display text-[clamp(2.6rem,1rem+4.4vw,5.2rem)] leading-[.95] font-bold tracking-[-.03em]">${escapeHtml(text.name)}</h2>
+      <p class="relative z-[2] mt-4 max-w-[40ch] text-[clamp(1rem,.9rem+.4vw,1.1875rem)] font-medium">${escapeHtml(text.text)}</p>
+      <a class="absolute inset-0 z-[9] rounded-[inherit]" href="${escapeHtml(game.url)}" ${NEW_TAB} aria-hidden="true" tabindex="-1"></a>
+      <div class="relative z-[10] mt-[22px]"><a class="${BUTTON_LIVE}" href="${escapeHtml(game.url)}" ${NEW_TAB}><span>${escapeHtml(locale.cta.live)}</span>${art.arrow}</a></div>
+      <img class="absolute left-1/2 bottom-[24px] z-[3] w-(--pw) -translate-x-1/2 rotate-[-4deg] rounded-[10px] shadow-[0_18px_34px_rgb(0_0_0/.45)] hub:top-1/2 hub:right-[5%] hub:left-auto hub:bottom-auto hub:translate-x-0 hub:w-[clamp(240px,24vw,360px)] hub:-translate-y-1/2" src="${rootOf(locale)}img/heros-play.webp" width="560" height="550" alt="" aria-hidden="true">
+    </section>`;
+  }
+
   if (game.status === "live") {
     return `
     <section id="${game.id}" aria-labelledby="${game.id}-title" data-tilt-card="8" class="group ${SLAB} col-span-full flex min-h-[600px] flex-col justify-center bg-zerod p-(--pad) pb-[calc(var(--pad)+var(--cw)*1.75+28px)] text-white [--cw:min(25vw,130px)] [--pad:clamp(24px,3.2vw,48px)] hub:min-h-0 hub:pb-(--pad) hub:[--cw:clamp(112px,min(10vw,18vh),160px)] motion-safe:animate-pop-1">

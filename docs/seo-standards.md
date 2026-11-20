@@ -28,7 +28,7 @@ The site must be easy for search engines and AI assistants to read, because that
 ## Speed
 
 - Fonts are self-hosted (`/fonts`), preloaded and `font-display: swap`. Images have `width` and `height`. The only external request is the GTM script, loaded with `async`.
-- No framework JavaScript. Keep it that way: the page should score near 100 in Lighthouse on mobile, and `.github/workflows/ci.yml` asserts a floor (`lighthouserc.json`). The Lighthouse job blocks the GTM script (`blockedUrlPatterns` for `static.guilherr.me`): the owner's container is outside this repository and its third-party chain alone moves LCP in the CI runner (issue #2). The script is still on every page for visitors, and the floor guards what the repository controls.
+- No framework JavaScript. Keep it that way: the page should score near 100 in Lighthouse on mobile, and `.github/workflows/ci.yml` asserts a floor (`lighthouserc.json`). The Lighthouse job blocks the GTM script (`blockedUrlPatterns` for `static.guilherr.me`) and takes the median of three runs, since one cold run on the CI runner can spike the blocking time: the owner's container is outside this repository and its third-party chain alone moves LCP in the CI runner (issue #2). The script is still on every page for visitors, and the floor guards what the repository controls.
 
 ## What is not promised
 

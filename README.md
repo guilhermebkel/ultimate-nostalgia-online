@@ -11,11 +11,12 @@
 
 ## Games
 
-| Game       | Description                                                                                | Status      | Link                                           |
-| ---------- | ------------------------------------------------------------------------------------------ | ----------- | ---------------------------------------------- |
-| Zerod      | A free card game for up to 12 friends. Open a room, send the code and play in the browser. | Out now     | [zerod.guilherr.me](https://zerod.guilherr.me) |
-| Pebo       | Online 3D foosball. Teams of 1, 2 or 4 players, with just a nickname.                      | Coming soon | None yet                                       |
-| Ogro Party | Nine minigames in the mud. Up to 8 players, online, in the browser.                        | Coming soon | None yet                                       |
+| Game        | Description                                                                                                     | Status      | Link                                           |
+| ----------- | --------------------------------------------------------------------------------------------------------------- | ----------- | ---------------------------------------------- |
+| Zerod       | A free card game for up to 12 friends. Open a room, send the code and play in the browser.                      | Out now     | [zerod.guilherr.me](https://zerod.guilherr.me) |
+| Hero's Play | A rock rhythm game in the browser. Play the songs, climb the leaderboards and face your friends in multiplayer. | Out now     | [herosplay.online](https://herosplay.online/)  |
+| Pebo        | Online 3D foosball. Teams of 1, 2 or 4 players, with just a nickname.                                           | Coming soon | None yet                                       |
+| Ogro Party  | Nine minigames in the mud. Up to 8 players, online, in the browser.                                             | Coming soon | None yet                                       |
 
 ## What you get
 
